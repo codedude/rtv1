@@ -1,0 +1,20 @@
+# Object files
+*.o
+
+# Libraries
+*.lib
+*.a
+
+# Executables
+*.exe
+*.out
+rtv1
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# img
+*.bmp

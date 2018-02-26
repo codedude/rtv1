@@ -1,0 +1,18 @@
+Type 0x420x4D
+Size : 4 bytes
+Reserved : 2 bytes
+Reserved : 2 bytes
+Offset img : 4 bytes
+
+Header : BITMAPINFOHEADER
+Size header : 0x28
+Width : 4bytes
+Height : 4bytes
+Plane : 0x01 (2 bytes)
+BPP : 0x20 (2 bytes)
+Compression : 0 (4 bytes)
+Img size : (4 bytes)
+Hor res : (4 bytes)
+Ver res : (4 bytes)
+Nb colors palette : 0 (4 bytes)
+Nb imp colors : 0 (4 bytes)
