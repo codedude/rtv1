@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/24 19:05:21 by valentin          #+#    #+#             */
-/*   Updated: 2018/01/12 13:46:59 by vparis           ###   ########.fr       */
+/*   Updated: 2018/02/26 12:02:32 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ t_f64				deg_to_rad(t_f64 x);
 t_f64				rad_to_deg(t_f64 x);
 t_f64				ft_cos(t_f64 x);
 t_f64				ft_sin(t_f64 x);
+t_f64				ft_tan(t_f64 x);
 
 #endif

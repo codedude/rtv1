@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 04:21:59 by vparis            #+#    #+#             */
-/*   Updated: 2018/02/26 11:24:59 by vparis           ###   ########.fr       */
+/*   Updated: 2018/02/26 18:18:28 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,13 @@
 
 # include "ft_mlx.h"
 # include "ft_tpool.h"
+# include "matrix.h"
+# include "objects.h"
 
 # define WIDTH			800
 # define HEIGHT			600
+# define FOV			90.
+# define MAX_DEPTH		6
 # define TITLE			"RTV1 DX4000"
 # define FILE_NAME		"saved_img/rt_XXX.bmp"
 
@@ -39,9 +43,13 @@ typedef struct	s_env {
 	int			keydown;
 	int			refresh;
 	int			show_fps;
+	int			save_img;
 	int			width;
 	int			height;
-	int			save_img;
+	t_f64		ratio;
+	int			ratio_dir;
+	t_obj_lst	*objects;
+	t_vec3		ang;
 }				t_env;
 
 typedef struct	s_data {
@@ -51,8 +59,8 @@ typedef struct	s_data {
 
 typedef struct	s_algo {
 	t_data		*data;
-	t_u32		start;
-	t_u32		end;
+	int			start;
+	int			end;
 }				t_algo;
 
 int				env_init(t_env *env, int width, int height);

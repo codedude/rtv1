@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 11:01:14 by vparis            #+#    #+#             */
-/*   Updated: 2018/02/26 11:20:11 by vparis           ###   ########.fr       */
+/*   Updated: 2018/02/26 15:22:49 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 
 static void	get_filename(int nb, char *filename)
 {
-	ft_bzero(filename, 26);
+	ft_bzero(filename, 20);
 	ft_strcpy(filename, FILE_NAME);
-	filename[18] = '0' + nb / 100;
-	filename[19] = '0' + nb / 10 - (nb / 100) * 10;
-	filename[20] = '0' + nb % 10;
+	filename[13] = '0' + nb / 100;
+	filename[14] = '0' + nb / 10 - (nb / 100) * 10;
+	filename[15] = '0' + nb % 10;
 }
 
 int			write_header(int fd, int size[2])

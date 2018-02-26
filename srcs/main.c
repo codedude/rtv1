@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 17:52:32 by vparis            #+#    #+#             */
-/*   Updated: 2018/02/26 11:21:56 by vparis           ###   ########.fr       */
+/*   Updated: 2018/02/26 18:16:22 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@
 #include "ft_mlx.h"
 #include "rtv1.h"
 
+static t_f64 ay = 0.;
+
 static int	loop(void *param)
 {
 	t_data	*data;
 
 	data = (t_data *)param;
+	vec3_set(&(data->env.ang), 0., ay, 0.);
 	check_key(&(data->env));
 	if (data->env.refresh == 1)
 	{
@@ -32,7 +35,7 @@ static int	loop(void *param)
 	if (save_img(data) == ERROR)
 		ft_putstr("Image can't be save\n");
 	ft_mlx_fps(data->env.show_fps, data->env.refresh);
-	data->env.refresh = 0;
+	ay += 2.;
 	return (1);
 }
 

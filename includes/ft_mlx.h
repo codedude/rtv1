@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 17:44:18 by vparis            #+#    #+#             */
-/*   Updated: 2018/02/08 13:37:20 by vparis           ###   ########.fr       */
+/*   Updated: 2018/02/26 15:55:03 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void			ft_mlx_fps(int show_fps, int refresh);
 ** Pixel manipulation
 */
 
+void			ft_mlx_put(t_mlx *mlx, int x, int y, t_color c);
 t_color			ft_mlx_getcolor(int r, int g, int b);
 
 #endif
