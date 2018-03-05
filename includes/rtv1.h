@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 04:21:59 by vparis            #+#    #+#             */
-/*   Updated: 2018/02/26 18:18:28 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/05 18:51:01 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,13 @@
 # include "matrix.h"
 # include "objects.h"
 
-# define WIDTH			800
-# define HEIGHT			600
+# define WIDTH			1200
+# define HEIGHT			1200
 # define FOV			90.
-# define MAX_DEPTH		6
+# define MAX_DEPTH		8
+# define FLOAT_INF		1e8
+# define INTER_MIN		1e-8
+# define BIAIS			1e-6
 # define TITLE			"RTV1 DX4000"
 # define FILE_NAME		"saved_img/rt_XXX.bmp"
 
@@ -76,6 +79,12 @@ int				manage_mouse_move(int x, int y, void *param);
 void			draw_img(t_data *data);
 void			clean_maps(t_data *data);
 int				draw_rt(void *data);
+t_color			convert_color(t_vec3 *color);
+void			pixel_to_screen(int x, int y, t_vec3 *camera, t_env *env);
+int				intersect_sphere(t_vec3 *orig, t_vec3 *dir, t_object *obj, 
+									t_f64 *t0, t_f64 *t1);
+int				intersect_plane(t_vec3 *orig, t_vec3 *dir, t_object *obj,
+								t_f64 *t);
 
 int				write_header(int fd, int size[2]);
 int				write_dibheader(int fd, int size[2]);

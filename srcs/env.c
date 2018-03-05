@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 00:26:13 by vparis            #+#    #+#             */
-/*   Updated: 2018/02/26 18:21:03 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/05 18:14:43 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,44 +43,65 @@ static void	env_init_screen(t_env *env, int width, int height)
 
 static void	env_init_scene(t_env *env)
 {
-	t_object	*objs[6];
+	t_object	*objs[10];
 	t_vec3		pos;
+	t_vec3		dir;
 	t_vec3		color;
 	t_vec3		e_color;
 
-	vec3_set(&pos, 0.0, 20, -5);
-	vec3_set(&color, 0.0, 0.0, 0.0);
-	vec3_set(&e_color, 2, 2, 2);
-	objs[0] = object_new(LIGHT, &pos, 3., &color, &e_color, 0, 0);
+	vec3_set(&pos, 0., -5., 0.);
+	vec3_set(&dir, 0.0, 1.0, 0.0);
+	vec3_norm(&dir);
+	vec3_set(&color, 0.70, 0.60, 0.50);
+	vec3_set(&color, 1., 0.0, 0.0);
+	objs[1] = object_new(PLANE, &pos, &dir, 1., &color, &e_color, 0, 0);
 
-	vec3_set(&e_color, 0., 0., 0.);
+	vec3_set(&dir, 0., 0., 0.);
 
-	vec3_set(&pos, 0.0, -10004., -20.);
+	vec3_set(&pos, 0.0, 100.0, 0.0);
+	vec3_set(&color, 0.0, 0.1, 0.1);
+	vec3_set(&e_color, 1.2, 1.2, 1.2);
+	objs[0] = object_new(LIGHT, &pos, &dir, 5., &color, &e_color, 0, 0);
+
+	vec3_set(&pos, -100.0, 20.0, 0.0);
+	vec3_set(&color, 0.5, 0.0, 0.0);
+	vec3_set(&e_color, 1.1, 1.1, 1.1);
+	objs[7] = object_new(LIGHT, &pos, &dir, 5., &color, &e_color, 0, 0);
+
+	vec3_set(&e_color, 0, 0, 0);
+
+	vec3_set(&pos, 0.0, -76., -20.);
 	vec3_set(&color, 0.70, 0.70, 0.70);
-	objs[1] = object_new(SPHERE, &pos, 10000., &color, &e_color, 0, 0);
+	objs[6] = object_new(SPHERE, &pos, &dir, 75., &color, &e_color, 0, 0);
 
 	vec3_set(&pos, 0.0, 0, -20);
 	vec3_set(&color, 1.00, 0.32, 0.36);
-	objs[2] = object_new(SPHERE, &pos, 4., &color, &e_color, 1, 0.5);
+	objs[2] = object_new(SPHERE, &pos, &dir, 4., &color, &e_color, 1, 0.5);
 
-	vec3_set(&pos, 5.0, -1, -15);
+	vec3_set(&pos, -20.0, 21, -10);
 	vec3_set(&color, 0.90, 0.76, 0.46);
-	objs[3] = object_new(SPHERE, &pos, 2., &color, &e_color, 1, 0.0);
+	objs[3] = object_new(SPHERE, &pos, &dir, 2., &color, &e_color, 1, 0.0);
 
 	vec3_set(&pos, 5.0, -1, -25);
 	vec3_set(&color, 0.65, 0.77, 0.97);
-	objs[4] = object_new(SPHERE, &pos, 3., &color, &e_color, 1, 0.0);
+	objs[4] = object_new(SPHERE, &pos, &dir, 3., &color, &e_color, 1, 0.0);
 
-	vec3_set(&pos, -5.5, 0, -15);
+	vec3_set(&pos, -5.5, 3, -15);
 	vec3_set(&color, 0.50, 0.90, 0.50);
-	objs[5] = object_new(SPHERE, &pos, 3., &color, &e_color, 1, 0.0);
+	objs[5] = object_new(SPHERE, &pos, &dir, 3., &color, &e_color, 1, 0.0);
 
+	/*vec3_set(&pos, -5.5, 12., -15);
+	vec3_set(&color, 0.50, 0.90, 0.50);
+	objs[6] = object_new(SPHERE, &pos, &dir, 3., &color, &e_color, 1, 0.0);
+*/
 	object_add(&(env->objects), objs[0]);
 	object_add(&(env->objects), objs[1]);
 	object_add(&(env->objects), objs[2]);
 	object_add(&(env->objects), objs[3]);
 	object_add(&(env->objects), objs[4]);
 	object_add(&(env->objects), objs[5]);
+	object_add(&(env->objects), objs[6]);
+	object_add(&(env->objects), objs[7]);
 }
 
 int		env_init(t_env *env, int width, int height)

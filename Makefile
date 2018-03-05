@@ -6,7 +6,7 @@
 #    By: vparis <vparis@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/02 17:37:24 by vparis            #+#    #+#              #
-#    Updated: 2018/02/26 17:02:03 by vparis           ###   ########.fr        #
+#    Updated: 2018/03/05 11:09:50 by vparis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRCS		=	$(SRCD)/main.c $(SRCD)/ft_mlx.c $(SRCD)/ft_pixel.c \
 				$(SRCD)/binds2.c $(SRCD)/rt.c $(SRCD)/objects.c \
 				$(SRCD)/vec3_1.c $(SRCD)/vec3_2.c $(SRCD)/vec3_3.c \
 				$(SRCD)/matrix.c $(SRCD)/matrix_rot.c \
-				$(SRCD)/export_bmp.c $(SRCD)/export_bmp2.c
+				$(SRCD)/export_bmp.c $(SRCD)/export_bmp2.c \
+				$(SRCD)/rt_convert.c $(SRCD)/rt_intersect.c
 OBJS		=	$(patsubst %.c, %.o, $(SRCS))
 
 CFLAGS		+=	-I$(INCD) -O3 -flto -march=native -g \

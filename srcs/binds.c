@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 09:53:02 by vparis            #+#    #+#             */
-/*   Updated: 2018/02/26 11:19:52 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/05 10:59:36 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,5 @@ int			manage_mouse_move(int x, int y, void *param)
 	data = (t_data *)param;
 	(void)x;
 	(void)y;
-	data->env.refresh = 0;
 	return (1);
 }

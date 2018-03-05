@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 18:53:53 by vparis            #+#    #+#             */
-/*   Updated: 2018/02/26 17:50:47 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/05 14:42:49 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_vec3			*vec3_new(void);
 void			vec3_del(t_vec3 *v1);
 void			vec3_set(t_vec3 *pt, t_f64 x, t_f64 y, t_f64 z);
 void			vec3_cpy(t_vec3 *v1, t_vec3 *v2);
-void			vec3_mul3(t_vec3 *v1, t_vec3 *v2);
+void			vec3_mul(t_vec3 *v1, t_vec3 *v2);
 
 /*
 ** vec3_2.c
@@ -79,6 +79,6 @@ void			vec3_add(t_vec3 *v1, t_vec3 *v2);
 void			vec3_add_scalar(t_vec3 *v1, t_f64 s);
 void			vec3_sub(t_vec3 *v1, t_vec3 *v2);
 void			vec3_sub_scalar(t_vec3 *v1, t_f64 s);
-void			vec3_mul(t_vec3 *v1, t_f64 r);
+void			vec3_mul_scalar(t_vec3 *v1, t_f64 r);
 
 #endif

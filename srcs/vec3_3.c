@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 15:06:44 by vparis            #+#    #+#             */
-/*   Updated: 2018/02/26 15:08:20 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/05 14:41:51 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void			vec3_sub(t_vec3 *v1, t_vec3 *v2)
 	v1->z -= v2->z;
 }
 
-void			vec3_mul(t_vec3 *v1, t_f64 r)
+void			vec3_mul_scalar(t_vec3 *v1, t_f64 r)
 {
 	v1->x *= r;
 	v1->y *= r;

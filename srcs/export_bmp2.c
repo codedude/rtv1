@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 13:44:22 by valentin          #+#    #+#             */
-/*   Updated: 2018/02/26 11:20:14 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/05 11:04:54 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ int			write_img(int fd, int size[2], t_color *map)
 	int		n;
 	char	buff[BMP_BUFF];
 
-	i = size[1] - 1;
+	i = size[0] - 1;
 	n = 0;
 	while (i >= 0)
 	{
 		j = 0;
-		while (j < size[0])
+		while (j < size[1])
 		{
-			get_int(map[i * size[0] + j], (char *)&buff[n], 4);
+			get_int(map[i * size[1] + j], (char *)&buff[n], 4);
 			if ((n += 4) == BMP_BUFF)
 			{
 				write(fd, buff, BMP_BUFF);
