@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 04:21:59 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/05 18:51:01 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/06 19:06:42 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@
 # include "matrix.h"
 # include "objects.h"
 
-# define WIDTH			1200
-# define HEIGHT			1200
+# define WIDTH			1920
+# define HEIGHT			1080
 # define FOV			90.
 # define MAX_DEPTH		8
 # define FLOAT_INF		1e8
 # define INTER_MIN		1e-8
-# define BIAIS			1e-6
+# define BIAIS			1e-8
 # define TITLE			"RTV1 DX4000"
 # define FILE_NAME		"saved_img/rt_XXX.bmp"
 
@@ -85,6 +85,8 @@ int				intersect_sphere(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 									t_f64 *t0, t_f64 *t1);
 int				intersect_plane(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 								t_f64 *t);
+int				intersect_cylinder(t_vec3 *orig, t_vec3 *dir, t_object *obj,
+								t_f64 *t0, t_f64 *t1);
 
 int				write_header(int fd, int size[2]);
 int				write_dibheader(int fd, int size[2]);

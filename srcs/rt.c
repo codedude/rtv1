@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 11:22:50 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/05 18:49:56 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/06 18:59:39 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,64 +21,106 @@
 #include "objects.h"
 #include "rtv1.h"
 
+void			mix_color(t_vec3 *color, t_vec3 *obj_color, t_vec3 *light_color, 						t_f64 t)
+{
+	t_vec3	tmp;
+
+	if (t > 0.)
+	{
+		vec3_cpy(&tmp, obj_color);
+		vec3_mul(&tmp, light_color);
+		vec3_mul_scalar(&tmp, t);
+		vec3_add(color, &tmp);
+	}
+}
+void			compute_biais(t_vec3 *n_hit, t_vec3 *p_hit, t_vec3 *p_hit_biais)
+{
+	vec3_cpy(p_hit_biais, n_hit);
+	vec3_mul_scalar(p_hit_biais, BIAIS);
+	vec3_add(p_hit_biais, p_hit);
+}
+
+void			compute_hit(t_vec3 *orig, t_vec3 *dir, t_object *obj, 
+							t_vec3 *n_hit, t_vec3 *p_hit, t_f64 t)
+{
+	t_vec3	tmp;
+
+	vec3_cpy(&tmp, dir);
+	vec3_mul_scalar(&tmp, t);
+	vec3_cpy(p_hit, orig);
+	vec3_add(p_hit, &tmp);
+	if (obj->type == SPHERE)
+	{
+		vec3_cpy(n_hit, p_hit);
+		vec3_sub(n_hit, &(obj->pos));
+		vec3_norm(n_hit);
+	}
+	else if (obj->type == PLANE)
+		vec3_cpy(n_hit, &(obj->norm));
+	else if (obj->type == CYLIND)
+	{
+		vec3_cpy(n_hit, p_hit);
+		vec3_sub(n_hit, &(obj->pos));
+		vec3_norm(n_hit);
+	}
+	
+}
+
 static t_color	compute_color(t_vec3 *orig, t_vec3 *dir, t_object *obj, 
 							t_obj_lst *objects, t_f64 t)
 {
 	t_obj_lst	*iter_light;
 	t_obj_lst	*iter;
 	t_vec3		color;
-	t_vec3		tmp;
 	t_vec3		p_hit;
 	t_vec3		n_hit;
-	t_vec3		inter;
+	t_vec3		p_hit_biais;
 	t_vec3		light;
 	t_f64		t0;
 	t_f64		t1;
-	int			inside;
+	t_f64		light_dist;
 	int			shadow;
 
-	inside = 0;
 	vec3_set(&color, 0., 0., 0.);
-	vec3_cpy(&tmp, dir);
-	vec3_mul_scalar(&tmp, t);
-	vec3_cpy(&p_hit, orig);
-	vec3_add(&p_hit, &tmp);
-	vec3_cpy(&n_hit, &p_hit);
-	vec3_sub(&n_hit, &(obj->pos));
-	vec3_norm(&n_hit);
-	if (vec3_dot(dir, &n_hit) > 0.)
-	{
-		vec3_mul_scalar(&n_hit, -1.);
-		inside = 1;
-	}
-	vec3_cpy(&inter, &n_hit);
-	vec3_mul_scalar(&inter, BIAIS);
-	vec3_add(&inter, &p_hit);
+	compute_hit(orig, dir, obj, &n_hit, &p_hit, t);
+	compute_biais(&n_hit, &p_hit, &p_hit_biais);
 	iter_light = objects;
 	while (iter_light != NULL)
 	{
 		if (iter_light->object->type == LIGHT)
 		{
-			shadow = 0;
 			vec3_cpy(&light, &(iter_light->object->pos));
 			vec3_sub(&light, &p_hit);
+			light_dist = vec3_len(&light);
 			vec3_norm(&light);
+			shadow = 0;
 			iter = objects;
 			while (iter != NULL)
 			{
 				if (iter_light != iter)
 				{
 					if (iter->object->type == SPHERE && 
-						intersect_sphere(&inter, &light, iter->object, 
-						&t0, &t1) == SUCCESS)
+						intersect_sphere(&p_hit_biais, &light, 
+							iter->object, &t0, &t1) == SUCCESS)
 					{
 						shadow = 1;
 						break ;
 					}
-					else if (iter->object->type == PLANE && obj->type != PLANE && 
-						intersect_plane(&inter, &light, iter->object, &t0) 
-						== SUCCESS)
+					else if (iter->object->type == PLANE &&
+						intersect_plane(&p_hit_biais, &light, 
+							iter->object, &t0) == SUCCESS)
 					{
+						if (t0 < light_dist)
+						{
+							shadow = 1;
+							break ;
+						}
+					}
+					else if (iter->object->type == CYLIND && 
+						intersect_cylinder(&p_hit_biais, &light, 
+							iter->object, &t0, &t1) == SUCCESS)
+					{
+
 						shadow = 1;
 						break ;
 					}
@@ -86,17 +128,12 @@ static t_color	compute_color(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 				iter = iter->next;
 			}
 			if (shadow == 0)
-			{
-				vec3_cpy(&tmp, &(obj->color));
-				vec3_mul(&tmp, &(iter_light->object->e_color));
-				t0 = vec3_dot(&n_hit, &light);
-				vec3_mul_scalar(&tmp, (t0 > 0.) ? t0 : 0.);
-				vec3_add(&color, &tmp);
-			}
+				mix_color(&color, &(obj->color), &(iter_light->object->e_color), 
+							vec3_dot(&n_hit, &light));
 		}
 		iter_light = iter_light->next;
 	}
-	/*vec3_add(&color, &(obj->e_color));*/
+	vec3_add(&color, &(obj->e_color));
 	return (convert_color(&color));
 }
 
@@ -114,8 +151,6 @@ static t_object	*trace(t_vec3 *orig, t_vec3 *dir, t_obj_lst *objects, t_f64 *t)
 	{
 		if (iter->object->type == SPHERE && intersect_sphere(orig, dir, iter->object, &t0, &t1) == SUCCESS)
 		{
-			if (t0 < 0.)
-				t0 = t1;
 			if (t0 < *t)
 			{
 				*t = t0;
@@ -124,6 +159,15 @@ static t_object	*trace(t_vec3 *orig, t_vec3 *dir, t_obj_lst *objects, t_f64 *t)
 		}
 		else if (iter->object->type == PLANE && intersect_plane(orig, dir,
 				iter->object, &t0) == SUCCESS)
+		{
+			if (t0 < *t)
+			{
+				*t = t0;
+				obj = iter->object;
+			}
+		}
+		else if (iter->object->type == CYLIND && intersect_cylinder(orig, dir,
+				iter->object, &t0, &t1) == SUCCESS)
 		{
 			if (t0 < *t)
 			{
@@ -151,7 +195,7 @@ static void		draw_start(t_vec3 *dir, int i, int j, t_data *data)
 	t_vec3		orig;
 	t_f64		t;
 
-	vec3_set(&orig, 0., 8., 20.);
+	vec3_set(&orig, 0, 10, 20);
 	vec3_norm(dir);
 	obj = trace(&orig, dir, data->env.objects, &t);
 	if (obj != NULL && obj->type != LIGHT)

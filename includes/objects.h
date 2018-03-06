@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 12:32:54 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/05 14:14:50 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/06 17:49:39 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@
 # define LIGHT	0
 # define PLANE	1
 # define SPHERE	2
+# define CONE	3
+# define CYLIND	4
 
 typedef struct			s_object {
 	t_vec3				pos;
+	t_vec3				pos2;
 	t_vec3				norm;
 	t_vec3				color;
 	t_vec3				e_color;
@@ -38,8 +41,8 @@ typedef struct			s_obj_lst {
 	t_object			*object;
 }						t_obj_lst;
 
-t_object	*object_new(int type, t_vec3 *pos, t_vec3 *dir, t_f64 radius,
-						t_vec3 *color, t_vec3 *e_color, t_f64 t, t_f64 r);
+t_object	*object_new(int type, t_vec3 *pos, t_vec3 *pos2, t_vec3 *dir,
+			t_f64 radius, t_vec3 *color, t_vec3 *e_color, t_f64 t, t_f64 r);
 t_obj_lst	*object_add(t_obj_lst **objects, t_object *object);
 void		object_free(t_obj_lst **objects);
 

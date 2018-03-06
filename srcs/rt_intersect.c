@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 11:08:48 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/05 18:51:13 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/06 19:01:03 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int		intersect_sphere(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 	thc = sqrt(obj->radius2 - d2);
 	*t0 = tca - thc;
 	*t1 = tca + thc; 
+	if (*t0 < 0.)
+		*t0 = *t1;
 	return (SUCCESS);
 }
 
@@ -58,4 +60,56 @@ int		intersect_plane(t_vec3 *orig, t_vec3 *dir, t_object *obj, t_f64 *t)
 		return (*t > INTER_MIN ? SUCCESS : ERROR);
 	}
 	return (ERROR);
+}
+
+int		intersect_cylinder(t_vec3 *orig, t_vec3 *dir, t_object *obj, 
+									t_f64 *t0, t_f64 *t1)
+{
+	t_vec3	delta_p;
+	t_vec3	vva;
+	t_vec3	dpva;
+	t_vec3	tmp;
+	t_vec3	tmp2;
+	t_f64	abc[4];
+
+	//delta p
+	vec3_cpy(&delta_p, orig);
+	vec3_sub(&delta_p, &(obj->pos));
+	//va
+	vec3_cpy(&tmp, &(obj->pos));
+	vec3_sub(&tmp, &(obj->pos2));
+	vec3_norm(&tmp);
+	//(v,va)va
+	vec3_cpy(&vva, &tmp);
+	vec3_mul_scalar(&vva, vec3_dot(dir, &tmp));
+	//(delta p,va)va
+	vec3_cpy(&dpva, &tmp);
+	vec3_mul_scalar(&dpva, vec3_dot(&delta_p, &tmp));
+	//A dot(v - vva)
+	vec3_cpy(&tmp, dir);
+	vec3_sub(&tmp, &vva);
+	abc[0] = vec3_dot(&tmp, &tmp);
+	//B
+	vec3_cpy(&tmp2, &delta_p);
+	vec3_sub(&tmp2, &dpva);
+	abc[1] = 2. * vec3_dot(&tmp, &tmp2);
+	//C
+	abc[2] = vec3_dot(&tmp2, &tmp2) - obj->radius2;
+
+	//Find t1 and t2
+	abc[3] = abc[1] * abc[1] - (4. * abc[0] * abc[2]);
+	if (abc[3] <= 0.)
+		return (ERROR);
+
+	*t0 = (-abc[1] + sqrt(abc[3])) / (2. * abc[0]);
+	*t1 = (-abc[1] - sqrt(abc[3])) / (2. * abc[0]);
+	
+	//Check + values
+	if (*t0 < 0. && *t1 < 0.)
+		return (ERROR);
+	if (*t0 < 0.)
+		*t0 = *t1;
+	else if (*t1 >= 0. && *t1 < *t0)
+		*t0 = *t1;
+	return (SUCCESS);
 }

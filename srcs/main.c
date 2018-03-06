@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 17:52:32 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/05 18:06:17 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/06 19:07:05 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 static t_f64 ax = 0.;
 static t_f64 ay = 0.;
-static t_f64 az = -10.;
+static t_f64 az = -8.;
 
 static int	loop(void *param)
 {

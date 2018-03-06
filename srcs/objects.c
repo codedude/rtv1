@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 12:46:39 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/05 12:08:45 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/06 17:50:44 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 #include "objects.h"
 #include "matrix.h"
 
-t_object	*object_new(int type, t_vec3 *pos, t_vec3 *dir, t_f64 radius,
-	t_vec3 *color, t_vec3 *e_color, t_f64 t, t_f64 r)
+t_object	*object_new(int type, t_vec3 *pos, t_vec3 *pos2, t_vec3 *dir,
+			t_f64 radius, t_vec3 *color, t_vec3 *e_color, t_f64 t, t_f64 r)
 {
 	t_object	*tmp;
 
@@ -31,6 +31,7 @@ t_object	*object_new(int type, t_vec3 *pos, t_vec3 *dir, t_f64 radius,
 	vec3_cpy(&(tmp->color), color);
 	vec3_cpy(&(tmp->e_color), e_color);
 	vec3_cpy(&(tmp->pos), pos);
+	vec3_cpy(&(tmp->pos2), pos2);
 	vec3_cpy(&(tmp->norm), dir);
 	return (tmp);
 }
