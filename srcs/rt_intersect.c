@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_intersect.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 11:08:48 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/08 17:10:33 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/08 22:13:53 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 ** HIT = SUCCESS
 */
 
-int		intersect_sphere(t_vec3 *orig, t_vec3 *dir, t_object *obj, 
+int		intersect_sphere(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 									t_f64 *t0, t_f64 *t1)
 {
 	t_f64		tca;
@@ -36,7 +36,7 @@ int		intersect_sphere(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 	if (tca < 0.)
 		return (ERROR);
 	d2 = obj->radius2 - (vec3_dot(&l, &l) - tca * tca);
-	if (d2 < 0.) 
+	if (d2 < 0.)
 		return (ERROR);
 	if (d2 == 0.)
 		*t0 = tca;
@@ -45,7 +45,7 @@ int		intersect_sphere(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 		thc = sqrt(d2);
 		*t0 = tca - thc;
 		*t1 = tca + thc;
-	} 
+	}
 	if (*t0 < INTER_MIN)
 		*t0 = *t1;
 	return (SUCCESS);
@@ -67,7 +67,7 @@ int		intersect_plane(t_vec3 *orig, t_vec3 *dir, t_object *obj, t_f64 *t)
 	return (ERROR);
 }
 
-int		intersect_cylinder(t_vec3 *orig, t_vec3 *dir, t_object *obj, 
+int		intersect_cylinder(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 									t_f64 *t0, t_f64 *t1)
 {
 	t_vec3	delta_p;
@@ -122,7 +122,7 @@ int		intersect_cylinder(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 	return (SUCCESS);
 }
 
-int		intersect_cone(t_vec3 *orig, t_vec3 *dir, t_object *obj, 
+int		intersect_cone(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 									t_f64 *t0, t_f64 *t1)
 {
 	t_vec3	delta_p;
@@ -174,11 +174,11 @@ int		intersect_cone(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 		*t1 = (-abc[1] - abc[3]) / (2. * abc[0]);
 	}
 	//Check + values
-	if (*t0 < INTER_MIN && *t1 < INTER_MIN)
+	if (*t0 < 0. && *t1 < 0.)
 		return (ERROR);
-	if (*t0 < INTER_MIN)
+	if (*t0 < 0.)
 		*t0 = *t1;
-	else if (*t1 >= INTER_MIN && *t1 < *t0)
+	else if (*t1 >= 0. && *t1 < *t0)
 		*t0 = *t1;
 	return (SUCCESS);
 }

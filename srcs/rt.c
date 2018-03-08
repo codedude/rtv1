@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 11:22:50 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/08 19:08:35 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/08 21:56:52 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void			compute_biais(t_vec3 *n_hit, t_vec3 *p_hit, t_vec3 *p_hit_biais)
 	vec3_add(p_hit_biais, p_hit);
 }
 
-void			compute_hit(t_vec3 *orig, t_vec3 *dir, t_object *obj, 
+void			compute_hit(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 							t_vec3 *n_hit, t_vec3 *p_hit, t_f64 t)
 {
 	t_vec3		tmp;
@@ -78,46 +78,24 @@ void			compute_hit(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 
 	else if (obj->type == CONE)
 	{
+		t_f64	t;
+
 		vec3_cpy(n_hit, p_hit);
 		vec3_sub(n_hit, &(obj->pos));
-		vec3_cpy(&tmp, n_hit);
-		n_hit->x *= 2.;
-		n_hit->y *= 2.;
-		n_hit->z *= 2.;
-		vec3_sub(n_hit, &tmp);
-		vec3_norm(n_hit);
-/*
-    x = a * 2 * (a x+b y+c z) - x * 2 * (a^2+b^2+c^2) * cos^2(t))
-    y = b * 2 * (a x+b y+c z) - y * 2 * (a^2+b^2+c^2) * cos^2(t))
-    z = c * 2 * (a x+b y+c z) - z * 2 * (a^2+b^2+c^2) * cos^2(t))
-
-		t_f64	t1;
-		t_f64	t2;
-
-		vec3_cpy(&tmp, &(obj->norm));
-		vec3_mul(&tmp, p_hit);
-		t1 = 2. * (tmp.x + tmp.y + tmp.z);
-
-		vec3_cpy(&tmp, &(obj->norm));
-		vec3_mul(&tmp, &tmp);
-		t2 = 2. * (tmp.x + tmp.y + tmp.z) 
-			* ((1. + ft_cos(2. * obj->radius)) / 2.);
-		
-		vec3_cpy(&tmp, &(obj->norm));
-		vec3_mul_scalar(&tmp, t1);
-		vec3_cpy(n_hit, &tmp);
-
+		t = ft_cos(2.0 * obj->radius);
+		t = 1.0 + (1.0 - t) / (1.0 + t);
+		t *= vec3_dot(n_hit, &(obj->norm));
 		vec3_cpy(&tmp, p_hit);
-		vec3_mul_scalar(&tmp, t2);
-
-		vec3_sub(n_hit, &tmp);
+		vec3_sub(&tmp, &(obj->pos));
+		vec3_cpy(n_hit, &(obj->norm));
+		vec3_mul_scalar(n_hit, -t);
+		vec3_add(n_hit, &tmp);
 		vec3_norm(n_hit);
-*/
 	}
-	
+
 }
 
-static t_color	compute_color(t_vec3 *orig, t_vec3 *dir, t_object *obj, 
+static t_color	compute_color(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 							t_obj_lst *objects, t_f64 t)
 {
 	t_obj_lst	*iter_light;
@@ -152,8 +130,8 @@ static t_color	compute_color(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 			{
 				if (iter_light != iter)
 				{
-					if (iter->object->type == SPHERE && 
-						intersect_sphere(&p_hit_biais, &light, 
+					if (iter->object->type == SPHERE &&
+						intersect_sphere(&p_hit_biais, &light,
 							iter->object, &t0, &t1) == SUCCESS)
 					{
 						if (t0 < light_dist && t0 > 0.)
@@ -163,7 +141,7 @@ static t_color	compute_color(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 						}
 					}
 					else if (iter->object->type == PLANE &&
-						intersect_plane(&p_hit_biais, &light, 
+						intersect_plane(&p_hit_biais, &light,
 							iter->object, &t0) == SUCCESS)
 					{
 						if (t0 < light_dist && t0 > 0.)
@@ -172,8 +150,8 @@ static t_color	compute_color(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 							break ;
 						}
 					}
-					else if (iter->object->type == CYLIND && 
-						intersect_cylinder(&p_hit_biais, &light, 
+					else if (iter->object->type == CYLIND &&
+						intersect_cylinder(&p_hit_biais, &light,
 							iter->object, &t0, &t1) == SUCCESS)
 					{
 						if (t0 < light_dist && t0 > 0.)
@@ -182,8 +160,8 @@ static t_color	compute_color(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 							break ;
 						}
 					}
-					else if (iter->object->type == CONE && 
-						intersect_cone(&p_hit_biais, &light, 
+					else if (iter->object->type == CONE &&
+						intersect_cone(&p_hit_biais, &light,
 							iter->object, &t0, &t1) == SUCCESS)
 					{
 						if (t0 < light_dist && t0 > 0.)
@@ -196,7 +174,7 @@ static t_color	compute_color(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 				iter = iter->next;
 			}
 			if (shadow == 0)
-				mix_color(&color, &(obj->color), &(iter_light->object->e_color), 
+				mix_color(&color, &(obj->color), &(iter_light->object->e_color),
 							vec3_dot(&n_hit, &light));
 		}
 		iter_light = iter_light->next;
@@ -290,7 +268,7 @@ int				draw_rt(void *data)
 
 	algo = (t_algo *)data;
 	i = algo->start;
-	
+
 	while (i < algo->end)
 	{
 		j = 0;

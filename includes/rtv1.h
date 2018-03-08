@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtv1.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 04:21:59 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/08 16:00:35 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/08 21:40:44 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 # include "matrix.h"
 # include "objects.h"
 
-# define WIDTH			1600
-# define HEIGHT			900
-# define FOV			75.
+# define WIDTH			1024
+# define HEIGHT			768
+# define FOV			72.
 # define MAX_DEPTH		8
 # define FLOAT_INF		1e9
 # define INTER_MIN		1e-10
@@ -84,7 +84,7 @@ void			clean_maps(t_data *data);
 int				draw_rt(void *data);
 t_color			convert_color(t_vec3 *color);
 void			pixel_to_screen(int x, int y, t_vec3 *camera, t_env *env);
-int				intersect_sphere(t_vec3 *orig, t_vec3 *dir, t_object *obj, 
+int				intersect_sphere(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 									t_f64 *t0, t_f64 *t1);
 int				intersect_plane(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 								t_f64 *t);
