@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 04:21:59 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/06 19:06:42 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/08 16:00:35 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,19 @@
 # include "matrix.h"
 # include "objects.h"
 
-# define WIDTH			1920
-# define HEIGHT			1080
-# define FOV			90.
+# define WIDTH			1600
+# define HEIGHT			900
+# define FOV			75.
 # define MAX_DEPTH		8
-# define FLOAT_INF		1e8
-# define INTER_MIN		1e-8
+# define FLOAT_INF		1e9
+# define INTER_MIN		1e-10
 # define BIAIS			1e-8
 # define TITLE			"RTV1 DX4000"
 # define FILE_NAME		"saved_img/rt_XXX.bmp"
 
 # define THREADS		8
 # define TASKS			32
+# define MOVE_DELTA		2.0
 
 typedef struct	s_area {
 	t_f128		x1;
@@ -52,7 +53,9 @@ typedef struct	s_env {
 	t_f64		ratio;
 	int			ratio_dir;
 	t_obj_lst	*objects;
-	t_vec3		ang;
+	t_vec3		cam_ang;
+	t_vec3		cam_orig;
+	t_matrix	rot;
 }				t_env;
 
 typedef struct	s_data {
@@ -86,6 +89,8 @@ int				intersect_sphere(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 int				intersect_plane(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 								t_f64 *t);
 int				intersect_cylinder(t_vec3 *orig, t_vec3 *dir, t_object *obj,
+								t_f64 *t0, t_f64 *t1);
+int				intersect_cone(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 								t_f64 *t0, t_f64 *t1);
 
 int				write_header(int fd, int size[2]);

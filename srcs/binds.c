@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 09:53:02 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/05 10:59:36 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/08 15:02:32 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int			manage_key_up(int keycode, void *param)
 	data->env.keydown = -1;
 	if (keycode == K_F)
 		data->env.show_fps = !data->env.show_fps;
-	else if (keycode == K_S)
+	else if (keycode == K_R)
 		data->env.save_img = 1;
 	return (1);
 }

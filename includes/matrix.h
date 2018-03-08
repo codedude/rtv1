@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 18:53:53 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/05 14:42:49 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/08 12:17:00 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void			matrix_del(int type, t_matrix *mat);
 void			matrix_getsize(int type, int *l, int *c);
 void			matrix_mul3_vec3(t_matrix mat, t_vec3 *v);
 void			matrix_mul3(t_matrix m1, t_matrix m2);
-
 /*
 ** matrix_rot.c
 */
@@ -50,6 +49,7 @@ void			matrix_mul3(t_matrix m1, t_matrix m2);
 # define ROT_Z	3
 
 t_matrix		matrix_rot(t_vec3 *ang);
+t_matrix		matrix_rot_vec(t_f64 ang, t_vec3 *v);
 
 /*
 ** vec3_1.c
