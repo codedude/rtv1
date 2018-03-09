@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 11:22:50 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/09 21:29:31 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/10 00:35:56 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@ void			mix_color(t_vec3 *color, t_f64 dist, t_object *obj,
 	t_vec3	light_intensity;
 
 	vec3_cpy(&light_intensity, &(light->intensity));
-	if (dist > 2.0)
+	if (dist > 1.0)
 	{
-		t = 1. / (log(dist * dist));
-		if (t >= 0.0)
-			vec3_mul_scalar(&light_intensity, t);
+		t = exp(-0.5 * (dist / 100.));
+		vec3_mul_scalar(&light_intensity, t);
 	}
 //Cache : max(0, dot(N, L))
 	dln = vec3_dot(n, l);
