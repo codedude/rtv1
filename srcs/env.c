@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 00:26:13 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/10 00:35:09 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/10 00:37:47 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	env_init_scene(t_env *env)
 	vec3_set(&color, .98, 0.95, 0.80);
 	objs[35] = object_new(PLANE, &pos, &dir, 1., &color, 0.0, &intens_d);
 
-	vec3_set(&pos, 0., 0., -300.);
+	vec3_set(&pos, 0., 0., -500.);
 	vec3_set(&dir, 0.0, 0.0, 1.0);
 	objs[36] = object_new(PLANE, &pos, &dir, 1., &color, 0.0, &intens_d);
 
@@ -121,7 +121,7 @@ static void	env_init_scene(t_env *env)
 
 //PLANE
 	object_add(&(env->objects), objs[35]);
-	//object_add(&(env->objects), objs[36]);
+	object_add(&(env->objects), objs[36]);
 	//object_add(&(env->objects), objs[37]);
 	//object_add(&(env->objects), objs[38]);
 //LIGHT
