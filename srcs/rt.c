@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 11:22:50 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/09 10:35:39 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/09 21:29:31 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,38 +21,47 @@
 #include "objects.h"
 #include "rtv1.h"
 
-void			compute_kd(t_vec3 *vd, t_f64 dln, t_vec3 *c, t_vec3 *i)
-{
-	vec3_cpy(vd, i);
-	vec3_mul(vd, c);
-	vec3_mul_scalar(vd, dln);
-}
-
-void			mix_color(t_vec3 *color, t_object *obj, t_object *light,
-				t_vec3 *l, t_vec3 *n, t_vec3 *v)
+void			mix_color(t_vec3 *color, t_f64 dist, t_object *obj,
+	t_object *light, t_vec3 *l, t_vec3 *n, t_vec3 *v)
 {
 	t_vec3	r;
 	t_f64	t;
 	t_f64	dln;
 	t_vec3	vs;
 	t_vec3	vd;
+	t_vec3	light_intensity;
 
-	dln = vec3_dot(l, n);
+	vec3_cpy(&light_intensity, &(light->intensity));
+	if (dist > 2.0)
+	{
+		t = 1. / (log(dist * dist));
+		if (t >= 0.0)
+			vec3_mul_scalar(&light_intensity, t);
+	}
+//Cache : max(0, dot(N, L))
+	dln = vec3_dot(n, l);
 	if (dln < 0.0)
 		dln = 0.0;
-	vec3_cpy(&r, n);
-	vec3_mul_scalar(&r, 2.0 * dln);
-	vec3_sub(&r, l);
-	t = vec3_dot(&r, v);
-	t = pow(t, obj->shini) * KS;
-	vec3_cpy(&vs, &(light->intens_s));
-	vec3_mul_scalar(&vs, t);
-
-	compute_kd(&vd, dln, &(obj->color), &(light->intens_d));
-	vec3_mul_scalar(&vd, dln);
-	vec3_mul(&vd, &(light->intens_d));
-
-	vec3_add(&vd, &vs);
+//Diffuse (lambertian)
+	vec3_cpy(&vd, &light_intensity);
+	vec3_mul_scalar(&vd, dln * KD);
+//Specular (optionnel)
+	if (obj->shini > 0.0 && dln > 0.0)
+	{
+		vec3_cpy(&r, n);
+		vec3_mul_scalar(&r, 2.0 * dln);
+		vec3_sub(&r, l);
+		vec3_norm(&r);
+		t = fabs(vec3_dot(&r, v));
+		if (t > INTER_MIN)
+		{
+			t = pow(t, obj->shini) * KS;
+			vec3_cpy(&vs, &light_intensity);
+			vec3_mul_scalar(&vs, t);
+			vec3_add(&vd, &vs);
+		}
+	}
+//All PHONG model (Luminance = sum of all lights)
 	vec3_add(color, &vd);
 }
 void			compute_biais(t_vec3 *n_hit, t_vec3 *p_hit, t_vec3 *p_hit_biais)
@@ -132,22 +141,21 @@ static t_color	compute_color(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 	t_f64		light_dist;
 	int			shadow;
 
-	vec3_set(&color, 1.0, 1.0, 1.0);
-	vec3_mul_scalar(&color, KA);
-	vec3_mul(&color, &(obj->color));
+	//Ambient
+	vec3_set(&color, KA, KA, KA);
 	compute_hit(orig, dir, obj, &n_hit, &p_hit, t);
 	compute_biais(&n_hit, &p_hit, &p_hit_biais);
-	if (vec3_dot(dir, &n_hit) > 0.)
+	if (vec3_dot(dir, &n_hit) > 0.0)
 		vec3_mul_scalar(&n_hit, -1.0);
 	iter_light = objects;
 	while (iter_light != NULL)
 	{
 		if (iter_light->object->type == LIGHT)
 		{
-			vec3_cpy(&(light), &(iter_light->object->pos));
-			vec3_sub(&(light), &p_hit);
-			light_dist = vec3_len(&(light));
-			vec3_norm(&(light));
+			vec3_cpy(&light, &(iter_light->object->pos));
+			vec3_sub(&light, &p_hit);
+			light_dist = vec3_len(&light);
+			vec3_norm(&light);
 			shadow = 0;
 			iter = objects;
 			while (iter != NULL)
@@ -198,10 +206,12 @@ static t_color	compute_color(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 				iter = iter->next;
 			}
 			if (shadow == 0)
-				mix_color(&color, obj, iter_light->object, &(light), &n_hit, dir);
+				mix_color(&color, light_dist, obj, iter_light->object,
+					&light, &n_hit, dir);
 		}
 		iter_light = iter_light->next;
 	}
+	vec3_mul(&color, &(obj->color));
 	return (convert_color(&color));
 }
 

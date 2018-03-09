@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtv1.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 04:21:59 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/08 21:40:44 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/09 15:48:57 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
 # include "matrix.h"
 # include "objects.h"
 
-# define WIDTH			1024
-# define HEIGHT			768
-# define FOV			72.
+# define WIDTH			1200
+# define HEIGHT			700
+# define FOV			70.
 # define MAX_DEPTH		8
-# define FLOAT_INF		1e9
-# define INTER_MIN		1e-10
+# define FLOAT_INF		1e8
+# define INTER_MIN		1e-8
 # define BIAIS			1e-8
 # define TITLE			"RTV1 DX4000"
 # define FILE_NAME		"saved_img/rt_XXX.bmp"

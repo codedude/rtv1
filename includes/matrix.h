@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 18:53:53 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/08 12:17:00 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/09 17:16:03 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,6 @@ void			vec3_add_scalar(t_vec3 *v1, t_f64 s);
 void			vec3_sub(t_vec3 *v1, t_vec3 *v2);
 void			vec3_sub_scalar(t_vec3 *v1, t_f64 s);
 void			vec3_mul_scalar(t_vec3 *v1, t_f64 r);
+void			vec3_div_scalar(t_vec3 *v1, t_f64 r);
 
 #endif

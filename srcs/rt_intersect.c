@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_intersect.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 11:08:48 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/08 22:13:53 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/09 15:10:17 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,11 +174,11 @@ int		intersect_cone(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 		*t1 = (-abc[1] - abc[3]) / (2. * abc[0]);
 	}
 	//Check + values
-	if (*t0 < 0. && *t1 < 0.)
+	if (*t0 < INTER_MIN && *t1 < INTER_MIN)
 		return (ERROR);
-	if (*t0 < 0.)
+	if (*t0 < INTER_MIN)
 		*t0 = *t1;
-	else if (*t1 >= 0. && *t1 < *t0)
+	else if (*t1 >= INTER_MIN && *t1 < *t0)
 		*t0 = *t1;
 	return (SUCCESS);
 }

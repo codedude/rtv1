@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 16:56:56 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/05 14:41:37 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/09 16:56:24 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,13 @@ t_f64			vec3_dot(t_vec3 *v1, t_vec3 *v2)
 
 t_f64			vec3_len(t_vec3 *v1)
 {
-	return (sqrt(v1->x * v1->x + v1->y * v1->y + v1->z * v1->z));
+	t_f64	len;
+
+	len = vec3_len_ns(v1);
+	if (len > 0.0)
+		return (sqrt(len));
+	else
+		return (0.0);
 }
 
 t_f64			vec3_len_ns(t_vec3 *v1)
@@ -35,9 +41,9 @@ void			vec3_norm(t_vec3 *v1)
 	t_f64	len;
 
 	len = vec3_len_ns(v1);
-	if (len > 0.)
+	if (len > 0.0)
 	{
-		len = 1. / sqrt(len);
+		len = 1.0 / sqrt(len);
 		v1->x *= len;
 		v1->y *= len;
 		v1->z *= len;

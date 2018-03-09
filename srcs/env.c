@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 00:26:13 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/09 10:34:41 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/09 21:21:08 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,110 +27,108 @@ static void	env_init_scene(t_env *env)
 	t_vec3		dir;
 	t_vec3		color;
 	t_vec3		intens_d;
-	t_vec3		intens_s;
 
 	vec3_set(&intens_d, 0.0, 0.0, 0.0);
-	vec3_set(&intens_s, 0.0, 0.0, 0.0);
 
 //PLANE
 	vec3_set(&pos, 0., 0., 0.);
 	vec3_set(&dir, 0.0, 1.0, 0.0);
 	vec3_set(&color, .98, 0.95, 0.80);
-	objs[35] = object_new(PLANE, &pos, &dir, 1., &color, 2, &intens_d, &intens_s);
+	objs[35] = object_new(PLANE, &pos, &dir, 1., &color, 0.0, &intens_d);
 
-	vec3_set(&pos, 0., 0., -50.);
+	vec3_set(&pos, 0., 0., -300.);
 	vec3_set(&dir, 0.0, 0.0, 1.0);
-	objs[36] = object_new(PLANE, &pos, &dir, 1., &color, 2, &intens_d, &intens_s);
+	objs[36] = object_new(PLANE, &pos, &dir, 1., &color, 0.0, &intens_d);
 
 	vec3_set(&pos, 50., 0., 0.);
 	vec3_set(&dir, -1.0, 0.0, 0.0);
-	objs[37] = object_new(PLANE, &pos, &dir, 1., &color, 2, &intens_d, &intens_s);
+	objs[37] = object_new(PLANE, &pos, &dir, 1., &color, 0.0, &intens_d);
 
 	vec3_set(&pos, -50., 0., 0.);
 	vec3_set(&dir, 1.0, 0.0, 0.0);
-	objs[38] = object_new(PLANE, &pos, &dir, 1., &color, 2, &intens_d, &intens_s);
+	objs[38] = object_new(PLANE, &pos, &dir, 1., &color, 0.0, &intens_d);
 
 //CYLINDER
 	vec3_set(&pos, -30, 0.0, -21.0);
 	vec3_set(&dir, 0.0, 1.0, 0.0);
 	vec3_set(&color, 0.50, 0.80, 0.90);
-	objs[10] = object_new(CYLIND, &pos, &dir, 3., &color, 10, &intens_d, &intens_s);
+	objs[10] = object_new(CYLIND, &pos, &dir, 3., &color, 12.0, &intens_d);
 
 	vec3_set(&pos, 30, 0.0, -21.0);
 	vec3_set(&dir, 0.0, 1.0, 0.0);
 	vec3_set(&color, 0.50, 0.80, 0.90);
-	objs[11] = object_new(CYLIND, &pos, &dir, 3., &color, 10, &intens_d, &intens_s);
+	objs[11] = object_new(CYLIND, &pos, &dir, 3., &color, 12.0, &intens_d);
 
 //CONE
 	vec3_set(&pos, -50, 15, -10);
 	vec3_set(&dir, 0.2, -0.2, -0.02);
 	vec3_set(&color, 0.80, 0.50, 0.90);
-	objs[14] = object_new(CONE, &pos, &dir, 10., &color, 6, &intens_d, &intens_s);
+	objs[14] = object_new(CONE, &pos, &dir, 10., &color, 5.0, &intens_d);
 
 	vec3_set(&pos, 50, 5, -10);
 	vec3_set(&dir, -0.2, -0.2, 0.02);
 	vec3_set(&color, 0.80, 0.50, 0.90);
-	objs[15] = object_new(CONE, &pos, &dir, 20., &color, 6, &intens_d, &intens_s);
+	objs[15] = object_new(CONE, &pos, &dir, 20., &color, 5.0, &intens_d);
 
 	vec3_set(&dir, 0., 0., 0.);
 	vec3_set(&color, 1.0, 1.0, 1.0);
 
 //LIGHT
-	vec3_set(&pos, 0.0, 100.0, 0.0);
-	vec3_set(&intens_d, 0.5, 0.5, 0.5);
-	vec3_set(&intens_s, 0.5, 0.5, 0.5);
-	objs[30] = object_new(LIGHT, &pos, &dir, 1., &color, 1, &intens_d, &intens_s);
+	vec3_set(&pos, 0.0, 80.0, 0.0);
+	vec3_set(&intens_d, 0.6, 0.6, 0.6);
+	objs[30] = object_new(LIGHT, &pos, &dir, 1., &color, 0.0, &intens_d);
 
-	vec3_set(&pos, -90.0, 3.0, 30.0);
+	vec3_set(&pos, -80.0, 2.0, 30.0);
 	vec3_set(&intens_d, 1.0, 1.0, 1.0);
-	vec3_set(&intens_s, 0.5, 0.5, 0.5);
-	objs[31] = object_new(LIGHT, &pos, &dir, 1., &color, 1, &intens_d, &intens_s);
+	objs[31] = object_new(LIGHT, &pos, &dir, 1., &color, 0.0, &intens_d);
 
-	vec3_set(&pos, 90.0, 3.0, 30.0);
+	vec3_set(&pos, 80.0, 2.0, 30.0);
 	vec3_set(&intens_d, 1.0, 1.0, 1.0);
-	vec3_set(&intens_s, 0.5, 0.5, 0.5);
-	objs[32] = object_new(LIGHT, &pos, &dir, 1., &color, 1, &intens_d, &intens_s);
+	objs[32] = object_new(LIGHT, &pos, &dir, 1., &color, 0.0, &intens_d);
+
+	vec3_set(&pos, -20.0, 8.0, 25.0);
+	vec3_set(&intens_d, 0.75, 0.75, 0.75);
+	objs[33] = object_new(LIGHT, &pos, &dir, 1., &color, 0.0, &intens_d);
 
 	vec3_set(&intens_d, 0.0, 0.0, 0.0);
-	vec3_set(&intens_s, 0.0, 0.0, 0.0);
 
 //SPHERES
 	vec3_set(&pos, 0.0, -76., 0.);
 	vec3_set(&color, 0.70, 0.70, 0.70);
-	objs[3] = object_new(SPHERE, &pos, &dir, 80., &color, 3, &intens_d, &intens_s);
+	objs[3] = object_new(SPHERE, &pos, &dir, 80., &color, 4.0, &intens_d);
 
 	vec3_set(&pos, 0.0, 12.5, 0.0);
 	vec3_set(&color, 1.00, 0.32, 0.36);
-	objs[4] = object_new(SPHERE, &pos, &dir, 5., &color, 40, &intens_d, &intens_s);
+	objs[4] = object_new(SPHERE, &pos, &dir, 5., &color, 30.0, &intens_d);
 
 	vec3_set(&pos, -10.0, 21.0, 10.0);
 	vec3_set(&color, 0.50, 0.90, 0.50);
-	objs[5] = object_new(SPHERE, &pos, &dir, 3., &color, 2, &intens_d, &intens_s);
+	objs[5] = object_new(SPHERE, &pos, &dir, 3., &color, 6.0, &intens_d);
 
 	vec3_set(&pos, 13, 30.0, -9.0);
 	vec3_set(&color, 0.65, 0.77, 0.97);
-	objs[6] = object_new(SPHERE, &pos, &dir, 4., &color, 6, &intens_d, &intens_s);
+	objs[6] = object_new(SPHERE, &pos, &dir, 5., &color, 0.0, &intens_d);
 
 	vec3_set(&pos, -15.0, 10, -10);
 	vec3_set(&color, 0.90, 0.76, 0.46);
-	objs[7] = object_new(SPHERE, &pos, &dir, 2., &color, 2, &intens_d, &intens_s);
+	objs[7] = object_new(SPHERE, &pos, &dir, 2., &color, 3.0, &intens_d);
 	vec3_set(&pos, 15.0, 18, -10);
 	vec3_set(&color, 0.90, 0.76, 0.46);
-	objs[8] = object_new(SPHERE, &pos, &dir, 2., &color, 2, &intens_d, &intens_s);
+	objs[8] = object_new(SPHERE, &pos, &dir, 2., &color, 3.0, &intens_d);
 	vec3_set(&pos, 21.0, 18, -10);
 	vec3_set(&color, 0.90, 0.76, 0.46);
-	objs[9] = object_new(SPHERE, &pos, &dir, 2., &color, 2, &intens_d, &intens_s);
+	objs[9] = object_new(SPHERE, &pos, &dir, 2., &color, 3.0, &intens_d);
 
 //PLANE
 	object_add(&(env->objects), objs[35]);
-	//object_add(&(env->objects), objs[36]);
+	object_add(&(env->objects), objs[36]);
 	//object_add(&(env->objects), objs[37]);
 	//object_add(&(env->objects), objs[38]);
 //LIGHT
 	object_add(&(env->objects), objs[30]);
-	object_add(&(env->objects), objs[31]);
-	object_add(&(env->objects), objs[32]);
-	//object_add(&(env->objects), objs[33]);
+	//object_add(&(env->objects), objs[31]);
+	//object_add(&(env->objects), objs[32]);
+	object_add(&(env->objects), objs[33]);
 //SPHERE
 	object_add(&(env->objects), objs[3]);
 	object_add(&(env->objects), objs[4]);

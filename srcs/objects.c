@@ -3,34 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   objects.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 12:46:39 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/09 09:07:58 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/09 16:24:21 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <math.h>
 #include "libft.h"
 #include "ft_mlx.h"
 #include "objects.h"
 #include "matrix.h"
 
 t_object	*object_new(int type, t_vec3 *pos, t_vec3 *dir,
-			t_f64 radius, t_vec3 *color, t_f64 shini, t_vec3 *intens_d,
-			t_vec3 *intens_s)
+			t_f64 radius, t_vec3 *color, t_f64 shini, t_vec3 *intensity)
 {
 	t_object	*tmp;
 
 	if ((tmp = (t_object *)malloc(sizeof(t_object))) == NULL)
 		return (NULL);
 	tmp->type = type;
-	tmp->shini = shini;
+	tmp->shini = (shini < 1.) ? 0.0 : round(shini);
 	tmp->radius = radius;
 	tmp->radius2 = radius * radius;
 	vec3_cpy(&(tmp->color), color);
-	vec3_cpy(&(tmp->intens_d), intens_d);
-	vec3_cpy(&(tmp->intens_s), intens_s);
+	vec3_cpy(&(tmp->intensity), intensity);
 	vec3_cpy(&(tmp->pos), pos);
 	vec3_norm(dir);
 	vec3_cpy(&(tmp->norm), dir);
