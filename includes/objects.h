@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objects.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 12:32:54 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/08 14:16:20 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/09 10:26:53 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@
 # include "libft.h"
 # include "ft_mlx.h"
 # include "matrix.h"
+
+# define KS		0.2
+# define KA		0.2
+# define KD		0.66
+# define SHINI	10
 
 # define LIGHT	0
 # define PLANE	1
@@ -27,9 +32,11 @@ typedef struct			s_object {
 	t_vec3				pos;
 	t_vec3				norm;
 	t_vec3				color;
-	t_vec3				e_color;
+	t_vec3				intens_d;
+	t_vec3				intens_s;
 	t_f64				radius;
 	t_f64				radius2;
+	t_f64				shini;
 	int					type;
 }						t_object;
 
@@ -39,7 +46,8 @@ typedef struct			s_obj_lst {
 }						t_obj_lst;
 
 t_object	*object_new(int type, t_vec3 *pos, t_vec3 *dir,
-			t_f64 radius, t_vec3 *color, t_vec3 *e_color);
+			t_f64 radius, t_vec3 *color, t_f64 shini, t_vec3 *intens_d,
+			t_vec3 *intens_s);
 t_obj_lst	*object_add(t_obj_lst **objects, t_object *object);
 void		object_free(t_obj_lst **objects);
 

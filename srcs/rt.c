@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 11:22:50 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/08 21:56:52 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/09 10:35:39 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,39 @@
 #include "objects.h"
 #include "rtv1.h"
 
-void			mix_color(t_vec3 *color, t_vec3 *obj_color, t_vec3 *light_color, 						t_f64 t)
+void			compute_kd(t_vec3 *vd, t_f64 dln, t_vec3 *c, t_vec3 *i)
 {
-	t_vec3	tmp;
+	vec3_cpy(vd, i);
+	vec3_mul(vd, c);
+	vec3_mul_scalar(vd, dln);
+}
 
-	if (t > 0.)
-	{
-		vec3_cpy(&tmp, obj_color);
-		vec3_mul(&tmp, light_color);
-		vec3_mul_scalar(&tmp, t);
-		vec3_add(color, &tmp);
-	}
+void			mix_color(t_vec3 *color, t_object *obj, t_object *light,
+				t_vec3 *l, t_vec3 *n, t_vec3 *v)
+{
+	t_vec3	r;
+	t_f64	t;
+	t_f64	dln;
+	t_vec3	vs;
+	t_vec3	vd;
+
+	dln = vec3_dot(l, n);
+	if (dln < 0.0)
+		dln = 0.0;
+	vec3_cpy(&r, n);
+	vec3_mul_scalar(&r, 2.0 * dln);
+	vec3_sub(&r, l);
+	t = vec3_dot(&r, v);
+	t = pow(t, obj->shini) * KS;
+	vec3_cpy(&vs, &(light->intens_s));
+	vec3_mul_scalar(&vs, t);
+
+	compute_kd(&vd, dln, &(obj->color), &(light->intens_d));
+	vec3_mul_scalar(&vd, dln);
+	vec3_mul(&vd, &(light->intens_d));
+
+	vec3_add(&vd, &vs);
+	vec3_add(color, &vd);
 }
 void			compute_biais(t_vec3 *n_hit, t_vec3 *p_hit, t_vec3 *p_hit_biais)
 {
@@ -110,7 +132,9 @@ static t_color	compute_color(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 	t_f64		light_dist;
 	int			shadow;
 
-	vec3_set(&color, 0.0, 0.0, 0.0);
+	vec3_set(&color, 1.0, 1.0, 1.0);
+	vec3_mul_scalar(&color, KA);
+	vec3_mul(&color, &(obj->color));
 	compute_hit(orig, dir, obj, &n_hit, &p_hit, t);
 	compute_biais(&n_hit, &p_hit, &p_hit_biais);
 	if (vec3_dot(dir, &n_hit) > 0.)
@@ -120,10 +144,10 @@ static t_color	compute_color(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 	{
 		if (iter_light->object->type == LIGHT)
 		{
-			vec3_cpy(&light, &(iter_light->object->pos));
-			vec3_sub(&light, &p_hit);
-			light_dist = vec3_len(&light);
-			vec3_norm(&light);
+			vec3_cpy(&(light), &(iter_light->object->pos));
+			vec3_sub(&(light), &p_hit);
+			light_dist = vec3_len(&(light));
+			vec3_norm(&(light));
 			shadow = 0;
 			iter = objects;
 			while (iter != NULL)
@@ -131,7 +155,7 @@ static t_color	compute_color(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 				if (iter_light != iter)
 				{
 					if (iter->object->type == SPHERE &&
-						intersect_sphere(&p_hit_biais, &light,
+						intersect_sphere(&p_hit_biais, &(light),
 							iter->object, &t0, &t1) == SUCCESS)
 					{
 						if (t0 < light_dist && t0 > 0.)
@@ -141,7 +165,7 @@ static t_color	compute_color(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 						}
 					}
 					else if (iter->object->type == PLANE &&
-						intersect_plane(&p_hit_biais, &light,
+						intersect_plane(&p_hit_biais, &(light),
 							iter->object, &t0) == SUCCESS)
 					{
 						if (t0 < light_dist && t0 > 0.)
@@ -151,7 +175,7 @@ static t_color	compute_color(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 						}
 					}
 					else if (iter->object->type == CYLIND &&
-						intersect_cylinder(&p_hit_biais, &light,
+						intersect_cylinder(&p_hit_biais, &(light),
 							iter->object, &t0, &t1) == SUCCESS)
 					{
 						if (t0 < light_dist && t0 > 0.)
@@ -161,7 +185,7 @@ static t_color	compute_color(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 						}
 					}
 					else if (iter->object->type == CONE &&
-						intersect_cone(&p_hit_biais, &light,
+						intersect_cone(&p_hit_biais, &(light),
 							iter->object, &t0, &t1) == SUCCESS)
 					{
 						if (t0 < light_dist && t0 > 0.)
@@ -174,12 +198,10 @@ static t_color	compute_color(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 				iter = iter->next;
 			}
 			if (shadow == 0)
-				mix_color(&color, &(obj->color), &(iter_light->object->e_color),
-							vec3_dot(&n_hit, &light));
+				mix_color(&color, obj, iter_light->object, &(light), &n_hit, dir);
 		}
 		iter_light = iter_light->next;
 	}
-	vec3_add(&color, &(obj->e_color));
 	return (convert_color(&color));
 }
 
