@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   rtv1.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 04:21:59 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/10 11:26:35 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/12 13:04:58 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTV1_H
 # define RTV1_H
 
+# include "ft_type.h"
 # include "ft_mlx.h"
 # include "ft_tpool.h"
 # include "matrix.h"
@@ -25,12 +26,24 @@
 # define FLOAT_INF		1e8
 # define INTER_MIN		1e-8
 # define BIAIS			1e-8
+# define L_DIST_FACTOR	100.
 # define TITLE			"RTV1 DX4000"
 # define FILE_NAME		"saved_img/rt_XXX.bmp"
 
 # define THREADS		8
 # define TASKS			32
 # define MOVE_DELTA		2.0
+
+typedef struct	s_ray {
+	t_vec3		orig;
+	t_vec3		dir;
+}				t_ray;
+
+typedef struct	s_solution {
+	t_f64		t;
+	t_f64		t0;
+	t_f64		t1;
+}				t_solution;
 
 typedef struct	s_area {
 	t_f128		x1;
@@ -84,14 +97,14 @@ void			clean_maps(t_data *data);
 int				draw_rt(void *data);
 t_color			convert_color(t_vec3 *color);
 void			pixel_to_screen(int x, int y, t_vec3 *camera, t_env *env);
-int				intersect_sphere(t_vec3 *orig, t_vec3 *dir, t_object *obj,
-									t_f64 *t0, t_f64 *t1);
-int				intersect_plane(t_vec3 *orig, t_vec3 *dir, t_object *obj,
-								t_f64 *t);
-int				intersect_cylinder(t_vec3 *orig, t_vec3 *dir, t_object *obj,
-								t_f64 *t0, t_f64 *t1);
-int				intersect_cone(t_vec3 *orig, t_vec3 *dir, t_object *obj,
-								t_f64 *t0, t_f64 *t1);
+int				intersect_sphere(t_ray *ray, t_object *obj,
+					t_solution *solution);
+int				intersect_plane(t_ray *ray, t_object *obj,
+					t_solution *solution);
+int				intersect_cylinder(t_ray *ray, t_object *obj,
+					t_solution *solution);
+int				intersect_cone(t_ray *ray, t_object *obj,
+					t_solution *solution);
 
 int				write_header(int fd, int size[2]);
 int				write_dibheader(int fd, int size[2]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_intersect.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 11:08:48 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/10 11:33:10 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/12 12:40:45 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@
 ** HIT = SUCCESS
 */
 
-int		intersect_sphere(t_vec3 *orig, t_vec3 *dir, t_object *obj,
-									t_f64 *t0, t_f64 *t1)
+int		intersect_sphere(t_ray *ray, t_object *obj, t_solution *solution)
 {
 	t_f64		tca;
 	t_f64		d2;
@@ -31,44 +30,43 @@ int		intersect_sphere(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 	t_vec3		l;
 
 	vec3_cpy(&l, &(obj->pos));
-	vec3_sub(&l, orig);
-	tca = vec3_dot(&l, dir);
+	vec3_sub(&l, &(ray->orig));
+	tca = vec3_dot(&l, &(ray->dir));
 	if (tca < 0.)
 		return (ERROR);
 	d2 = obj->radius2 - (vec3_dot(&l, &l) - tca * tca);
 	if (d2 < 0.)
 		return (ERROR);
 	if (d2 == 0.)
-		*t0 = tca;
+		solution->t0 = tca;
 	else
 	{
 		thc = sqrt(d2);
-		*t0 = tca - thc;
-		*t1 = tca + thc;
+		solution->t0 = tca - thc;
+		solution->t1 = tca + thc;
 	}
-	if (*t0 < INTER_MIN)
-		*t0 = *t1;
+	if (solution->t0 < INTER_MIN)
+		solution->t0 = solution->t1;
 	return (SUCCESS);
 }
 
-int		intersect_plane(t_vec3 *orig, t_vec3 *dir, t_object *obj, t_f64 *t)
+int		intersect_plane(t_ray *ray, t_object *obj, t_solution *solution)
 {
 	t_f64	denom;
 	t_vec3	diff;
 
-	denom = vec3_dot(&(obj->norm), dir);
+	denom = vec3_dot(&(obj->norm), &(ray->dir));
 	if (fabs(denom) > INTER_MIN)
 	{
 		vec3_cpy(&diff, &(obj->pos));
-		vec3_sub(&diff, orig);
-		*t = vec3_dot(&diff, &(obj->norm)) / denom;
-		return (*t > 0. ? SUCCESS : ERROR);
+		vec3_sub(&diff, &(ray->orig));
+		solution->t0 = vec3_dot(&diff, &(obj->norm)) / denom;
+		return (solution->t0 > 0. ? SUCCESS : ERROR);
 	}
 	return (ERROR);
 }
 
-int		intersect_cylinder(t_vec3 *orig, t_vec3 *dir, t_object *obj,
-									t_f64 *t0, t_f64 *t1)
+int		intersect_cylinder(t_ray *ray, t_object *obj, t_solution *solution)
 {
 	t_vec3	delta_p;
 	t_vec3	vva;
@@ -78,18 +76,18 @@ int		intersect_cylinder(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 	t_f64	abc[4];
 
 	//delta p
-	vec3_cpy(&delta_p, orig);
+	vec3_cpy(&delta_p, &(ray->orig));
 	vec3_sub(&delta_p, &(obj->pos));
 	//va
 	vec3_cpy(&tmp, &(obj->norm));
 	//(v,va)va
 	vec3_cpy(&vva, &tmp);
-	vec3_mul_scalar(&vva, vec3_dot(dir, &tmp));
+	vec3_mul_scalar(&vva, vec3_dot(&(ray->dir), &tmp));
 	//(delta p,va)va
 	vec3_cpy(&dpva, &tmp);
 	vec3_mul_scalar(&dpva, vec3_dot(&delta_p, &tmp));
 	//A dot(v - vva)
-	vec3_cpy(&tmp, dir);
+	vec3_cpy(&tmp, &(ray->dir));
 	vec3_sub(&tmp, &vva);
 	abc[0] = vec3_dot(&tmp, &tmp);
 	//B
@@ -103,27 +101,25 @@ int		intersect_cylinder(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 	abc[3] = abc[1] * abc[1] - (4. * abc[0] * abc[2]);
 	if (abc[3] < 0.)
 		return (ERROR);
-
 	if (abc[3] == 0.)
-		*t0 = -abc[1] / (2. * abc[0]);
+		solution->t0 = -abc[1] / (2. * abc[0]);
 	else
 	{
 		abc[3] = sqrt(abc[3]);
-		*t0 = (-abc[1] + abc[3]) / (2. * abc[0]);
-		*t1 = (-abc[1] - abc[3]) / (2. * abc[0]);
+		solution->t0 = (-abc[1] + abc[3]) / (2. * abc[0]);
+		solution->t1 = (-abc[1] - abc[3]) / (2. * abc[0]);
 	}
 	//Check + values
-	if (*t0 < INTER_MIN && *t1 < INTER_MIN)
+	if (solution->t0 < INTER_MIN && solution->t1 < INTER_MIN)
 		return (ERROR);
-	if (*t0 < INTER_MIN)
-		*t0 = *t1;
-	else if (*t1 >= INTER_MIN && *t1 < *t0)
-		*t0 = *t1;
+	if (solution->t0 < INTER_MIN)
+		solution->t0 = solution->t1;
+	else if (solution->t1 >= INTER_MIN && solution->t1 < solution->t0)
+		solution->t0 = solution->t1;
 	return (SUCCESS);
 }
 
-int		intersect_cone(t_vec3 *orig, t_vec3 *dir, t_object *obj,
-									t_f64 *t0, t_f64 *t1)
+int		intersect_cone(t_ray *ray, t_object *obj, t_solution *solution)
 {
 	t_vec3	delta_p;
 	t_vec3	va;
@@ -140,11 +136,11 @@ int		intersect_cone(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 	cos2 = (1. + ft_cos(2. * obj->radius)) / 2.;
 	sin2 = (1. - ft_cos(2. * obj->radius)) / 2.;
 	//delta p
-	vec3_cpy(&delta_p, orig);
+	vec3_cpy(&delta_p, &(ray->orig));
 	vec3_sub(&delta_p, &(obj->pos));
 	//va
 	vec3_cpy(&va, &(obj->norm));
-	dvva = vec3_dot(dir, &va);
+	dvva = vec3_dot(&(ray->dir), &va);
 	//(v,va)va
 	vec3_cpy(&vva, &va);
 	vec3_mul_scalar(&vva, dvva);
@@ -153,7 +149,7 @@ int		intersect_cone(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 	dpva = vec3_dot(&delta_p, &va);
 	vec3_mul_scalar(&vpva, dpva);
 	//A dot(v - vva)
-	vec3_cpy(&tmp, dir);
+	vec3_cpy(&tmp, &(ray->dir));
 	vec3_sub(&tmp, &vva);
 	abc[0] = cos2 * vec3_dot(&tmp, &tmp) - sin2 * dvva * dvva;
 	//B
@@ -165,20 +161,22 @@ int		intersect_cone(t_vec3 *orig, t_vec3 *dir, t_object *obj,
 
 	//Find t1 and t2
 	abc[3] = abc[1] * abc[1] - (4. * abc[0] * abc[2]);
+	if (abc[3] < 0.)
+		return (ERROR);
 	if (abc[3] == 0.)
-		*t0 = -abc[1] / (2. * abc[0]);
+		solution->t0 = -abc[1] / (2. * abc[0]);
 	else
 	{
 		abc[3] = sqrt(abc[3]);
-		*t0 = (-abc[1] + abc[3]) / (2. * abc[0]);
-		*t1 = (-abc[1] - abc[3]) / (2. * abc[0]);
+		solution->t0 = (-abc[1] + abc[3]) / (2. * abc[0]);
+		solution->t1 = (-abc[1] - abc[3]) / (2. * abc[0]);
 	}
 	//Check + values
-	if (*t0 < INTER_MIN && *t1 < INTER_MIN)
+	if (solution->t0 < INTER_MIN && solution->t1 < INTER_MIN)
 		return (ERROR);
-	if (*t0 < INTER_MIN)
-		*t0 = *t1;
-	else if (*t1 >= INTER_MIN && *t1 < *t0)
-		*t0 = *t1;
+	if (solution->t0 < INTER_MIN)
+		solution->t0 = solution->t1;
+	else if (solution->t1 >= INTER_MIN && solution->t1 < solution->t0)
+		solution->t0 = solution->t1;
 	return (SUCCESS);
 }

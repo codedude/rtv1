@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 12:46:39 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/09 16:24:21 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/12 13:03:01 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,18 @@
 #include "matrix.h"
 
 t_object	*object_new(int type, t_vec3 *pos, t_vec3 *dir,
-			t_f64 radius, t_vec3 *color, t_f64 shini, t_vec3 *intensity)
+			t_f64 radius, t_vec3 *color, t_f64 phong[PHONGS], t_vec3 *intensity)
 {
 	t_object	*tmp;
 
 	if ((tmp = (t_object *)malloc(sizeof(t_object))) == NULL)
 		return (NULL);
 	tmp->type = type;
-	tmp->shini = (shini < 1.) ? 0.0 : round(shini);
+	tmp->phong[PHONG_SHINI] = 
+		(phong[PHONG_SHINI] < 1.) ? 0.0 : round(phong[PHONG_SHINI]);;
+	tmp->phong[PHONG_KA] = phong[PHONG_KA];
+	tmp->phong[PHONG_KD] = phong[PHONG_KD];
+	tmp->phong[PHONG_KS] = phong[PHONG_KS];
 	tmp->radius = radius;
 	tmp->radius2 = radius * radius;
 	vec3_cpy(&(tmp->color), color);

@@ -1,16 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix.c                                           :+:      :+:    :+:   */
+/*   matrix_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 19:02:38 by vparis            #+#    #+#             */
-/*   Updated: 2018/01/08 13:57:22 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/12 11:57:27 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include "libft.h"
 #include "matrix.h"
@@ -77,17 +76,13 @@ void		matrix_mul3_vec3(t_matrix mat, t_vec3 *v)
 void		matrix_cpy3(t_matrix m1, t_matrix m2)
 {
 	t_u32		i;
-	t_u32		j;
 
 	i = 0;
 	while (i < 3)
 	{
-		j = 0;
-		while (j < 3)
-		{
-			m1[i][j] = m2[i][j];
-			j++;
-		}
+		m1[i][0] = m2[i][0];
+		m1[i][1] = m2[i][1];
+		m1[i][2] = m2[i][2];
 		i++;
 	}
 }

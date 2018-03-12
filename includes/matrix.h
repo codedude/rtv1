@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 18:53:53 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/09 17:16:03 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/12 11:53:41 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,30 @@ typedef struct	s_vec3 {
 }				t_vec3;
 
 /*
-** matrix.c
+** matrix_1.c
 */
 
 t_matrix		matrix_new(int type, int init);
 void			matrix_del(int type, t_matrix *mat);
-void			matrix_getsize(int type, int *l, int *c);
+void			matrix_cpy3(t_matrix m1, t_matrix m2);
 void			matrix_mul3_vec3(t_matrix mat, t_vec3 *v);
 void			matrix_mul3(t_matrix m1, t_matrix m2);
+
 /*
-** matrix_rot.c
+** matrix_2.c
 */
 
 # define ROT_X	1
 # define ROT_Y	2
 # define ROT_Z	3
 
+void			matrix_getsize(int type, int *l, int *c);
 t_matrix		matrix_rot(t_vec3 *ang);
+
+/*
+** matrix_3.c
+*/
+
 t_matrix		matrix_rot_vec(t_f64 ang, t_vec3 *v);
 
 /*
@@ -59,7 +66,6 @@ t_vec3			*vec3_new(void);
 void			vec3_del(t_vec3 *v1);
 void			vec3_set(t_vec3 *pt, t_f64 x, t_f64 y, t_f64 z);
 void			vec3_cpy(t_vec3 *v1, t_vec3 *v2);
-void			vec3_mul(t_vec3 *v1, t_vec3 *v2);
 
 /*
 ** vec3_2.c
@@ -75,11 +81,18 @@ t_f64			vec3_dot(t_vec3 *v1, t_vec3 *v2);
 ** vec3_3.c
 */
 
-void			vec3_add(t_vec3 *v1, t_vec3 *v2);
 void			vec3_add_scalar(t_vec3 *v1, t_f64 s);
-void			vec3_sub(t_vec3 *v1, t_vec3 *v2);
 void			vec3_sub_scalar(t_vec3 *v1, t_f64 s);
 void			vec3_mul_scalar(t_vec3 *v1, t_f64 r);
 void			vec3_div_scalar(t_vec3 *v1, t_f64 r);
+
+/*
+** vec3_4.c
+*/
+
+void			vec3_add(t_vec3 *v1, t_vec3 *v2);
+void			vec3_sub(t_vec3 *v1, t_vec3 *v2);
+void			vec3_mul(t_vec3 *v1, t_vec3 *v2);
+void			vec3_div(t_vec3 *v1, t_vec3 *v2);
 
 #endif

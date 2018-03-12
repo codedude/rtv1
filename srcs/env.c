@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 00:26:13 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/12 09:40:35 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/12 13:02:00 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,102 +27,114 @@ static void	env_init_scene(t_env *env)
 	t_vec3		dir;
 	t_vec3		color;
 	t_vec3		intens_d;
+	t_f64		phong[PHONGS];
 
+	phong[PHONG_KA] = 0.1;
+
+	
 	vec3_set(&intens_d, 0.0, 0.0, 0.0);
-
+	phong[PHONG_SHINI] = 0.0; phong[PHONG_KD] = 1.0; phong[PHONG_KS] = 0.0;
 //PLANE
 	vec3_set(&pos, 0., 0., 0.);
 	vec3_set(&dir, 0.0, 1.0, 0.0);
 	vec3_set(&color, .98, 0.95, 0.80);
-	objs[35] = object_new(PLANE, &pos, &dir, 1., &color, 0.0, &intens_d);
+	objs[35] = object_new(PLANE, &pos, &dir, 1., &color, phong, &intens_d);
 
 	vec3_set(&pos, 0., 0., -200.);
 	vec3_set(&dir, 0.0, 0.0, 1.0);
-	objs[36] = object_new(PLANE, &pos, &dir, 1., &color, 0.0, &intens_d);
+	objs[36] = object_new(PLANE, &pos, &dir, 1., &color, phong, &intens_d);
 
 	vec3_set(&pos, 50., 0., 0.);
 	vec3_set(&dir, -1.0, 0.0, 0.0);
-	objs[37] = object_new(PLANE, &pos, &dir, 1., &color, 0.0, &intens_d);
+	objs[37] = object_new(PLANE, &pos, &dir, 1., &color, phong, &intens_d);
 
 	vec3_set(&pos, -50., 0., 0.);
 	vec3_set(&dir, 1.0, 0.0, 0.0);
-	objs[38] = object_new(PLANE, &pos, &dir, 1., &color, 0.0, &intens_d);
+	objs[38] = object_new(PLANE, &pos, &dir, 1., &color, phong, &intens_d);
 
+	phong[PHONG_SHINI] = 12.0; phong[PHONG_KD] = 0.85; phong[PHONG_KS] = 0.4;
 //CYLINDER
 	vec3_set(&pos, -30, 0.0, -21.0);
 	vec3_set(&dir, 0.0, 1.0, 0.0);
 	vec3_set(&color, 0.50, 0.80, 0.90);
-	objs[10] = object_new(CYLIND, &pos, &dir, 3., &color, 12.0, &intens_d);
+	objs[10] = object_new(CYLIND, &pos, &dir, 3., &color, phong, &intens_d);
 
 	vec3_set(&pos, 30, 0.0, -21.0);
 	vec3_set(&dir, 0.0, 1.0, 0.0);
 	vec3_set(&color, 0.50, 0.80, 0.90);
-	objs[11] = object_new(CYLIND, &pos, &dir, 3., &color, 12.0, &intens_d);
+	objs[11] = object_new(CYLIND, &pos, &dir, 3., &color, phong, &intens_d);
 
 	vec3_set(&pos, 0.0, 10.0, -80.0);
 	vec3_set(&dir, 1.0, 0.0, 0.0);
 	vec3_set(&color, 0.90, 0.50, 0.80);
-	objs[12] = object_new(CYLIND, &pos, &dir, 5., &color, 12.0, &intens_d);
+	objs[12] = object_new(CYLIND, &pos, &dir, 5., &color, phong, &intens_d);
 
 //CONE
 	vec3_set(&pos, -50, 15, -10);
 	vec3_set(&dir, 0.2, -0.2, -0.02);
 	vec3_set(&color, 0.80, 0.50, 0.90);
-	objs[14] = object_new(CONE, &pos, &dir, 10., &color, 5.0, &intens_d);
+	objs[14] = object_new(CONE, &pos, &dir, 10., &color, phong, &intens_d);
 
 	vec3_set(&pos, 50, 5, -10);
 	vec3_set(&dir, -0.2, -0.2, 0.02);
 	vec3_set(&color, 0.80, 0.50, 0.90);
-	objs[15] = object_new(CONE, &pos, &dir, 20., &color, 5.0, &intens_d);
+	objs[15] = object_new(CONE, &pos, &dir, 20., &color, phong, &intens_d);
 
 	vec3_set(&dir, 0., 0., 0.);
 	vec3_set(&color, 1.0, 1.0, 1.0);
 
+	phong[PHONG_SHINI] = 0.0; phong[PHONG_KD] = 1.0; phong[PHONG_KS] = 0.0;
 //LIGHT
 	vec3_set(&pos, 0.0, 80.0, 0.0);
 	vec3_set(&intens_d, 0.6, 0.6, 0.6);
-	objs[30] = object_new(LIGHT, &pos, &dir, 1., &color, 0.0, &intens_d);
+	objs[30] = object_new(LIGHT, &pos, &dir, 1., &color, phong, &intens_d);
 
 	vec3_set(&pos, -80.0, 2.0, 30.0);
 	vec3_set(&intens_d, 1.0, 1.0, 1.0);
-	objs[31] = object_new(LIGHT, &pos, &dir, 1., &color, 0.0, &intens_d);
+	objs[31] = object_new(LIGHT, &pos, &dir, 1., &color, phong, &intens_d);
 
 	vec3_set(&pos, 80.0, 2.0, 30.0);
 	vec3_set(&intens_d, 1.0, 1.0, 1.0);
-	objs[32] = object_new(LIGHT, &pos, &dir, 1., &color, 0.0, &intens_d);
+	objs[32] = object_new(LIGHT, &pos, &dir, 1., &color, phong, &intens_d);
 
 	vec3_set(&pos, -100.0, 8.0, 80.0);
 	vec3_set(&intens_d, 3., 3., 3.);
-	objs[33] = object_new(LIGHT, &pos, &dir, 1., &color, 0.0, &intens_d);
+	objs[33] = object_new(LIGHT, &pos, &dir, 1., &color, phong, &intens_d);
 
 	vec3_set(&intens_d, 0.0, 0.0, 0.0);
 
+	phong[PHONG_KD] = 0.90; phong[PHONG_KS] = 0.33;
 //SPHERES
 	vec3_set(&pos, 0.0, -76., 0.);
 	vec3_set(&color, 0.70, 0.70, 0.70);
-	objs[3] = object_new(SPHERE, &pos, &dir, 80., &color, 4.0, &intens_d);
+	phong[PHONG_SHINI] = 4.0;
+	objs[3] = object_new(SPHERE, &pos, &dir, 80., &color, phong, &intens_d);
 
 	vec3_set(&pos, 0.0, 12.5, 0.0);
 	vec3_set(&color, 1.00, 0.32, 0.36);
-	objs[4] = object_new(SPHERE, &pos, &dir, 5., &color, 10.0, &intens_d);
+	phong[PHONG_SHINI] = 10.0;
+	objs[4] = object_new(SPHERE, &pos, &dir, 5., &color, phong, &intens_d);
 
 	vec3_set(&pos, -10.0, 21.0, 10.0);
 	vec3_set(&color, 0.50, 0.90, 0.50);
-	objs[5] = object_new(SPHERE, &pos, &dir, 3., &color, 0.0, &intens_d);
+	phong[PHONG_SHINI] = 0.0;
+	objs[5] = object_new(SPHERE, &pos, &dir, 3., &color, phong, &intens_d);
 
 	vec3_set(&pos, 13, 30.0, -100.0);
 	vec3_set(&color, 0.65, 0.77, 0.97);
-	objs[6] = object_new(SPHERE, &pos, &dir, 50., &color, 100.0, &intens_d);
+	phong[PHONG_SHINI] = 100.0;
+	objs[6] = object_new(SPHERE, &pos, &dir, 50., &color, phong, &intens_d);
 
+	phong[PHONG_SHINI] = 5.0;
 	vec3_set(&pos, -15.0, 10, -10);
 	vec3_set(&color, 0.90, 0.76, 0.46);
-	objs[7] = object_new(SPHERE, &pos, &dir, 2., &color, 3.0, &intens_d);
+	objs[7] = object_new(SPHERE, &pos, &dir, 2., &color, phong, &intens_d);
 	vec3_set(&pos, 15.0, 18, -10);
 	vec3_set(&color, 0.90, 0.76, 0.46);
-	objs[8] = object_new(SPHERE, &pos, &dir, 2., &color, 3.0, &intens_d);
+	objs[8] = object_new(SPHERE, &pos, &dir, 2., &color, phong, &intens_d);
 	vec3_set(&pos, 21.0, 18, -10);
 	vec3_set(&color, 0.90, 0.76, 0.46);
-	objs[9] = object_new(SPHERE, &pos, &dir, 2., &color, 3.0, &intens_d);
+	objs[9] = object_new(SPHERE, &pos, &dir, 2., &color, phong, &intens_d);
 
 //PLANE
 	object_add(&(env->objects), objs[35]);
@@ -175,7 +187,7 @@ static void	env_init_screen(t_env *env, int width, int height)
 	}
 }
 
-int		env_init(t_env *env, int width, int height)
+int			env_init(t_env *env, int width, int height)
 {
 	if ((env->tp = tp_create(THREADS, TP_ON_START)) == NULL)
 		return (ERROR);
@@ -191,7 +203,7 @@ int		env_init(t_env *env, int width, int height)
 	return (SUCCESS);
 }
 
-void	env_destroy(t_data *data)
+void		env_destroy(t_data *data)
 {
 	int	i;
 
