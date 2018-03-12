@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 00:26:13 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/10 11:41:21 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/12 09:40:35 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,15 +104,15 @@ static void	env_init_scene(t_env *env)
 
 	vec3_set(&pos, 0.0, 12.5, 0.0);
 	vec3_set(&color, 1.00, 0.32, 0.36);
-	objs[4] = object_new(SPHERE, &pos, &dir, 5., &color, 30.0, &intens_d);
+	objs[4] = object_new(SPHERE, &pos, &dir, 5., &color, 10.0, &intens_d);
 
 	vec3_set(&pos, -10.0, 21.0, 10.0);
 	vec3_set(&color, 0.50, 0.90, 0.50);
-	objs[5] = object_new(SPHERE, &pos, &dir, 3., &color, 6.0, &intens_d);
+	objs[5] = object_new(SPHERE, &pos, &dir, 3., &color, 0.0, &intens_d);
 
 	vec3_set(&pos, 13, 30.0, -100.0);
 	vec3_set(&color, 0.65, 0.77, 0.97);
-	objs[6] = object_new(SPHERE, &pos, &dir, 50., &color, 30.0, &intens_d);
+	objs[6] = object_new(SPHERE, &pos, &dir, 50., &color, 100.0, &intens_d);
 
 	vec3_set(&pos, -15.0, 10, -10);
 	vec3_set(&color, 0.90, 0.76, 0.46);

@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 12:32:54 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/10 11:30:03 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/12 09:36:16 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "ft_mlx.h"
 # include "matrix.h"
 
-# define KS		0.20
+# define KS		0.50
 # define KD		0.90
 # define KA		0.15
 # define KDIST	1.0
