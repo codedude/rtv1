@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 11:22:50 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/12 13:04:56 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/12 16:41:43 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,57 +20,6 @@
 #include "matrix.h"
 #include "objects.h"
 #include "rtv1.h"
-
-/*
-** PHONG model : sum(La + sumLight(Ldi + Lsi)) * objectColor
-** La (ambient) + Ld (Lambertian diffuse) + Ls (object constant specular)
-*/
-
-void			mix_color(t_vec3 *color, t_f64 dist, t_object *obj,
-	t_object *light, t_vec3 *l, t_vec3 *n, t_vec3 *v)
-{
-	t_vec3	r;
-	t_f64	t;
-	t_f64	dln;
-	t_vec3	vs;
-	t_vec3	vd;
-	t_vec3	light_intensity;
-
-	vec3_cpy(&light_intensity, &(light->intensity));
-	if (dist > 1.0)
-	{
-		t = exp(-0.5 * (dist / L_DIST_FACTOR));
-		vec3_mul_scalar(&light_intensity, t);
-	}
-	dln = vec3_dot(n, l);
-	if (dln < 0.0)
-		dln = 0.0;
-	vec3_cpy(&vd, &light_intensity);
-	vec3_mul_scalar(&vd, dln * obj->phong[PHONG_KD]);
-	if (obj->phong[PHONG_SHINI] > 0.0 && dln > 0.0)
-	{
-		vec3_cpy(&r, n);
-		vec3_mul_scalar(&r, 2.0 * dln);
-		vec3_sub(&r, l);
-		vec3_norm(&r);
-		t = fabs(vec3_dot(&r, v));
-		if (t > INTER_MIN)
-		{
-			t = pow(t, obj->phong[PHONG_SHINI]) * obj->phong[PHONG_KS];
-			vec3_cpy(&vs, &light_intensity);
-			vec3_mul_scalar(&vs, t);
-			vec3_add(&vd, &vs);
-		}
-	}
-	vec3_add(color, &vd);
-}
-
-void			compute_biais(t_ray *ray_hit, t_vec3 *p_hit_biais)
-{
-	vec3_cpy(p_hit_biais, &(ray_hit->dir));
-	vec3_mul_scalar(p_hit_biais, BIAIS);
-	vec3_add(p_hit_biais, &(ray_hit->orig));
-}
 
 void			compute_hit(t_ray *ray, t_ray *ray_hit, t_object *obj,
 							t_f64 t)
@@ -90,24 +39,20 @@ void			compute_hit(t_ray *ray, t_ray *ray_hit, t_object *obj,
 	}
 	else if (obj->type == PLANE)
 		vec3_cpy(&(ray_hit->dir), &(obj->norm));
-	else if (obj->type == CYLIND)
+	else if (obj->type == CYLINDER)
 	{
 		vec3_cpy(&tmp, &(obj->norm));
-
 		vec3_cpy(&(ray_hit->dir), &(ray_hit->orig));
 		vec3_sub(&(ray_hit->dir), &(obj->pos));
-
 		rot = matrix_rot_vec(180., &tmp);
 		matrix_mul3_vec3(rot, &(ray_hit->dir));
 		matrix_del(MATRIX_33, &rot);
-
 		vec3_add(&(ray_hit->dir), &(obj->pos));
 		vec3_cpy(&tmp, &(ray_hit->dir));
 		vec3_cpy(&(ray_hit->dir), &(ray_hit->orig));
 		vec3_sub(&(ray_hit->dir), &tmp);
 		vec3_norm(&(ray_hit->dir));
 	}
-
 	else if (obj->type == CONE)
 	{
 		vec3_cpy(&(ray_hit->dir), &(ray_hit->orig));
@@ -122,137 +67,91 @@ void			compute_hit(t_ray *ray, t_ray *ray_hit, t_object *obj,
 		vec3_add(&(ray_hit->dir), &tmp);
 		vec3_norm(&(ray_hit->dir));
 	}
-
 }
 
-static t_color	compute_color(t_ray *ray, t_object *obj, t_obj_lst *objects,
-								t_f64 t)
+t_obj_lst		*find_next_light(t_obj_lst *lst)
+{
+	while (lst != NULL && !is_light(lst->object))
+		lst = lst->next;
+	return (lst);
+}
+
+t_obj_lst		*find_next_object(t_obj_lst *lst)
+{
+	while (lst != NULL && is_light(lst->object))
+		lst = lst->next;
+	return (lst);
+}
+
+/*
+** Save p_hit_biais in ray.orig !!!
+*/
+
+t_color			compute_light(t_env *env, t_ray *ray, t_ray *ray_hit,
+								t_object *obj)
 {
 	t_obj_lst	*iter_light;
-	t_obj_lst	*iter;
-	t_vec3		color;
-	t_vec3		p_hit_biais;
+	t_obj_lst	*iter_object;
 	t_f64		light_dist;
 	t_solution	solution;
-	t_ray		ray_hit;
+	t_vec3		color;
 	t_ray		ray_light;
-	int			shadow;
 
-	vec3_set(&color, obj->phong[PHONG_KA], obj->phong[PHONG_KA],
-		obj->phong[PHONG_KA]);
-	compute_hit(ray, &ray_hit, obj, t);
-	compute_biais(&ray_hit, &p_hit_biais);
-	if (vec3_dot(&(ray->dir), &(ray_hit.dir)) > 0.0)
-		vec3_mul_scalar(&(ray_hit.dir), -1.0);
-	iter_light = objects;
-	while (iter_light != NULL)
+	init_color(&color, obj);
+	iter_light = env->objects;
+	while ((iter_light = find_next_light(iter_light)) != NULL)
 	{
-		if (iter_light->object->type == LIGHT)
+		vec3_cpy(&(ray_light.orig), &(iter_light->object->pos));
+		vec3_sub(&(ray_light.orig), &(ray_hit->orig));
+		light_dist = vec3_len(&(ray_light.orig));
+		vec3_cpy(&(ray_light.dir), &(ray_light.orig));
+		vec3_norm(&(ray_light.dir));
+		vec3_cpy(&(ray_light.orig), &(ray->orig));
+		iter_object = env->objects;
+		while ((iter_object = find_next_object(iter_object)) != NULL)
 		{
-			vec3_cpy(&(ray_light.orig), &(iter_light->object->pos));
-			vec3_sub(&(ray_light.orig), &(ray_hit.orig));
-			light_dist = vec3_len(&(ray_light.orig));
-			vec3_cpy(&(ray_light.dir), &(ray_light.orig));
-			vec3_norm(&(ray_light.dir));
-			vec3_cpy(&(ray_light.orig), &p_hit_biais);
-			shadow = 0;
-			iter = objects;
-			while (iter != NULL)
-			{
-				if (iter_light != iter)
-				{
-					if (iter->object->type == SPHERE &&
-						intersect_sphere(&ray_light, iter->object, &solution)
-							== SUCCESS)
-					{
-						if (solution.t0 < light_dist && solution.t0 > 0.)
-						{
-							shadow = 1;
-							break ;
-						}
-					}
-					else if (iter->object->type == PLANE &&
-						intersect_plane(&ray_light, iter->object, &solution)
-							== SUCCESS)
-					{
-						if (solution.t0 < light_dist && solution.t0 > 0.)
-						{
-							shadow = 1;
-							break ;
-						}
-					}
-					else if (iter->object->type == CYLIND &&
-						intersect_cylinder(&ray_light, iter->object, &solution)
-							== SUCCESS)
-					{
-						if (solution.t0 < light_dist && solution.t0 > 0.)
-						{
-							shadow = 1;
-							break ;
-						}
-					}
-					else if (iter->object->type == CONE &&
-						intersect_cone(&ray_light, iter->object, &solution)
-							== SUCCESS)
-					{
-						if (solution.t0 < light_dist && solution.t0 > 0.)
-						{
-							shadow = 1;
-							break ;
-						}
-					}
-				}
-				iter = iter->next;
-			}
-			if (shadow == 0)
-				mix_color(&color, light_dist, obj, iter_light->object,
-					&(ray_light.dir), &(ray_hit.dir), &(ray->dir));
+			if (env->intersect[iter_object->object->type](&ray_light,
+				iter_object->object, &solution) == SUCCESS)
+				if (solution.t0 < light_dist && solution.t0 > 0.)
+					break ;
+			iter_object = iter_object->next;
 		}
+		if (iter_object == NULL)
+			mix_color(&color, light_dist, obj, iter_light->object,
+				&(ray_light.dir), &(ray_hit->dir), &(ray->dir));
 		iter_light = iter_light->next;
 	}
 	vec3_mul(&color, &(obj->color));
 	return (convert_color(&color));
 }
 
-static t_object	*trace(t_ray *ray, t_obj_lst *objects, t_solution *solution)
+static t_color	compute_color(t_env *env, t_ray *ray, t_object *obj, t_f64 t)
+{
+	t_color		color;
+	t_vec3		p_hit_biais;
+	t_ray		ray_hit;
+
+	compute_hit(ray, &ray_hit, obj, t);
+	compute_biais(&ray_hit, &p_hit_biais);
+	if (vec3_dot(&(ray->dir), &(ray_hit.dir)) > 0.0)
+		vec3_mul_scalar(&(ray_hit.dir), -1.0);
+	vec3_cpy(&(ray->orig), &p_hit_biais);
+	color = compute_light(env, ray, &ray_hit, obj);
+	return (color);
+}
+
+static t_object	*trace(t_env *env, t_ray *ray, t_solution *solution)
 {
 	t_obj_lst	*iter;
 	t_object	*obj;
 
-	iter = objects;
 	solution->t = FLOAT_INF;
 	obj = NULL;
-	while (iter != NULL)
+	iter = env->objects;
+	while ((iter = find_next_object(iter)) != NULL)
 	{
-		if (iter->object->type == SPHERE && intersect_sphere(ray,
-			iter->object, solution) == SUCCESS)
-		{
-			if (solution->t0 < solution->t)
-			{
-				solution->t = solution->t0;
-				obj = iter->object;
-			}
-		}
-		else if (iter->object->type == PLANE && intersect_plane(ray,
-				iter->object, solution) == SUCCESS)
-		{
-			if (solution->t0 < solution->t)
-			{
-				solution->t = solution->t0;
-				obj = iter->object;
-			}
-		}
-		else if (iter->object->type == CYLIND && intersect_cylinder(ray,
-				iter->object, solution) == SUCCESS)
-		{
-			if (solution->t0 < solution->t)
-			{
-				solution->t = solution->t0;
-				obj = iter->object;
-			}
-		}
-		else if (iter->object->type == CONE && intersect_cone(ray,
-				iter->object, solution) == SUCCESS)
+		if (env->intersect[iter->object->type](ray, iter->object, solution)
+			== SUCCESS)
 		{
 			if (solution->t0 < solution->t)
 			{
@@ -273,7 +172,7 @@ static t_object	*trace(t_ray *ray, t_obj_lst *objects, t_solution *solution)
 **	Trace ray
 */
 
-static void		draw_start(t_vec3 *dir, int i, int j, t_data *data)
+static void		draw_start(t_data *data, t_vec3 *dir, int i, int j)
 {
 	t_object	*obj;
 	t_color		color;
@@ -283,10 +182,10 @@ static void		draw_start(t_vec3 *dir, int i, int j, t_data *data)
 	vec3_norm(dir);
 	vec3_cpy(&(ray.dir), dir);
 	vec3_cpy(&(ray.orig), &(data->env.cam_orig));
-	obj = trace(&(ray), data->env.objects, &solution);
+	obj = trace(&(data->env), &(ray), &solution);
 	if (obj != NULL && obj->type != LIGHT)
 	{
-		color = compute_color(&ray, obj, data->env.objects, solution.t);
+		color = compute_color(&(data->env), &ray, obj, solution.t);
 		ft_mlx_put(&(data->mlx), j, i, color);
 	}
 }
@@ -307,7 +206,7 @@ int				draw_rt(void *data)
 		{
 			pixel_to_screen(j, i, &camera, &(algo->data->env));
 			matrix_mul3_vec3(algo->data->env.rot, &camera);
-			draw_start(&camera, i, j, algo->data);
+			draw_start(algo->data, &camera, i, j);
 			j++;
 		}
 		i++;

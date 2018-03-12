@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 00:26:13 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/12 13:02:00 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/12 16:06:33 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,17 @@ static void	env_init_scene(t_env *env)
 	vec3_set(&pos, -30, 0.0, -21.0);
 	vec3_set(&dir, 0.0, 1.0, 0.0);
 	vec3_set(&color, 0.50, 0.80, 0.90);
-	objs[10] = object_new(CYLIND, &pos, &dir, 3., &color, phong, &intens_d);
+	objs[10] = object_new(CYLINDER, &pos, &dir, 3., &color, phong, &intens_d);
 
 	vec3_set(&pos, 30, 0.0, -21.0);
 	vec3_set(&dir, 0.0, 1.0, 0.0);
 	vec3_set(&color, 0.50, 0.80, 0.90);
-	objs[11] = object_new(CYLIND, &pos, &dir, 3., &color, phong, &intens_d);
+	objs[11] = object_new(CYLINDER, &pos, &dir, 3., &color, phong, &intens_d);
 
 	vec3_set(&pos, 0.0, 10.0, -80.0);
 	vec3_set(&dir, 1.0, 0.0, 0.0);
 	vec3_set(&color, 0.90, 0.50, 0.80);
-	objs[12] = object_new(CYLIND, &pos, &dir, 5., &color, phong, &intens_d);
+	objs[12] = object_new(CYLINDER, &pos, &dir, 5., &color, phong, &intens_d);
 
 //CONE
 	vec3_set(&pos, -50, 15, -10);
@@ -187,6 +187,14 @@ static void	env_init_screen(t_env *env, int width, int height)
 	}
 }
 
+static void	env_init_intersection(t_env *env)
+{
+	env->intersect[PLANE] = &intersect_plane;
+	env->intersect[SPHERE] = &intersect_sphere;
+	env->intersect[CONE] = &intersect_cone;
+	env->intersect[CYLINDER] = &intersect_cylinder;
+}
+
 int			env_init(t_env *env, int width, int height)
 {
 	if ((env->tp = tp_create(THREADS, TP_ON_START)) == NULL)
@@ -199,6 +207,7 @@ int			env_init(t_env *env, int width, int height)
 	vec3_set(&(env->cam_ang), -12.0, 0.0, 0.0);
 	env_init_screen(env, width, height);
 	env_init_scene(env);
+	env_init_intersection(env);
 	srand(time(NULL));
 	return (SUCCESS);
 }

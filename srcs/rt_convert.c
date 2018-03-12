@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 11:06:19 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/06 09:35:06 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/12 16:39:09 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 #include "ft_mlx.h"
 #include "matrix.h"
 #include "rtv1.h"
+
+void			compute_biais(t_ray *ray_hit, t_vec3 *p_hit_biais)
+{
+	vec3_cpy(p_hit_biais, &(ray_hit->dir));
+	vec3_mul_scalar(p_hit_biais, BIAIS);
+	vec3_add(p_hit_biais, &(ray_hit->orig));
+}
 
 /*
 ** Convert pixel(int x, int y) to NDC

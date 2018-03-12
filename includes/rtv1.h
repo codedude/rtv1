@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 04:21:59 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/12 13:04:58 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/12 16:43:45 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define FLOAT_INF		1e8
 # define INTER_MIN		1e-8
 # define BIAIS			1e-8
-# define L_DIST_FACTOR	100.
+# define L_DIST_FACTOR	(-2.0 * 100.)
 # define TITLE			"RTV1 DX4000"
 # define FILE_NAME		"saved_img/rt_XXX.bmp"
 
@@ -45,16 +45,6 @@ typedef struct	s_solution {
 	t_f64		t1;
 }				t_solution;
 
-typedef struct	s_area {
-	t_f128		x1;
-	t_f128		y1;
-	t_f128		x2;
-	t_f128		y2;
-	t_f128		zoom[2];
-	t_u32		max;
-	t_u32		size[2];
-}				t_area;
-
 typedef struct	s_env {
 	t_tpool		*tp;
 	int			keydown;
@@ -69,6 +59,8 @@ typedef struct	s_env {
 	t_vec3		cam_ang;
 	t_vec3		cam_orig;
 	t_matrix	rot;
+	int			(*intersect[4])(t_ray *, t_object *, t_solution *);
+
 }				t_env;
 
 typedef struct	s_data {
@@ -92,11 +84,18 @@ int				manage_key_up(int keycode, void *param);
 int				manage_mouse(int keycode, int x, int y, void *param);
 int				manage_mouse_move(int x, int y, void *param);
 
-void			draw_img(t_data *data);
 void			clean_maps(t_data *data);
+void			draw_img(t_data *data);
 int				draw_rt(void *data);
-t_color			convert_color(t_vec3 *color);
 void			pixel_to_screen(int x, int y, t_vec3 *camera, t_env *env);
+void			compute_biais(t_ray *ray_hit, t_vec3 *p_hit_biais);
+t_color			convert_color(t_vec3 *color);
+t_f64			compute_reflect_ray(t_vec3 *v, t_vec3 *n, t_vec3 *l, t_f64 dln);
+void			init_color(t_vec3 *color, t_object *obj);
+int				is_light(t_object *obj);
+void			mix_color(t_vec3 *color, t_f64 dist, t_object *obj,
+					t_object *light, t_vec3 *l, t_vec3 *n, t_vec3 *v);
+
 int				intersect_sphere(t_ray *ray, t_object *obj,
 					t_solution *solution);
 int				intersect_plane(t_ray *ray, t_object *obj,

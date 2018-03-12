@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 17:44:18 by vparis            #+#    #+#             */
-/*   Updated: 2018/02/26 15:55:03 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/12 16:35:52 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define C_BLACK		0x00000000
 # define C_GREY			0x00999999
 
-# define BMP_BUFF		1024
+# define BMP_BUFF		4096
 
 typedef int		t_color;
 

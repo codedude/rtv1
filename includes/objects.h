@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 12:32:54 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/12 12:56:06 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/12 16:02:27 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 # include "ft_mlx.h"
 # include "matrix.h"
 
-# define LIGHT	0
-# define PLANE	1
-# define SPHERE	2
-# define CONE	3
-# define CYLIND	4
+# define LIGHT			10
+# define PLANE			0
+# define SPHERE			1
+# define CONE			2
+# define CYLINDER		3
 
 # define PHONGS			4
 # define PHONG_SHINI	0
