@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 00:26:13 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/10 00:37:47 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/10 11:41:21 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	env_init_scene(t_env *env)
 	vec3_set(&color, .98, 0.95, 0.80);
 	objs[35] = object_new(PLANE, &pos, &dir, 1., &color, 0.0, &intens_d);
 
-	vec3_set(&pos, 0., 0., -500.);
+	vec3_set(&pos, 0., 0., -200.);
 	vec3_set(&dir, 0.0, 0.0, 1.0);
 	objs[36] = object_new(PLANE, &pos, &dir, 1., &color, 0.0, &intens_d);
 
@@ -58,6 +58,11 @@ static void	env_init_scene(t_env *env)
 	vec3_set(&dir, 0.0, 1.0, 0.0);
 	vec3_set(&color, 0.50, 0.80, 0.90);
 	objs[11] = object_new(CYLIND, &pos, &dir, 3., &color, 12.0, &intens_d);
+
+	vec3_set(&pos, 0.0, 10.0, -80.0);
+	vec3_set(&dir, 1.0, 0.0, 0.0);
+	vec3_set(&color, 0.90, 0.50, 0.80);
+	objs[12] = object_new(CYLIND, &pos, &dir, 5., &color, 12.0, &intens_d);
 
 //CONE
 	vec3_set(&pos, -50, 15, -10);
@@ -86,8 +91,8 @@ static void	env_init_scene(t_env *env)
 	vec3_set(&intens_d, 1.0, 1.0, 1.0);
 	objs[32] = object_new(LIGHT, &pos, &dir, 1., &color, 0.0, &intens_d);
 
-	vec3_set(&pos, -20.0, 8.0, 25.0);
-	vec3_set(&intens_d, 0.75, 0.75, 0.75);
+	vec3_set(&pos, -100.0, 8.0, 80.0);
+	vec3_set(&intens_d, 3., 3., 3.);
 	objs[33] = object_new(LIGHT, &pos, &dir, 1., &color, 0.0, &intens_d);
 
 	vec3_set(&intens_d, 0.0, 0.0, 0.0);
@@ -105,9 +110,9 @@ static void	env_init_scene(t_env *env)
 	vec3_set(&color, 0.50, 0.90, 0.50);
 	objs[5] = object_new(SPHERE, &pos, &dir, 3., &color, 6.0, &intens_d);
 
-	vec3_set(&pos, 13, 30.0, -230.0);
+	vec3_set(&pos, 13, 30.0, -100.0);
 	vec3_set(&color, 0.65, 0.77, 0.97);
-	objs[6] = object_new(SPHERE, &pos, &dir, 5., &color, 0.0, &intens_d);
+	objs[6] = object_new(SPHERE, &pos, &dir, 50., &color, 30.0, &intens_d);
 
 	vec3_set(&pos, -15.0, 10, -10);
 	vec3_set(&color, 0.90, 0.76, 0.46);
@@ -126,9 +131,9 @@ static void	env_init_scene(t_env *env)
 	//object_add(&(env->objects), objs[38]);
 //LIGHT
 	object_add(&(env->objects), objs[30]);
-	//object_add(&(env->objects), objs[31]);
-	//object_add(&(env->objects), objs[32]);
-	object_add(&(env->objects), objs[33]);
+	object_add(&(env->objects), objs[31]);
+	object_add(&(env->objects), objs[32]);
+	//object_add(&(env->objects), objs[33]);
 //SPHERE
 	object_add(&(env->objects), objs[3]);
 	object_add(&(env->objects), objs[4]);

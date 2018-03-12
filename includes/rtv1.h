@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtv1.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 04:21:59 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/09 15:48:57 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/10 11:26:35 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include "matrix.h"
 # include "objects.h"
 
-# define WIDTH			1200
-# define HEIGHT			700
+# define WIDTH			1024
+# define HEIGHT			768
 # define FOV			70.
 # define MAX_DEPTH		8
 # define FLOAT_INF		1e8

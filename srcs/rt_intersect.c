@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_intersect.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 11:08:48 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/09 15:10:17 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/10 11:33:10 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		intersect_plane(t_vec3 *orig, t_vec3 *dir, t_object *obj, t_f64 *t)
 		vec3_cpy(&diff, &(obj->pos));
 		vec3_sub(&diff, orig);
 		*t = vec3_dot(&diff, &(obj->norm)) / denom;
-		return (*t > INTER_MIN ? SUCCESS : ERROR);
+		return (*t > 0. ? SUCCESS : ERROR);
 	}
 	return (ERROR);
 }

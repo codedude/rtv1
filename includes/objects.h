@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objects.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 12:32:54 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/09 17:26:28 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/10 11:30:03 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 # include "ft_mlx.h"
 # include "matrix.h"
 
-# define KS		0.15
+# define KS		0.20
 # define KD		0.90
-# define KA		0.1
+# define KA		0.15
 # define KDIST	1.0
 
 # define LIGHT	0
