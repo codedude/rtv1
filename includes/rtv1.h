@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtv1.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 04:21:59 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/13 16:30:42 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/13 23:22:01 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@
 # include "objects.h"
 
 # define WIDTH			1024
-# define HEIGHT			1024
+# define HEIGHT			768
 # define FOV			70.
-# define MAX_DEPTH		8
 # define FLOAT_INF		1e8
 # define INTER_MIN		1e-8
 # define BIAIS			1e-8

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 16:28:53 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/13 16:30:28 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/13 23:03:47 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void		env_init_scene(t_env *env)
 
 	phong[PHONG_KA] = 0.1;
 
-	
+
 	vec3_set(&intens_d, 0.0, 0.0, 0.0);
 	phong[PHONG_SHINI] = 0.0; phong[PHONG_KD] = 1.0; phong[PHONG_KS] = 0.0;
 //PLANE
