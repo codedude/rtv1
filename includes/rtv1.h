@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 04:21:59 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/12 16:43:45 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/13 16:30:42 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include "objects.h"
 
 # define WIDTH			1024
-# define HEIGHT			768
+# define HEIGHT			1024
 # define FOV			70.
 # define MAX_DEPTH		8
 # define FLOAT_INF		1e8
@@ -60,6 +60,7 @@ typedef struct	s_env {
 	t_vec3		cam_orig;
 	t_matrix	rot;
 	int			(*intersect[4])(t_ray *, t_object *, t_solution *);
+	void		(*norm[4])(t_ray *, t_object *);
 
 }				t_env;
 
@@ -76,6 +77,8 @@ typedef struct	s_algo {
 
 int				env_init(t_env *env, int width, int height);
 void			env_destroy(t_data *data);
+void			env_init_scene(t_env *env);
+t_f64			clamp_f64(t_f64 f, t_f64 lmin, t_f64 lmax);
 
 void			check_key(t_env *env);
 void			check_key2(t_env *env);
@@ -89,13 +92,27 @@ void			draw_img(t_data *data);
 int				draw_rt(void *data);
 void			pixel_to_screen(int x, int y, t_vec3 *camera, t_env *env);
 void			compute_biais(t_ray *ray_hit, t_vec3 *p_hit_biais);
-t_color			convert_color(t_vec3 *color);
+void			compute_hit(t_ray *ray, t_ray *ray_hit, t_f64 t);
+t_color			convert_color(t_vec3 *color, t_vec3 *obj_color);
+t_f64			compute_raylight(t_ray *ray, t_ray *ray_hit, t_ray *ray_light,
+									t_object *obj);
 t_f64			compute_reflect_ray(t_vec3 *v, t_vec3 *n, t_vec3 *l, t_f64 dln);
-void			init_color(t_vec3 *color, t_object *obj);
 int				is_light(t_object *obj);
-void			mix_color(t_vec3 *color, t_f64 dist, t_object *obj,
-					t_object *light, t_vec3 *l, t_vec3 *n, t_vec3 *v);
+t_obj_lst		*find_next_light(t_obj_lst *lst);
+t_obj_lst		*find_next_object(t_obj_lst *lst);
+int				is_shadow(t_env *env, t_ray *ray_light, t_solution *solution);
 
+void			color_intensity(t_vec3 *intensity, t_object *light, t_f64 dist);
+void			color_ambient(t_vec3 *color, t_object *obj);
+int				color_diffuse(t_vec3 *intensity, t_vec3 *color, t_object *obj,
+								t_f64 *t);
+void			color_specular(t_vec3 *intensity, t_vec3 *color, t_object *obj,
+								t_f64 t);
+
+void			norm_sphere(t_ray *ray_hit, t_object *obj);
+void			norm_plane(t_ray *ray_hit, t_object *obj);
+void			norm_cylinder(t_ray *ray_hit, t_object *obj);
+void			norm_cone(t_ray *ray_hit, t_object *obj);
 int				intersect_sphere(t_ray *ray, t_object *obj,
 					t_solution *solution);
 int				intersect_plane(t_ray *ray, t_object *obj,

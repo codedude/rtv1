@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 11:08:48 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/12 12:40:45 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/13 13:44:51 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,50 +66,21 @@ int		intersect_plane(t_ray *ray, t_object *obj, t_solution *solution)
 	return (ERROR);
 }
 
-int		intersect_cylinder(t_ray *ray, t_object *obj, t_solution *solution)
+int		solve_quadra(t_f64 abc[3], t_solution *solution)
 {
-	t_vec3	delta_p;
-	t_vec3	vva;
-	t_vec3	dpva;
-	t_vec3	tmp;
-	t_vec3	tmp2;
-	t_f64	abc[4];
+	t_f64	r;
 
-	//delta p
-	vec3_cpy(&delta_p, &(ray->orig));
-	vec3_sub(&delta_p, &(obj->pos));
-	//va
-	vec3_cpy(&tmp, &(obj->norm));
-	//(v,va)va
-	vec3_cpy(&vva, &tmp);
-	vec3_mul_scalar(&vva, vec3_dot(&(ray->dir), &tmp));
-	//(delta p,va)va
-	vec3_cpy(&dpva, &tmp);
-	vec3_mul_scalar(&dpva, vec3_dot(&delta_p, &tmp));
-	//A dot(v - vva)
-	vec3_cpy(&tmp, &(ray->dir));
-	vec3_sub(&tmp, &vva);
-	abc[0] = vec3_dot(&tmp, &tmp);
-	//B
-	vec3_cpy(&tmp2, &delta_p);
-	vec3_sub(&tmp2, &dpva);
-	abc[1] = 2. * vec3_dot(&tmp, &tmp2);
-	//C
-	abc[2] = vec3_dot(&tmp2, &tmp2) - obj->radius2;
-
-	//Find t1 and t2
-	abc[3] = abc[1] * abc[1] - (4. * abc[0] * abc[2]);
-	if (abc[3] < 0.)
+	r = abc[1] * abc[1] - (4. * abc[0] * abc[2]);
+	if (r < 0.)
 		return (ERROR);
-	if (abc[3] == 0.)
+	if (r == 0.)
 		solution->t0 = -abc[1] / (2. * abc[0]);
 	else
 	{
-		abc[3] = sqrt(abc[3]);
-		solution->t0 = (-abc[1] + abc[3]) / (2. * abc[0]);
-		solution->t1 = (-abc[1] - abc[3]) / (2. * abc[0]);
+		r = sqrt(r);
+		solution->t0 = (-abc[1] + r) / (2. * abc[0]);
+		solution->t1 = (-abc[1] - r) / (2. * abc[0]);
 	}
-	//Check + values
 	if (solution->t0 < INTER_MIN && solution->t1 < INTER_MIN)
 		return (ERROR);
 	if (solution->t0 < INTER_MIN)
@@ -119,64 +90,91 @@ int		intersect_cylinder(t_ray *ray, t_object *obj, t_solution *solution)
 	return (SUCCESS);
 }
 
-int		intersect_cone(t_ray *ray, t_object *obj, t_solution *solution)
+/*
+**	//delta p
+**	vec3_cpy(&delta_p, &(ray->orig));
+**	vec3_sub(&delta_p, &(obj->pos));
+**	//va
+**	vec3_cpy(&tmp, &(obj->norm));
+**	//(v,va)va
+**	vec3_cpy(&vva, &tmp);
+**	vec3_mul_scalar(&vva, vec3_dot(&(ray->dir), &tmp));
+**	//(delta p,va)va
+**	vec3_cpy(&dpva, &tmp);
+**	vec3_mul_scalar(&dpva, vec3_dot(&delta_p, &tmp));
+** END : delta_p = tmp2
+*/
+
+int		intersect_cylinder(t_ray *ray, t_object *obj, t_solution *solution)
 {
 	t_vec3	delta_p;
-	t_vec3	va;
 	t_vec3	vva;
-	t_vec3	vpva;
+	t_vec3	dpva;
 	t_vec3	tmp;
-	t_vec3	tmp2;
-	t_f64	abc[4];
-	t_f64	cos2;
-	t_f64	sin2;
-	t_f64	dvva;
-	t_f64	dpva;
+	t_f64	abc[3];
 
-	cos2 = (1. + ft_cos(2. * obj->radius)) / 2.;
-	sin2 = (1. - ft_cos(2. * obj->radius)) / 2.;
-	//delta p
 	vec3_cpy(&delta_p, &(ray->orig));
 	vec3_sub(&delta_p, &(obj->pos));
-	//va
-	vec3_cpy(&va, &(obj->norm));
-	dvva = vec3_dot(&(ray->dir), &va);
-	//(v,va)va
-	vec3_cpy(&vva, &va);
-	vec3_mul_scalar(&vva, dvva);
-	//(delta p,va)va
-	vec3_cpy(&vpva, &va);
-	dpva = vec3_dot(&delta_p, &va);
-	vec3_mul_scalar(&vpva, dpva);
-	//A dot(v - vva)
+	vec3_cpy(&tmp, &(obj->norm));
+	vec3_cpy(&vva, &tmp);
+	vec3_mul_scalar(&vva, vec3_dot(&(ray->dir), &tmp));
+	vec3_cpy(&dpva, &tmp);
+	vec3_mul_scalar(&dpva, vec3_dot(&delta_p, &tmp));
 	vec3_cpy(&tmp, &(ray->dir));
 	vec3_sub(&tmp, &vva);
-	abc[0] = cos2 * vec3_dot(&tmp, &tmp) - sin2 * dvva * dvva;
-	//B
-	vec3_cpy(&tmp2, &delta_p);
-	vec3_sub(&tmp2, &vpva);
-	abc[1] = 2. * cos2 * vec3_dot(&tmp, &tmp2) - 2. * sin2 * dvva * dpva;
-	//C
-	abc[2] = cos2 * vec3_dot(&tmp2, &tmp2) - sin2 * dpva * dpva;
+	abc[0] = vec3_dot(&tmp, &tmp);
+	vec3_sub(&delta_p, &dpva);
+	abc[1] = 2. * vec3_dot(&tmp, &delta_p);
+	abc[2] = vec3_dot(&delta_p, &delta_p) - obj->radius2;
+	return (solve_quadra(abc, solution));
+}
 
-	//Find t1 and t2
-	abc[3] = abc[1] * abc[1] - (4. * abc[0] * abc[2]);
-	if (abc[3] < 0.)
-		return (ERROR);
-	if (abc[3] == 0.)
-		solution->t0 = -abc[1] / (2. * abc[0]);
-	else
-	{
-		abc[3] = sqrt(abc[3]);
-		solution->t0 = (-abc[1] + abc[3]) / (2. * abc[0]);
-		solution->t1 = (-abc[1] - abc[3]) / (2. * abc[0]);
-	}
-	//Check + values
-	if (solution->t0 < INTER_MIN && solution->t1 < INTER_MIN)
-		return (ERROR);
-	if (solution->t0 < INTER_MIN)
-		solution->t0 = solution->t1;
-	else if (solution->t1 >= INTER_MIN && solution->t1 < solution->t0)
-		solution->t0 = solution->t1;
-	return (SUCCESS);
+/*
+** vec[0] = delta_p
+** vec[1] = vva
+** vec[2] = vpva
+** vec[3] = tmp
+**	//delta p
+**	vec3_cpy(&delta_p, &(ray->orig));
+**	vec3_sub(&delta_p, &(obj->pos));
+**	//va
+**	vec3_cpy(&va, &(obj->norm));
+**	dvva = vec3_dot(&(ray->dir), &va);
+**	//(v,va)va
+**	vec3_cpy(&vva, &va);
+**	vec3_mul_scalar(&vva, dvva);
+**	//(delta p,va)va
+**	vec3_cpy(&vpva, &va);
+**	dpva = vec3_dot(&delta_p, &va);
+**	vec3_mul_scalar(&vpva, dpva);
+** END : delta_p = tmp2
+*/
+
+int		intersect_cone(t_ray *ray, t_object *obj, t_solution *solution)
+{
+	t_vec3	vec[4];
+	t_f64	abc[3];
+	t_f64	cos2sin2[2];
+	t_f64	dvpva[2];
+
+	cos2sin2[0] = (1. + ft_cos(2. * obj->radius)) / 2.;
+	cos2sin2[1] = (1. - ft_cos(2. * obj->radius)) / 2.;
+	vec3_cpy(&vec[0], &(ray->orig));
+	vec3_sub(&vec[0], &(obj->pos));
+	dvpva[0] = vec3_dot(&(ray->dir), &(obj->norm));
+	vec3_cpy(&vec[1], &(obj->norm));
+	vec3_mul_scalar(&vec[1], dvpva[0]);
+	vec3_cpy(&vec[2], &(obj->norm));
+	dvpva[1] = vec3_dot(&vec[0], &(obj->norm));
+	vec3_mul_scalar(&vec[2], dvpva[1]);
+	vec3_cpy(&vec[3], &(ray->dir));
+	vec3_sub(&vec[3], &vec[1]);
+	abc[0] = cos2sin2[0] * vec3_dot(&vec[3], &vec[3])
+			- cos2sin2[1] * dvpva[0] * dvpva[0];
+	vec3_sub(&vec[0], &vec[2]);
+	abc[1] = 2. * cos2sin2[0] * vec3_dot(&vec[3], &vec[0])
+			- 2. * cos2sin2[1] * dvpva[0] * dvpva[1];
+	abc[2] = cos2sin2[0] * vec3_dot(&vec[0], &vec[0])
+			- cos2sin2[1] * dvpva[1] * dvpva[1];
+	return (solve_quadra(abc, solution));
 }

@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 11:22:50 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/12 18:11:50 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/13 16:27:54 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,68 +21,6 @@
 #include "objects.h"
 #include "rtv1.h"
 
-void			compute_hit(t_ray *ray, t_ray *ray_hit, t_object *obj,
-							t_f64 t)
-{
-	t_vec3		tmp;
-	t_matrix	rot;
-
-	vec3_cpy(&tmp, &(ray->dir));
-	vec3_mul_scalar(&tmp, t);
-	vec3_cpy(&(ray_hit->orig), &(ray->orig));
-	vec3_add(&(ray_hit->orig), &tmp);
-	if (obj->type == SPHERE)
-	{
-		vec3_cpy(&(ray_hit->dir), &(ray_hit->orig));
-		vec3_sub(&(ray_hit->dir), &(obj->pos));
-		vec3_norm(&(ray_hit->dir));
-	}
-	else if (obj->type == PLANE)
-		vec3_cpy(&(ray_hit->dir), &(obj->norm));
-	else if (obj->type == CYLINDER)
-	{
-		vec3_cpy(&tmp, &(obj->norm));
-		vec3_cpy(&(ray_hit->dir), &(ray_hit->orig));
-		vec3_sub(&(ray_hit->dir), &(obj->pos));
-		rot = matrix_rot_vec(180., &tmp);
-		matrix_mul3_vec3(rot, &(ray_hit->dir));
-		matrix_del(MATRIX_33, &rot);
-		vec3_add(&(ray_hit->dir), &(obj->pos));
-		vec3_cpy(&tmp, &(ray_hit->dir));
-		vec3_cpy(&(ray_hit->dir), &(ray_hit->orig));
-		vec3_sub(&(ray_hit->dir), &tmp);
-		vec3_norm(&(ray_hit->dir));
-	}
-	else if (obj->type == CONE)
-	{
-		vec3_cpy(&(ray_hit->dir), &(ray_hit->orig));
-		vec3_sub(&(ray_hit->dir), &(obj->pos));
-		t = ft_cos(2.0 * obj->radius);
-		t = 1.0 + (1.0 - t) / (1.0 + t);
-		t *= vec3_dot(&(ray_hit->dir), &(obj->norm));
-		vec3_cpy(&tmp, &(ray_hit->orig));
-		vec3_sub(&tmp, &(obj->pos));
-		vec3_cpy(&(ray_hit->dir), &(obj->norm));
-		vec3_mul_scalar(&(ray_hit->dir), -t);
-		vec3_add(&(ray_hit->dir), &tmp);
-		vec3_norm(&(ray_hit->dir));
-	}
-}
-
-t_obj_lst		*find_next_light(t_obj_lst *lst)
-{
-	while (lst != NULL && !is_light(lst->object))
-		lst = lst->next;
-	return (lst);
-}
-
-t_obj_lst		*find_next_object(t_obj_lst *lst)
-{
-	while (lst != NULL && is_light(lst->object))
-		lst = lst->next;
-	return (lst);
-}
-
 /*
 ** Save p_hit_biais in ray.orig !!!
 */
@@ -91,38 +29,30 @@ t_color			compute_light(t_env *env, t_ray *ray, t_ray *ray_hit,
 								t_object *obj)
 {
 	t_obj_lst	*iter_light;
-	t_obj_lst	*iter_object;
-	t_f64		light_dist;
 	t_solution	solution;
 	t_vec3		color;
 	t_ray		ray_light;
+	t_vec3		intensity;
 
-	init_color(&color, obj);
+	color_ambient(&color, obj);
 	iter_light = env->objects;
 	while ((iter_light = find_next_light(iter_light)) != NULL)
 	{
-		vec3_cpy(&(ray_light.orig), &(iter_light->object->pos));
-		vec3_sub(&(ray_light.orig), &(ray_hit->orig));
-		light_dist = vec3_len(&(ray_light.orig));
-		vec3_cpy(&(ray_light.dir), &(ray_light.orig));
-		vec3_norm(&(ray_light.dir));
-		vec3_cpy(&(ray_light.orig), &(ray->orig));
-		iter_object = env->objects;
-		while ((iter_object = find_next_object(iter_object)) != NULL)
+		solution.t = compute_raylight(ray, ray_hit, &ray_light,
+			iter_light->object);
+		if (is_shadow(env, &ray_light, &solution) == ERROR)
 		{
-			if (env->intersect[iter_object->object->type](&ray_light,
-				iter_object->object, &solution) == SUCCESS)
-				if (solution.t0 < light_dist && solution.t0 > 0.)
-					break ;
-			iter_object = iter_object->next;
+			color_intensity(&intensity, iter_light->object, solution.t);
+			solution.t = vec3_dot(&(ray_hit->dir), &(ray_light.dir));
+			if (color_diffuse(&intensity, &color, obj, &(solution.t))
+				== SUCCESS && obj->phong[PHONG_SHINI] > 0.0)
+				color_specular(&intensity, &color, obj,
+					compute_reflect_ray(&(ray->dir), &(ray_hit->dir),
+						&(ray_light.dir), solution.t));
 		}
-		if (iter_object == NULL)
-			mix_color(&color, light_dist, obj, iter_light->object,
-				&(ray_light.dir), &(ray_hit->dir), &(ray->dir));
 		iter_light = iter_light->next;
 	}
-	vec3_mul(&color, &(obj->color));
-	return (convert_color(&color));
+	return (convert_color(&color, &(obj->color)));
 }
 
 static t_color	compute_color(t_env *env, t_ray *ray, t_object *obj, t_f64 t)
@@ -131,7 +61,8 @@ static t_color	compute_color(t_env *env, t_ray *ray, t_object *obj, t_f64 t)
 	t_vec3		p_hit_biais;
 	t_ray		ray_hit;
 
-	compute_hit(ray, &ray_hit, obj, t);
+	compute_hit(ray, &ray_hit, t);
+	env->norm[obj->type](&ray_hit, obj);
 	compute_biais(&ray_hit, &p_hit_biais);
 	if (vec3_dot(&(ray->dir), &(ray_hit.dir)) > 0.0)
 		vec3_mul_scalar(&(ray_hit.dir), -1.0);

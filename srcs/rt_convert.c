@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 11:06:19 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/12 16:39:09 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/13 14:42:07 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "matrix.h"
 #include "rtv1.h"
 
-void			compute_biais(t_ray *ray_hit, t_vec3 *p_hit_biais)
+void		compute_biais(t_ray *ray_hit, t_vec3 *p_hit_biais)
 {
 	vec3_cpy(p_hit_biais, &(ray_hit->dir));
 	vec3_mul_scalar(p_hit_biais, BIAIS);
@@ -57,12 +57,13 @@ void		pixel_to_screen(int x, int y, t_vec3 *camera, t_env *env)
 ** Convert color from vector (t_vec3) to int (t_color)
 */
 
-t_color		convert_color(t_vec3 *color)
+t_color		convert_color(t_vec3 *color, t_vec3 *obj_color)
 {
 	int	x;
 	int	y;
 	int	z;
 
+	vec3_mul(color, obj_color);
 	x = (unsigned char)((color->x < 1. ? color->x : 1.) * 255.);
 	y = (unsigned char)((color->y < 1. ? color->y : 1.) * 255.);
 	z = (unsigned char)((color->z < 1. ? color->z : 1.) * 255.);
