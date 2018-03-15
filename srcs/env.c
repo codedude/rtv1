@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 00:26:13 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/13 16:29:25 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/15 11:05:04 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "matrix.h"
 #include "objects.h"
 #include "ft_tpool.h"
+#include "parser.h"
 
 static void	env_init_screen(t_env *env, int width, int height)
 {
@@ -53,7 +54,7 @@ static void	env_init_shapes(t_env *env)
 	env->norm[CYLINDER] = &norm_cylinder;
 }
 
-int			env_init(t_env *env, int width, int height)
+int			env_init(t_env *env, char *map, int width, int height)
 {
 	if ((env->tp = tp_create(THREADS, TP_ON_START)) == NULL)
 		return (ERROR);
@@ -67,7 +68,7 @@ int			env_init(t_env *env, int width, int height)
 	env_init_scene(env);
 	env_init_shapes(env);
 	srand(time(NULL));
-	return (SUCCESS);
+	return (parse_map(env, map));
 }
 
 void		env_destroy(t_data *data)

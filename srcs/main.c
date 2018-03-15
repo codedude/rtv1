@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 17:52:32 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/08 16:20:53 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/15 10:32:28 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ int			main(int argc, char **argv)
 	t_data	data;
 
 	(void)argv;
-	if (argc == 0)
+	if (argc < 2)
 	{
 		ft_putstr("rtv1 : ./rtv1 MAP\n");
 		return (EXIT_SUCCESS);
 	}
-	if (env_init(&(data.env), WIDTH, HEIGHT) == ERROR)
+	if (env_init(&(data.env), argv[1], WIDTH, HEIGHT) == ERROR)
 		return (EXIT_FAILURE);
 	ft_mlx_init(&(data.mlx));
 	if (ft_mlx_win(&(data.mlx), data.env.width, data.env.height, TITLE)

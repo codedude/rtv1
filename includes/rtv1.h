@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 04:21:59 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/13 23:22:01 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/15 10:37:31 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,13 @@ typedef struct	s_env {
 	int			save_img;
 	int			width;
 	int			height;
+	t_color		background;
 	t_f64		ratio;
 	int			ratio_dir;
 	t_obj_lst	*objects;
 	t_vec3		cam_ang;
 	t_vec3		cam_orig;
+	t_f64		fov;
 	t_matrix	rot;
 	int			(*intersect[4])(t_ray *, t_object *, t_solution *);
 	void		(*norm[4])(t_ray *, t_object *);
@@ -74,7 +76,7 @@ typedef struct	s_algo {
 	int			end;
 }				t_algo;
 
-int				env_init(t_env *env, int width, int height);
+int				env_init(t_env *env, char *map, int width, int height);
 void			env_destroy(t_data *data);
 void			env_init_scene(t_env *env);
 t_f64			clamp_f64(t_f64 f, t_f64 lmin, t_f64 lmax);

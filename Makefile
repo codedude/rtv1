@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vparis <vparis@student.42.fr>              +#+  +:+       +#+         #
+#    By: valentin <valentin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/02 17:37:24 by vparis            #+#    #+#              #
-#    Updated: 2018/03/13 16:30:08 by vparis           ###   ########.fr        #
+#    Updated: 2018/03/15 10:31:12 by valentin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,12 +22,13 @@ IMG			=	saved_img
 
 SRCS		=	$(SRCD)/main.c $(SRCD)/ft_mlx.c $(SRCD)/ft_pixel.c \
 				$(SRCD)/env.c $(SRCD)/compute.c $(SRCD)/binds.c \
-				$(SRCD)/binds2.c $(SRCD)/objects.c $(SRCD)/parse.c\
+				$(SRCD)/binds2.c $(SRCD)/objects.c $(SRCD)/parse_tmp.c \
 				$(SRCD)/vec3_1.c $(SRCD)/vec3_2.c $(SRCD)/vec3_3.c \
 				$(SRCD)/vec3_4.c $(SRCD)/matrix_1.c $(SRCD)/matrix_2.c \
 				$(SRCD)/matrix_3.c $(SRCD)/export_bmp.c $(SRCD)/export_bmp2.c \
 				$(SRCD)/rt.c $(SRCD)/rt_norm.c $(SRCD)/rt_utils.c \
-				$(SRCD)/rt_convert.c $(SRCD)/rt_intersect.c $(SRCD)/rt_color.c
+				$(SRCD)/rt_convert.c $(SRCD)/rt_intersect.c $(SRCD)/rt_color.c \
+				$(SRCD)/reader.c $(SRCD)/parser.c
 OBJS		=	$(patsubst %.c, %.o, $(SRCS))
 
 CFLAGS		+=	-I$(INCD) -O3 -flto -march=native -g \
