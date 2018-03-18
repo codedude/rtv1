@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 10:31:17 by valentin          #+#    #+#             */
-/*   Updated: 2018/03/15 11:51:42 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/18 20:31:40 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ int		parse_map(t_env *env, char *map)
 		printf("$%s$\n", map_cut[i]);
 		i++;
 	}
+
 	return (SUCCESS);
 }
