@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reader.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 10:31:22 by valentin          #+#    #+#             */
-/*   Updated: 2018/03/15 11:51:12 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/19 14:42:32 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,20 @@
 #include <unistd.h>
 #include "libft.h"
 #include "parser.h"
+
+int			check_map(char *str)
+{
+	size_t	size;
+
+	size = ft_strlen(str);
+	if (size < 4)
+		return (ERROR);
+	if (ft_strncmp(str + (size - 3), ".rt", 3) != 0)
+		return (ERROR);
+	if (str[size - 4] == '/')
+		return (ERROR);
+	return (SUCCESS);
+}
 
 char		*read_map(char *filename)
 {
@@ -47,7 +61,7 @@ char		*read_map(char *filename)
 			{
 				free(buff);
 				close(fd);
-				ft_putendl("File too big");
+				ft_putendl("File is too big (MAX 1Mo)");
 				return (NULL);
 			}
 		}
@@ -57,7 +71,7 @@ char		*read_map(char *filename)
 	return (buff);
 }
 
-static int	trim_content(char **dest)
+int			trim_content(char **dest)
 {
 	char	*tmp;
 

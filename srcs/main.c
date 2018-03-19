@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 17:52:32 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/15 10:32:28 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/19 20:50:25 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int			main(int argc, char **argv)
 		ft_putstr("rtv1 : ./rtv1 MAP\n");
 		return (EXIT_SUCCESS);
 	}
-	if (env_init(&(data.env), argv[1], WIDTH, HEIGHT) == ERROR)
+	if (env_init(&(data.env), argv[1]) == ERROR)
 		return (EXIT_FAILURE);
 	ft_mlx_init(&(data.mlx));
 	if (ft_mlx_win(&(data.mlx), data.env.width, data.env.height, TITLE)

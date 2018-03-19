@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 00:26:13 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/15 11:05:04 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/19 20:50:18 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,16 @@
 #include "ft_tpool.h"
 #include "parser.h"
 
-static void	env_init_screen(t_env *env, int width, int height)
+static void	env_init_screen(t_env *env)
 {
-	env->width = width;
-	env->height = height;
-	if (width > height)
+	if (env->width > env->height)
 	{
-		env->ratio = (t_f64)width / (t_f64)height;
+		env->ratio = env->width / env->height;
 		env->ratio_dir = 1;
 	}
-	else if (width < height)
+	else if (env->width < env->height)
 	{
-		env->ratio = (t_f64)height / (t_f64)width;
+		env->ratio = env->height / env->width;
 		env->ratio_dir = -1;
 	}
 	else
@@ -54,7 +52,7 @@ static void	env_init_shapes(t_env *env)
 	env->norm[CYLINDER] = &norm_cylinder;
 }
 
-int			env_init(t_env *env, char *map, int width, int height)
+int			env_init(t_env *env, char *map)
 {
 	if ((env->tp = tp_create(THREADS, TP_ON_START)) == NULL)
 		return (ERROR);
@@ -64,11 +62,13 @@ int			env_init(t_env *env, char *map, int width, int height)
 	env->save_img = 0;
 	vec3_set(&(env->cam_orig), 0.0, 16.0, 60.);
 	vec3_set(&(env->cam_ang), -12.0, 0.0, 0.0);
-	env_init_screen(env, width, height);
 	env_init_scene(env);
 	env_init_shapes(env);
+	if (parse_map(env, map) == ERROR)
+		return (ERROR);
+	env_init_screen(env);
 	srand(time(NULL));
-	return (parse_map(env, map));
+	return (SUCCESS);
 }
 
 void		env_destroy(t_data *data)

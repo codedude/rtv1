@@ -1,13 +1,12 @@
 #Commentaire
 #Mandatory : canvas, camera
-
-#Optionnal : object
+#Optionnal : objects
 #Order free
 
 canvas
 {
-	width = 1024
-	height = 768
+	width = 2000
+	height = 600
 	background = 255 255 255
 }
 
@@ -15,20 +14,48 @@ camera
 {
 	pos = 0.0 30.0 0.0
 	ang = -8.0 0.0 0.0
-	#Order free
 	fov = 70
 }
-#Order free
-object
+
+light
+{
+	pos = 0.0 30.0 0.0
+	color = 255 255 255
+	intensity = 1.0 1.0 1.0
+}
+
+plan
 {
 	pos = 0.0 30.0 0.0
 	dir = 0.0 1.0 0.0
 	size = 5.0
 	color = 255 255 255
-	intensity = 0.6 0.6 0.6
 	phong = 5 0.1 0.9 0.33
 }
-#Order free
-#Order free
-#Order free
-#Order free
+
+sphere
+{
+	pos = 0.0 30.0 0.0
+	dir = 0.0 1.0 0.0
+	size = 5.0
+	color = 255 255 255
+	phong = 5 0.1 0.9 0.33
+}
+
+cone
+{
+	pos = 0.0 30.0 0.0
+	dir = 0.0 1.0 0.0
+	size = 5.0
+	color = 255 255 255
+	phong = 5 0.1 0.9 0.33
+}
+
+cylinder
+{
+	pos = 0.0 30.0 0.0
+	dir = 0.0 1.0 0.0
+	size = 5.0
+	color = 255 255 255
+	phong = 5 0.1 0.9 0.33
+}

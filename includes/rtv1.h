@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtv1.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 04:21:59 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/15 10:37:31 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/19 20:50:41 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct	s_algo {
 	int			end;
 }				t_algo;
 
-int				env_init(t_env *env, char *map, int width, int height);
+int				env_init(t_env *env, char *map);
 void			env_destroy(t_data *data);
 void			env_init_scene(t_env *env);
 t_f64			clamp_f64(t_f64 f, t_f64 lmin, t_f64 lmax);

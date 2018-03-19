@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: valentin <valentin@student.42.fr>          +#+  +:+       +#+         #
+#    By: vparis <vparis@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/02 17:37:24 by vparis            #+#    #+#              #
-#    Updated: 2018/03/15 10:31:12 by valentin         ###   ########.fr        #
+#    Updated: 2018/03/19 20:45:25 by vparis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,9 @@ SRCS		=	$(SRCD)/main.c $(SRCD)/ft_mlx.c $(SRCD)/ft_pixel.c \
 				$(SRCD)/matrix_3.c $(SRCD)/export_bmp.c $(SRCD)/export_bmp2.c \
 				$(SRCD)/rt.c $(SRCD)/rt_norm.c $(SRCD)/rt_utils.c \
 				$(SRCD)/rt_convert.c $(SRCD)/rt_intersect.c $(SRCD)/rt_color.c \
-				$(SRCD)/reader.c $(SRCD)/parser.c
+				$(SRCD)/reader.c $(SRCD)/parser.c $(SRCD)/parse_type.c \
+				$(SRCD)/parse_funs1.c $(SRCD)/parse_funs2.c \
+				$(SRCD)/parse_funs3.c
 OBJS		=	$(patsubst %.c, %.o, $(SRCS))
 
 CFLAGS		+=	-I$(INCD) -O3 -flto -march=native -g \
