@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 14:09:01 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/19 20:37:37 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/20 12:59:58 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,16 +124,6 @@ char			**check_line(char *str, int type, int *r)
 		tmp = NULL;
 	}
 	return (tmp);
-}
-
-int				parse_details(t_env *env, int id, char *line)
-{
-	t_parse_type	*parse_funs;
-
-	parse_funs = get_parse_funs();
-	if ((*parse_funs[id].f)(env, line) == ERROR)
-		return (ERROR);
-	return (SUCCESS);
 }
 
 int		check_counter_details(int counter[OBJECT_DETAILS_SIZE], int type)

@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 10:29:55 by valentin          #+#    #+#             */
-/*   Updated: 2018/03/19 19:27:18 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/20 13:04:17 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 
 typedef struct	s_parse_type {
 	char		*name;
-	int			(*f)(t_env *, char *str);
+	int			(*f)(t_env *, char **strs);
 	char		*types;
 }				t_parse_type;
 
@@ -68,21 +68,28 @@ int				parse_map(t_env *env, char *map);
 */
 
 int				parse_global(t_env *env, char **str, int type);
+t_parse_type	*get_parse_funs(void);
+
+/*
+** parse_details.c
+*/
+
+int				parse_details(t_env *env, int id, char *line);
 
 /*
 ** parse_funsX.c
 */
 
-int				parse_t_width(t_env *env, char *str);
-int				parse_t_height(t_env *env, char *str);
-int				parse_t_background(t_env *env, char *str);
-int				parse_t_ang(t_env *env, char *str);
-int				parse_t_fov(t_env *env, char *str);
-int				parse_t_pos(t_env *env, char *str);
-int				parse_t_dir(t_env *env, char *str);
-int				parse_t_size(t_env *env, char *str);
-int				parse_t_color(t_env *env, char *str);
-int				parse_t_intensity(t_env *env, char *str);
-int				parse_t_phong(t_env *env, char *str);
+int				parse_t_width(t_env *env, char **strs);
+int				parse_t_height(t_env *env, char **strs);
+int				parse_t_background(t_env *env, char **strs);
+int				parse_t_ang(t_env *env, char **strs);
+int				parse_t_fov(t_env *env, char **strs);
+int				parse_t_pos(t_env *env, char **strs);
+int				parse_t_dir(t_env *env, char **strs);
+int				parse_t_size(t_env *env, char **strs);
+int				parse_t_color(t_env *env, char **strs);
+int				parse_t_intensity(t_env *env, char **strs);
+int				parse_t_phong(t_env *env, char **strs);
 
 #endif

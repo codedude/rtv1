@@ -6,7 +6,7 @@
 #    By: vparis <vparis@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/02 17:37:24 by vparis            #+#    #+#              #
-#    Updated: 2018/03/19 20:45:25 by vparis           ###   ########.fr        #
+#    Updated: 2018/03/20 13:03:37 by vparis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRCS		=	$(SRCD)/main.c $(SRCD)/ft_mlx.c $(SRCD)/ft_pixel.c \
 				$(SRCD)/rt_convert.c $(SRCD)/rt_intersect.c $(SRCD)/rt_color.c \
 				$(SRCD)/reader.c $(SRCD)/parser.c $(SRCD)/parse_type.c \
 				$(SRCD)/parse_funs1.c $(SRCD)/parse_funs2.c \
-				$(SRCD)/parse_funs3.c
+				$(SRCD)/parse_funs3.c $(SRCD)/parse_details.c
 OBJS		=	$(patsubst %.c, %.o, $(SRCS))
 
 CFLAGS		+=	-I$(INCD) -O3 -flto -march=native -g \

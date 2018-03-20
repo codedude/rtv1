@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 11:06:19 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/19 20:48:16 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/20 18:13:36 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,23 @@ void		pixel_to_screen(int x, int y, t_vec3 *camera, t_env *env)
 {
 	t_f64	fov;
 
-	fov = ft_tan(FOV / 2.);
+	fov = ft_tan(env->fov / 2.);
 	camera->x = ((t_f64)x + 0.5) / (t_f64)env->width;
 	camera->y = ((t_f64)y + 0.5) / (t_f64)env->height;
 	if (env->ratio_dir == 1)
 	{
 		camera->x = (2 * camera->x - 1.) * fov * env->ratio;
-		camera->y = (1. - 2 * camera->y) * fov;
+		camera->y = (1. - 2. * camera->y) * fov;
 	}
 	else if (env->ratio_dir == -1)
 	{
 		camera->x = (2 * camera->x - 1.) * fov;
-		camera->y = (1. - 2 * camera->y) * fov * env->ratio;
+		camera->y = (1. - 2. * camera->y) * fov * env->ratio;
 	}
 	else
 	{
 		camera->x = (2 * camera->x - 1.) * fov;
-		camera->y = (1. - 2 * camera->y) * fov;
+		camera->y = (1. - 2. * camera->y) * fov;
 	}
 	camera->z = -1.;
 }

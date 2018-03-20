@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_type.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/24 19:08:37 by valentin          #+#    #+#             */
-/*   Updated: 2018/01/30 23:32:00 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/20 17:21:18 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,14 @@
 # define CHARSET_BASE_16L	"0123456789abcdef"
 # define CHARSET_BASE_16U	"0123456789ABCDEF"
 # define CHARSET_BASE_16	"0123456789abcdefABCDEF"
+# define CHARSET_NUMBER		"0123456789-+."
 # if !defined(INT_MIN) && !defined(INT_MAX)
-#  define INT_MIN			(-INT_MAX -1)
 #  define INT_MAX			(+2147483647)
+#  define INT_MIN			(-INT_MAX -1)
 # endif
 # if !defined(INT64_MIN) && !defined(INT64_MAX)
-#  define INT64_MIN			(-INT64_MAX -1L)
 #  define INT64_MAX			(+9223372036854775807L)
+#  define INT64_MIN			(-INT64_MAX -1L)
 # endif
 
 /*

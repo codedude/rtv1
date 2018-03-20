@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/02 22:22:13 by vparis            #+#    #+#             */
-/*   Updated: 2018/01/12 13:45:17 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/20 17:58:16 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void				ft_strsplit_free(char **str);
 int					ft_atoi(const char *nptr);
 char				*ft_itoa(int n);
 int					ft_atoi_base(char const *nptr, char const *base);
+int					ft_atoi_s(const char *str, int *nb);
 
 /*
 ** ASCII Characters checking

@@ -3,16 +3,19 @@
 #Optionnal : objects
 #Order free
 
+#2147483647
+#-2147483648
+
 canvas
 {
-	width = 2000
-	height = 600
+	width = 768
+	height = 1024
 	background = 255 255 255
 }
 
 camera
 {
-	pos = 0.0 30.0 0.0
+	pos = 0. 30.04 .0
 	ang = -8.0 0.0 0.0
 	fov = 70
 }

@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 00:26:13 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/19 20:50:18 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/20 18:13:26 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ static void	env_init_screen(t_env *env)
 {
 	if (env->width > env->height)
 	{
-		env->ratio = env->width / env->height;
+		env->ratio = (t_f64)env->width / (t_f64)env->height;
 		env->ratio_dir = 1;
 	}
-	else if (env->width < env->height)
+	else if (env->height > env->width)
 	{
-		env->ratio = env->height / env->width;
+		env->ratio = (t_f64)env->height / (t_f64)env->width;
 		env->ratio_dir = -1;
 	}
 	else
