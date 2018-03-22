@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 00:26:13 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/20 18:13:26 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/22 17:19:09 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ int			env_init(t_env *env, char *map)
 	env->refresh = 1;
 	env->show_fps = 0;
 	env->save_img = 0;
-	vec3_set(&(env->cam_orig), 0.0, 16.0, 60.);
-	vec3_set(&(env->cam_ang), -12.0, 0.0, 0.0);
 	env_init_scene(env);
 	env_init_shapes(env);
 	if (parse_map(env, map) == ERROR)

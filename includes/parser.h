@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 10:29:55 by valentin          #+#    #+#             */
-/*   Updated: 2018/03/20 13:04:17 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/22 17:26:20 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,19 @@
 ** Max map filsize : 4Mo
 */
 
-# define BUFF_SIZE		1048576
-# define BUFF_READ		4096
+# define BUFF_SIZE				(1 * 1024 * 1024)
+# define BUFF_READ				4096
 
 # define OBJECT_SIZE			7
-# define OBJECT_DETAILS_SIZE	11
+# define OBJECT_DETAILS_SIZE	12
 
 /*
 ** Type counter order
 ** canvas, camera, light, plan, sphere, cylinder, cone
 ** -----------------------------
 ** Counter order list
-** width, height, background, ang, fov, pos, dir, size, color, intensity, phong
+** width, height, background, ang, orig, fov, 
+** pos, dir, size, color, intensity, phong
 */
 
 /*
@@ -46,6 +47,7 @@ typedef struct	s_parse_type {
 	char		*name;
 	int			(*f)(t_env *, char **strs);
 	char		*types;
+	size_t		size;
 }				t_parse_type;
 
 /*
@@ -84,6 +86,7 @@ int				parse_t_width(t_env *env, char **strs);
 int				parse_t_height(t_env *env, char **strs);
 int				parse_t_background(t_env *env, char **strs);
 int				parse_t_ang(t_env *env, char **strs);
+int				parse_t_orig(t_env *env, char **strs);
 int				parse_t_fov(t_env *env, char **strs);
 int				parse_t_pos(t_env *env, char **strs);
 int				parse_t_dir(t_env *env, char **strs);

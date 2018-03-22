@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/20 12:59:53 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/20 17:42:08 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/22 16:33:56 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,25 @@ int		check_numbers(char **tmp)
 			j++;
 		if (tmp[i][j] == 0 && j > sign)
 			return (SUCCESS);
-		if(tmp[i][j] == '.')
+		if(tmp[i][j] == '.' && j > sign)
 			j++;
 		while (ft_isdigit(tmp[i][j]))
 			j++;
-		if (tmp[i][j] != 0)
+		if (tmp[i][j] != 0 || j < 3 + sign)
 			return (ERROR);
 		i++;
 	}
 	return (SUCCESS);
+}
+
+static size_t	len_strs(char **strs)
+{
+	size_t	i;
+
+	i = 0;
+	while (strs[i] != NULL)
+		i++;
+	return (i);
 }
 
 int		parse_details(t_env *env, int id, char *line)
@@ -58,7 +68,9 @@ int		parse_details(t_env *env, int id, char *line)
 	if ((tmp = ft_strsplit_whitespaces(line)) == NULL)
 		return (ERROR);
 	parse_funs = get_parse_funs();
-	if (check_numbers(tmp) == ERROR
+	if (parse_funs[id].size != len_strs(tmp))
+		r = ERROR;
+	else if (check_numbers(tmp) == ERROR
 		|| (*parse_funs[id].f)(env, tmp) == ERROR)
 		r = ERROR;
 	ft_strsplit_free(tmp);

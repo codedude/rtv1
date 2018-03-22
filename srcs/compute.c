@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 14:47:10 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/08 14:54:30 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/22 17:22:37 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void			clean_maps(t_data *data)
 	i = 0;
 	while (i < data->env.height * data->env.width)
 	{
-		tmp[i] = C_WHITE;
+		tmp[i] = data->env.background;
 		i++;
 	}
 }

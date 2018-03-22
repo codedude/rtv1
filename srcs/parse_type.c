@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 14:09:01 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/20 12:59:58 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/22 17:08:28 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,19 @@
 t_parse_type	*get_parse_funs(void)
 {
 	static t_parse_type	parse_type[] = {
-		{"width", &parse_t_width, "0"},
-		{"height", &parse_t_height, "0"},
-		{"background", &parse_t_background, "0"},
-		{"ang", &parse_t_ang, "1"},
-		{"fov", &parse_t_fov, "1"},
-		{"pos", &parse_t_pos, "123456"},
-		{"dir", &parse_t_dir, "3456"},
-		{"size", &parse_t_size, "3456"},
-		{"color", &parse_t_color, "23456"},
-		{"intensity", &parse_t_intensity, "2"},
-		{"phong", &parse_t_phong, "3456"},
-		{NULL, NULL, NULL}
+		{"width", &parse_t_width, "0", 1},
+		{"height", &parse_t_height, "0", 1},
+		{"background", &parse_t_background, "0", 3},
+		{"ang", &parse_t_ang, "1", 3},
+		{"orig", &parse_t_orig, "1", 3},
+		{"fov", &parse_t_fov, "1", 1},
+		{"pos", &parse_t_pos, "23456", 3},
+		{"dir", &parse_t_dir, "3456", 3},
+		{"size", &parse_t_size, "3456", 1},
+		{"color", &parse_t_color, "23456", 3},
+		{"intensity", &parse_t_intensity, "2", 3},
+		{"phong", &parse_t_phong, "3456", 4},
+		{NULL, NULL, NULL, 0}
 	};
 
 	return (parse_type);
@@ -133,10 +134,10 @@ int		check_counter_details(int counter[OBJECT_DETAILS_SIZE], int type)
 	else if (type == 1)
 		return (counter[3] == 1 && counter[4] == 1 && counter[5] == 1);
 	else if (type == 2)
-		return (counter[5] == 1 && counter[8] == 1  && counter[9] == 1);
+		return (counter[6] == 1 && counter[9] == 1  && counter[10] == 1);
 	else
-		return (counter[5] == 1 && counter[6] == 1 && counter[7] == 1
-			&& counter[8] == 1 && counter[10] == 1);
+		return (counter[6] == 1 && counter[7] == 1 && counter[8] == 1
+			&& counter[9] == 1 && counter[11] == 1);
 	return (0);
 }
 

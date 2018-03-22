@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 12:46:39 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/13 16:29:07 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/22 15:11:30 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,6 @@
 #include "ft_mlx.h"
 #include "objects.h"
 #include "matrix.h"
-
-t_f64		clamp_f64(t_f64 f, t_f64 lmin, t_f64 lmax)
-{
-	if (f < lmin)
-		return (lmin);
-	else if (f > lmax)
-		return (lmax);
-	return (f);
-}
 
 t_obj_lst	*object_add(t_obj_lst **objects, t_object *object)
 {
