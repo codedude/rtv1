@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 10:31:17 by valentin          #+#    #+#             */
-/*   Updated: 2018/03/19 19:26:48 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/24 18:11:39 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,19 @@
 
 int		parse_check_header(char *str)
 {
-	if (ft_strcmp(str, "canvas") == 0)
+	if (ft_strcmp(str, "plane") == 0)
 		return (0);
-	else if (ft_strcmp(str, "camera") == 0)
-		return (1);
-	else if (ft_strcmp(str, "light") == 0)
-		return (2);
-	else if (ft_strcmp(str, "plan") == 0)
-		return (3);
 	else if (ft_strcmp(str, "sphere") == 0)
-		return (4);
-	else if (ft_strcmp(str, "cylinder") == 0)
-		return (5);
+		return (1);
 	else if (ft_strcmp(str, "cone") == 0)
+		return (2);
+	else if (ft_strcmp(str, "cylinder") == 0)
+		return (3);
+	else if (ft_strcmp(str, "light") == 0)
+		return (4);
+	else if (ft_strcmp(str, "canvas") == 0)
+		return (5);
+	else if (ft_strcmp(str, "camera") == 0)
 		return (6);
 	else
 		return (-1);
@@ -42,7 +42,7 @@ int		parse_check_header(char *str)
 
 int		check_counter(int counter[OBJECT_SIZE])
 {
-	return (counter[0] == 1 && counter[1] == 1 && counter[2] >= 0);
+	return (counter[5] == 1 && counter[6] == 1);
 }
 
 /*

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vparis <vparis@student.42.fr>              +#+  +:+       +#+         #
+#    By: valentin <valentin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/02 17:37:24 by vparis            #+#    #+#              #
-#    Updated: 2018/03/20 13:03:37 by vparis           ###   ########.fr        #
+#    Updated: 2018/03/24 18:21:32 by valentin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ IMG			=	saved_img
 
 SRCS		=	$(SRCD)/main.c $(SRCD)/ft_mlx.c $(SRCD)/ft_pixel.c \
 				$(SRCD)/env.c $(SRCD)/compute.c $(SRCD)/binds.c \
-				$(SRCD)/binds2.c $(SRCD)/objects.c $(SRCD)/parse_tmp.c \
+				$(SRCD)/binds2.c $(SRCD)/objects.c $(SRCD)/objects_set.c \
 				$(SRCD)/vec3_1.c $(SRCD)/vec3_2.c $(SRCD)/vec3_3.c \
 				$(SRCD)/vec3_4.c $(SRCD)/matrix_1.c $(SRCD)/matrix_2.c \
 				$(SRCD)/matrix_3.c $(SRCD)/export_bmp.c $(SRCD)/export_bmp2.c \
@@ -33,7 +33,7 @@ SRCS		=	$(SRCD)/main.c $(SRCD)/ft_mlx.c $(SRCD)/ft_pixel.c \
 				$(SRCD)/parse_funs3.c $(SRCD)/parse_details.c
 OBJS		=	$(patsubst %.c, %.o, $(SRCS))
 
-CFLAGS		+=	-I$(INCD) -O3 -flto -march=native -g \
+CFLAGS		+=	-I$(INCD) -O3 -flto -march=native -g -fsanitize=address \
 				-I$(LIBFTD)/includes -I$(LIBTPOOLD)/includes -I$(MLXD)
 LDFLAGS		+=	-Wextra -Wall -Wno-unused-result
 LDLIBS		+=	-L$(LIBFTD) -lft -L$(LIBTPOOLD) -ltpool -L$(MLXD) -lmlx -lm \

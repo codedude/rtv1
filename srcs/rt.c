@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 11:22:50 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/13 16:27:54 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/24 23:04:20 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static t_color	compute_color(t_env *env, t_ray *ray, t_object *obj, t_f64 t)
 		vec3_mul_scalar(&(ray_hit.dir), -1.0);
 	vec3_cpy(&(ray->orig), &p_hit_biais);
 	color = compute_light(env, ray, &ray_hit, obj);
+
 	return (color);
 }
 
@@ -113,8 +114,8 @@ static void		draw_start(t_data *data, t_vec3 *dir, int i, int j)
 	vec3_norm(dir);
 	vec3_cpy(&(ray.dir), dir);
 	vec3_cpy(&(ray.orig), &(data->env.cam_orig));
-	obj = trace(&(data->env), &(ray), &solution);
-	if (obj != NULL && obj->type != LIGHT)
+	obj = trace(&(data->env), &ray, &solution);
+	if (obj != NULL)
 	{
 		color = compute_color(&(data->env), &ray, obj, solution.t);
 		ft_mlx_put(&(data->mlx), j, i, color);

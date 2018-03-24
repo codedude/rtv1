@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_details.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/20 12:59:53 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/22 16:33:56 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/24 22:24:20 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,25 @@ static size_t	len_strs(char **strs)
 	return (i);
 }
 
-int		parse_details(t_env *env, int id, char *line)
+int		parse_details(t_env *env, int id, char *line, t_object *obj)
 {
 	t_parse_type	*parse_funs;
 	char			**tmp;
 	int				r;
+	void			*param;
 
 	r = SUCCESS;
 	if ((tmp = ft_strsplit_whitespaces(line)) == NULL)
 		return (ERROR);
 	parse_funs = get_parse_funs();
-	if (parse_funs[id].size != len_strs(tmp))
+
+	if (parse_funs[id].size != len_strs(tmp) || check_numbers(tmp) == ERROR)
 		r = ERROR;
-	else if (check_numbers(tmp) == ERROR
-		|| (*parse_funs[id].f)(env, tmp) == ERROR)
+	if (obj == NULL)
+		param = (void *)env;
+	else
+		param = (void *)obj;
+	if ((*parse_funs[id].f)(param, tmp) == ERROR)
 		r = ERROR;
 	ft_strsplit_free(tmp);
 	return (r);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtv1.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 04:21:59 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/22 16:44:59 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/24 22:55:34 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@
 # include "matrix.h"
 # include "objects.h"
 
-# define WIDTH			1024
-# define HEIGHT			768
-# define FOV			70.
 # define FLOAT_INF		1e8
 # define INTER_MIN		1e-8
 # define BIAIS			1e-8
@@ -60,9 +57,8 @@ typedef struct	s_env {
 	t_vec3		cam_orig;
 	t_f64		fov;
 	t_matrix	rot;
-	int			(*intersect[4])(t_ray *, t_object *, t_solution *);
-	void		(*norm[4])(t_ray *, t_object *);
-
+	int			(*intersect[OBJECTS])(t_ray *, t_object *, t_solution *);
+	void		(*norm[OBJECTS])(t_ray *, t_object *);
 }				t_env;
 
 typedef struct	s_data {
@@ -78,7 +74,6 @@ typedef struct	s_algo {
 
 int				env_init(t_env *env, char *map);
 void			env_destroy(t_data *data);
-void			env_init_scene(t_env *env);
 
 t_f64			clamp_f64(t_f64 f, t_f64 lmin, t_f64 lmax);
 int				clamp_i32(int f, int lmin, int lmax);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_funs1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 14:30:20 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/22 17:27:24 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/24 17:46:05 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,36 @@
 #include "matrix.h"
 #include "objects.h"
 
-int		parse_t_width(t_env *env, char **strs)
+int		parse_t_width(void *data, char **strs)
 {
+	t_env	*env;
 	int		n;
 
+	env = (t_env *)data;
 	if (ft_atoi_s(strs[0], &n) == ERROR)
 		return (ERROR);
-	env->width = clamp_i32(n, 1, 2560);
+	env->width = clamp_i32(n, 1, 2500);
 	return (SUCCESS);
 }
 
-int		parse_t_height(t_env *env, char **strs)
+int		parse_t_height(void  *data, char **strs)
 {
-	int		n;
+	t_env	*env;
+	int	n;
 
+	env = (t_env *)data;
 	if (ft_atoi_s(strs[0], &n) == ERROR)
 		return (ERROR);
-	env->height = clamp_i32(n, 1, 1440);
+	env->height = clamp_i32(n, 1, 1400);
 	return (SUCCESS);
 }
 
-int		parse_t_background(t_env *env, char **strs)
+int		parse_t_background(void  *data, char **strs)
 {
-	int	n[3];
+	t_env	*env;
+	int		n[3];
 
+	env = (t_env *)data;
 	if (ft_atoi_s(strs[0], &n[0]) == ERROR
 		|| ft_atoi_s(strs[1], &n[1]) == ERROR
 		|| ft_atoi_s(strs[2], &n[2]) == ERROR)
@@ -56,10 +62,12 @@ int		parse_t_background(t_env *env, char **strs)
 	return (SUCCESS);
 }
 
-int		parse_t_ang(t_env *env, char **strs)
+int		parse_t_ang(void  *data, char **strs)
 {
+	t_env	*env;
 	t_f64	n[3];
 
+	env = (t_env *)data;
 	if (ft_atof64_s(strs[0], &n[0]) == ERROR
 		|| ft_atof64_s(strs[1], &n[1]) == ERROR
 		|| ft_atof64_s(strs[2], &n[2]) == ERROR)
@@ -72,10 +80,12 @@ int		parse_t_ang(t_env *env, char **strs)
 	return (SUCCESS);
 }
 
-int		parse_t_fov(t_env *env, char **strs)
+int		parse_t_fov(void  *data, char **strs)
 {
+	t_env	*env;
 	int		n;
-	
+
+	env = (t_env *)data;
 	if (ft_atoi_s(strs[0], &n) == ERROR)
 		return (ERROR);
 	env->fov = (t_f64)clamp_f64(n, 1, 180);

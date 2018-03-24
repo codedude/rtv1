@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 14:33:24 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/13 16:18:55 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/24 23:02:17 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@
 #include "objects.h"
 #include "rtv1.h"
 
-int				is_light(t_object *obj)
+inline int		is_light(t_object *obj)
 {
-	return (obj->intensity.x > 0.0 || obj->intensity.y > 0.0
-			|| obj->intensity.z > 0.0);
+	return (obj->type == LIGHT);
 }
 
 t_obj_lst		*find_next_light(t_obj_lst *lst)

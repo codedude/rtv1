@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 00:26:13 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/22 17:19:09 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/24 18:26:16 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	env_init_screen(t_env *env)
 
 static void	env_init_shapes(t_env *env)
 {
+	env->objects = NULL;
 	env->intersect[PLANE] = &intersect_plane;
 	env->intersect[SPHERE] = &intersect_sphere;
 	env->intersect[CONE] = &intersect_cone;
@@ -60,7 +61,6 @@ int			env_init(t_env *env, char *map)
 	env->refresh = 1;
 	env->show_fps = 0;
 	env->save_img = 0;
-	env_init_scene(env);
 	env_init_shapes(env);
 	if (parse_map(env, map) == ERROR)
 		return (ERROR);
