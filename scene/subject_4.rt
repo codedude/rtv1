@@ -1,0 +1,66 @@
+#all, 1 spot
+
+canvas
+{
+	width = 1024
+	height = 768
+	background = 0 0 0
+}
+
+camera
+{
+	orig = 0.0 15.0 45.0
+	ang = -5.0 0.0 0.0
+	fov = 70
+}
+
+light
+{
+	pos = 33.0 6.0 25.0
+	intensity = 2.0 2.0 2.0
+}
+
+plane
+{
+	pos = 0.0 0.0 0.0
+	dir = 0.0 1.0 0.0
+	size = 1.0
+	color = 120 120 130
+	phong = 0 0.1 0.98 0.0
+}
+
+plane
+{
+	pos = 0.0 0.0 -75.0
+	dir = 0.0 0.0 1.0
+	size = 1.0
+	color = 30 50 220
+	phong = 0 0.1 0.98 0.0
+}
+
+sphere
+{
+	pos = 0.0 7.0 0.0
+	dir = 0.0 0.0 0.0
+	size = 8.0
+	color = 254 80 80
+	phong = 12 0.1 0.90 0.33
+}
+
+cone
+{
+	pos = 15.0 2.0 0.0
+	dir = -0.8 1.0 0.0
+	size = 20.0
+	color = 254 254 2
+	phong = 8 0.1 0.90 0.33
+}
+
+cylinder
+{
+	pos = -20.0 0.0 0.0
+	dir = 1.0 1.0 0.0
+	size = 4.0
+	color = 70 254 70
+	phong = 8 0.1 0.90 0.33
+}

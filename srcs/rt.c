@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 11:22:50 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/24 23:04:20 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/25 20:29:38 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_color			compute_light(t_env *env, t_ray *ray, t_ray *ray_hit,
 	{
 		solution.t = compute_raylight(ray, ray_hit, &ray_light,
 			iter_light->object);
-		if (is_shadow(env, &ray_light, &solution) == ERROR)
+		if (is_shadow(env, &ray_light, &solution, obj) == ERROR)
 		{
 			color_intensity(&intensity, iter_light->object, solution.t);
 			solution.t = vec3_dot(&(ray_hit->dir), &(ray_light.dir));

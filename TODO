@@ -1,2 +1,3 @@
 - Segfault pour une petite taille de fenetre
 - Check les leaks / invalid read/write
+- Check specular algo

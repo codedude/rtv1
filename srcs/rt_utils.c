@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 14:33:24 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/24 23:02:17 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/25 20:31:22 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,21 @@ t_obj_lst		*find_next_object(t_obj_lst *lst)
 	return (lst);
 }
 
-int				is_shadow(t_env *env, t_ray *ray_light, t_solution *solution)
+int				is_shadow(t_env *env, t_ray *ray_light, t_solution *solution,
+							t_object *obj)
 {
 	t_obj_lst	*iter_object;
 
 	iter_object = env->objects;
 	while ((iter_object = find_next_object(iter_object)) != NULL)
 	{
-		if (env->intersect[iter_object->object->type](ray_light,
-			iter_object->object, solution) == SUCCESS)
-			if (solution->t0 < solution->t && solution->t0 > 0.)
-				return (SUCCESS);
+		if (obj != iter_object->object)
+		{
+			if (env->intersect[iter_object->object->type](ray_light,
+				iter_object->object, solution) == SUCCESS)
+				if (solution->t0 < solution->t && solution->t0 > 0.)
+					return (SUCCESS);
+		}
 		iter_object = iter_object->next;
 	}
 	return (ERROR);

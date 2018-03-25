@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_color.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 16:39:36 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/13 16:26:04 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/25 23:23:49 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void			color_specular(t_vec3 *intensity, t_vec3 *color, t_object *obj,
 {
 	t_vec3	vs;
 
-	if (t > INTER_MIN)
+	if (t > 0.0)
 	{
 		t = pow(t, obj->phong[PHONG_SHINI]) * obj->phong[PHONG_KS];
 		vec3_cpy(&vs, intensity);

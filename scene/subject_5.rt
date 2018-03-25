@@ -1,0 +1,192 @@
+#complex
+
+canvas
+{
+	width = 1024
+	height = 768
+	background = 0 0 0
+}
+
+camera
+{
+	orig = 0.0 15.0 50.0
+	ang = -6.0 0.0 0.0
+	fov = 90
+}
+
+#Droite
+light
+{
+	pos = 60.0 6.0 50.0
+	intensity = 2.5 2.5 2.5
+}
+#Gauche
+light
+{
+	pos = -60.0 6.0 50.0
+	intensity = 2.5 2.5 2.5
+}
+
+#Droite
+light
+{
+	pos = -8.0 12.0 6.0
+	intensity = 0.5 0.5 0.5
+}
+#Gauche
+light
+{
+	pos = 8.0 12.0 6.0
+	intensity = 0.5 0.5 0.5
+}
+
+#Bas
+plane
+{
+	pos = 0.0 0.0 0.0
+	dir = 0.0 1.0 0.0
+	size = 1.0
+	color = 140 140 150
+	phong = 0 0.25 0.83 0.0
+}
+#Haut
+plane
+{
+	pos = 0.0 40.0 0.0
+	dir = 0.0 -1.0 0.0
+	size = 1.0
+	color = 70 70 80
+	phong = 0 0.25 0.83 0.0
+}
+#Fond
+plane
+{
+	pos = 0.0 0.0 -40.0
+	dir = 0.0 0.0 1.0
+	size = 1.0
+	color = 30 50 220
+	phong = 0 0.25 0.83 0.0
+}
+
+#Rouge milieu
+sphere
+{
+	pos = 0.0 5.0 12.0
+	dir = 0.0 0.0 0.0
+	size = 3.0
+	color = 254 80 80
+	phong = 20 0.1 0.90 0.33
+}
+
+#4 spheres basses
+#
+sphere
+{
+	pos = -20.0 0.0 20.0
+	dir = 0.0 0.0 0.0
+	size = 5.0
+	color = 80 80 80
+	phong = 12 0.1 0.90 0.8
+}
+
+sphere
+{
+	pos = 20.0 0.0 20.0
+	dir = 0.0 0.0 0.0
+	size = 5.0
+	color = 80 80 80
+	phong = 12 0.1 0.90 0.8
+}
+
+sphere
+{
+	pos = -20.0 0.0 -20.0
+	dir = 0.0 0.0 0.0
+	size = 5.0
+	color = 80 80 80
+	phong = 12 0.1 0.90 0.8
+}
+
+sphere
+{
+	pos = 20.0 0.0 -20.0
+	dir = 0.0 0.0 0.0
+	size = 5.0
+	color = 80 80 80
+	phong = 12 0.1 0.90 0.8
+}
+
+#4 spheres hautes
+#
+sphere
+{
+	pos = -20.0 40.0 20.0
+	dir = 0.0 0.0 0.0
+	size = 5.0
+	color = 80 80 80
+	phong = 12 0.1 0.90 0.8
+}
+
+sphere
+{
+	pos = 20.0 40.0 20.0
+	dir = 0.0 0.0 0.0
+	size = 5.0
+	color = 80 80 80
+	phong = 12 0.1 0.90 0.8
+}
+
+sphere
+{
+	pos = -20.0 40.0 -20.0
+	dir = 0.0 0.0 0.0
+	size = 5.0
+	color = 80 80 80
+	phong = 12 0.1 0.90 0.8
+}
+
+sphere
+{
+	pos = 20.0 40.0 -20.0
+	dir = 0.0 0.0 0.0
+	size = 5.0
+	color = 80 80 80
+	phong = 12 0.1 0.90 0.8
+}
+
+#4 cylindres
+cylinder
+{
+	pos = 20.0 0.0 -20.0
+	dir = 0.0 1.0 0.0
+	size = 3.0
+	color = 80 80 80
+	phong = 12 0.1 0.90 0.8
+}
+
+cylinder
+{
+	pos = -20.0 0.0 -20.0
+	dir = 0.0 1.0 0.0
+	size = 3.0
+	color = 80 80 80
+	phong = 12 0.1 0.90 0.8
+}
+
+cylinder
+{
+	pos = 20.0 0.0 20.0
+	dir = 0.0 1.0 0.0
+	size = 3.0
+	color = 80 80 80
+	phong = 12 0.1 0.90 0.8
+}
+
+cylinder
+{
+	pos = -20.0 0.0 20.0
+	dir = 0.0 1.0 0.0
+	size = 3.0
+	color = 80 80 80
+	phong = 12 0.1 0.90 0.8
+}

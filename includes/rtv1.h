@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 04:21:59 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/24 22:55:34 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/25 23:24:24 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define FLOAT_INF		1e8
 # define INTER_MIN		1e-8
 # define BIAIS			1e-8
-# define L_DIST_FACTOR	(-2.0 * 100.)
+# define L_DIST_FACTOR	(-2.0 * 120.)
 # define TITLE			"RTV1 DX4000"
 # define FILE_NAME		"saved_img/rt_XXX.bmp"
 
@@ -99,7 +99,8 @@ t_f64			compute_reflect_ray(t_vec3 *v, t_vec3 *n, t_vec3 *l, t_f64 dln);
 int				is_light(t_object *obj);
 t_obj_lst		*find_next_light(t_obj_lst *lst);
 t_obj_lst		*find_next_object(t_obj_lst *lst);
-int				is_shadow(t_env *env, t_ray *ray_light, t_solution *solution);
+int				is_shadow(t_env *env, t_ray *ray_light, t_solution *solution,
+							t_object *obj);
 
 void			color_intensity(t_vec3 *intensity, t_object *light, t_f64 dist);
 void			color_ambient(t_vec3 *color, t_object *obj);
