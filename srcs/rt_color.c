@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+///* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   rt_color.c                                         :+:      :+:    :+:   */
@@ -31,10 +31,10 @@ t_f64			compute_reflect_ray(t_vec3 *v, t_vec3 *n, t_vec3 *l, t_f64 dln)
 	t_vec3	r;
 
 	vec3_cpy(&r, n);
-	vec3_mul_scalar(&r, 2.0 * dln);
-	vec3_sub(&r, l);
+	vec3_mul_scalar(&r, -2.0 * dln);
+	vec3_add(&r, l);
 	vec3_norm(&r);
-	return (fabs(vec3_dot(&r, v)));
+	return (vec3_dot(&r, v));
 }
 
 void			color_intensity(t_vec3 *intensity, t_object *light, t_f64 dist)

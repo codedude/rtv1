@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   compute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 14:47:10 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/24 16:53:49 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/26 18:08:58 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libft.h"
 #include "rtv1.h"
 
@@ -49,6 +50,8 @@ void			draw_img(t_data *data)
 		i++;
 	}
 	data->env.rot = matrix_rot(&(data->env.cam_ang));
+	printf("\n");
 	tp_wait_for_queue(data->env.tp);
+	printf("\n");
 	matrix_del(MATRIX_33, &(data->env.rot));
 }

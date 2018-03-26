@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 11:22:50 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/25 20:29:38 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/26 17:45:04 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,10 @@ static void		draw_start(t_data *data, t_vec3 *dir, int i, int j)
 	vec3_cpy(&(ray.orig), &(data->env.cam_orig));
 	obj = trace(&(data->env), &ray, &solution);
 	if (obj != NULL)
-	{
 		color = compute_color(&(data->env), &ray, obj, solution.t);
-		ft_mlx_put(&(data->mlx), j, i, color);
-	}
+	else
+		color = data->env.background;
+	ft_mlx_put(&(data->mlx), j, i, color);
 }
 
 int				draw_rt(void *data)
@@ -128,6 +128,7 @@ int				draw_rt(void *data)
 	t_vec3		camera;
 	int			i;
 	int			j;
+
 
 	algo = (t_algo *)data;
 	i = algo->start;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tp_pool2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/10 22:46:27 by valentin          #+#    #+#             */
-/*   Updated: 2018/01/10 23:29:31 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/26 18:02:44 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ int			tp_wait_for_queue(t_tpool *tp)
 	{
 		pthread_cond_wait(&(tp->cond), &(tp->mutex));
 		if (tp_launch_task(tp) == ERROR)
+		{
+			pthread_mutex_unlock(&(tp->mutex));
 			return (ERROR);
+		}
 	}
 	pthread_mutex_unlock(&(tp->mutex));
 	return (SUCCESS);
