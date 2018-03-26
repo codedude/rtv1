@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tp_pool2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/10 22:46:27 by valentin          #+#    #+#             */
-/*   Updated: 2018/03/26 18:02:44 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/26 20:12:46 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,25 @@ static int	tp_find_slot(t_tpool *tp)
 		i++;
 	}
 	return (-1);
+}
+
+static int	tp_is_done(t_tpool *tp)
+{
+	int	i;
+
+	i = 0;
+	while (i < tp->size)
+	{
+		if (tp->threads[i].state == TH_BUSY)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static int	tp_is_queue(t_tpool *tp)
+{
+	return (tp->queue->size > 0);
 }
 
 static int	tp_launch_task(t_tpool *tp)
@@ -55,7 +74,7 @@ int			tp_wait_for_queue(t_tpool *tp)
 	tp->working_threads = 0;
 	tp_launch_task(tp);
 	pthread_mutex_lock(&(tp->mutex));
-	while (tp_find_slot(tp) == -1 || tp->working_threads > 0)
+	while (tp_is_queue(tp) || tp_is_done(tp) == 0)
 	{
 		pthread_cond_wait(&(tp->cond), &(tp->mutex));
 		if (tp_launch_task(tp) == ERROR)

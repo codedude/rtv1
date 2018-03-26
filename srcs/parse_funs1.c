@@ -6,12 +6,11 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 14:30:20 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/24 17:46:05 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/26 20:16:16 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include "parser.h"
 #include "libft.h"
 #include "ft_math.h"
@@ -28,7 +27,7 @@ int		parse_t_width(void *data, char **strs)
 	env = (t_env *)data;
 	if (ft_atoi_s(strs[0], &n) == ERROR)
 		return (ERROR);
-	env->width = clamp_i32(n, 1, 2500);
+	env->width = clamp_i32(n, 32, 2500);
 	return (SUCCESS);
 }
 
@@ -40,7 +39,7 @@ int		parse_t_height(void  *data, char **strs)
 	env = (t_env *)data;
 	if (ft_atoi_s(strs[0], &n) == ERROR)
 		return (ERROR);
-	env->height = clamp_i32(n, 1, 1400);
+	env->height = clamp_i32(n, 32, 1400);
 	return (SUCCESS);
 }
 

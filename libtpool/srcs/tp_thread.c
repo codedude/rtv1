@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tp_thread.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/27 22:19:36 by valentin          #+#    #+#             */
-/*   Updated: 2018/03/26 18:08:52 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/26 20:16:24 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 
 #include <pthread.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
 #include "libft.h"
 #include "ft_tpool.h"
@@ -39,9 +38,7 @@ void		*th_fun_start(void *param)
 		pthread_mutex_lock(&(tp->mutex));
 		tp->working_threads += 1;
 		pthread_mutex_unlock(&(tp->mutex));
-		printf("%d : Computing\n", th->id);
 		(*th->data->f)(th->data->param);
-		printf("%d : Finished !\n", th->id);
 		pthread_mutex_lock(&(th->mutex));
 		free(th->data);
 		th->state = TH_READY;
