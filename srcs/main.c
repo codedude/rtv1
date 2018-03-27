@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 17:52:32 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/26 17:23:24 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/27 14:23:29 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static int	loop(void *param)
 	check_key(&(data->env));
 	if (data->env.refresh == 1)
 	{
-		//clean_maps(data);
 		draw_img(data);
 		mlx_put_image_to_window(data->mlx.mlx, data->mlx.win[MAIN_WIN].win,
 			data->mlx.win[MAIN_WIN].img__, 0, 0);

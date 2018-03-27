@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_funs1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 14:30:20 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/26 20:16:16 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/27 14:32:06 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int		parse_t_width(void *data, char **strs)
 	return (SUCCESS);
 }
 
-int		parse_t_height(void  *data, char **strs)
+int		parse_t_height(void *data, char **strs)
 {
 	t_env	*env;
-	int	n;
+	int		n;
 
 	env = (t_env *)data;
 	if (ft_atoi_s(strs[0], &n) == ERROR)
@@ -43,7 +43,7 @@ int		parse_t_height(void  *data, char **strs)
 	return (SUCCESS);
 }
 
-int		parse_t_background(void  *data, char **strs)
+int		parse_t_background(void *data, char **strs)
 {
 	t_env	*env;
 	int		n[3];
@@ -56,12 +56,11 @@ int		parse_t_background(void  *data, char **strs)
 	env->background = ft_mlx_getcolor(
 		clamp_i32(n[0], 0, 255),
 		clamp_i32(n[1], 0, 255),
-		clamp_i32(n[2], 0, 255)
-	);
+		clamp_i32(n[2], 0, 255));
 	return (SUCCESS);
 }
 
-int		parse_t_ang(void  *data, char **strs)
+int		parse_t_ang(void *data, char **strs)
 {
 	t_env	*env;
 	t_f64	n[3];
@@ -74,12 +73,11 @@ int		parse_t_ang(void  *data, char **strs)
 	vec3_set(&(env->cam_ang),
 		clamp_f64(n[0], -360.0, 360.0),
 		clamp_f64(n[1], -360.0, 360.0),
-		clamp_f64(n[2], -360.0, 360.0)
-	);
+		clamp_f64(n[2], -360.0, 360.0));
 	return (SUCCESS);
 }
 
-int		parse_t_fov(void  *data, char **strs)
+int		parse_t_fov(void *data, char **strs)
 {
 	t_env	*env;
 	int		n;

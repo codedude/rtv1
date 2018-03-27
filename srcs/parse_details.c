@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_details.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/20 12:59:53 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/24 22:24:20 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/27 14:24:46 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include "matrix.h"
 #include "objects.h"
 
-int		check_numbers(char **tmp)
+int				check_numbers(char **tmp)
 {
 	int		i;
 	int		j;
@@ -37,7 +37,7 @@ int		check_numbers(char **tmp)
 			j++;
 		if (tmp[i][j] == 0 && j > sign)
 			return (SUCCESS);
-		if(tmp[i][j] == '.' && j > sign)
+		if (tmp[i][j] == '.' && j > sign)
 			j++;
 		while (ft_isdigit(tmp[i][j]))
 			j++;
@@ -58,7 +58,7 @@ static size_t	len_strs(char **strs)
 	return (i);
 }
 
-int		parse_details(t_env *env, int id, char *line, t_object *obj)
+int				parse_details(t_env *env, int id, char *line, t_object *obj)
 {
 	t_parse_type	*parse_funs;
 	char			**tmp;
@@ -69,7 +69,6 @@ int		parse_details(t_env *env, int id, char *line, t_object *obj)
 	if ((tmp = ft_strsplit_whitespaces(line)) == NULL)
 		return (ERROR);
 	parse_funs = get_parse_funs();
-
 	if (parse_funs[id].size != len_strs(tmp) || check_numbers(tmp) == ERROR)
 		r = ERROR;
 	if (obj == NULL)

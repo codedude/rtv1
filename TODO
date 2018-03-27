@@ -1,3 +1,17 @@
-- Segfault pour une petite taille de fenetre
--> rintf dans tp_thread.c et compute.c
--> signal perdu si ca va trop vite ???
+- Mettre atof/atoi/clamp dans libft
+- Check leaks
+- Norminette : 
+
+Norme: ./srcs/parse_funs3.c
+Error: 7 functions in the file
+
+Norme: ./srcs/parser.c
+Error (line 52): function parse_data has 43 lines
+
+Norme: ./srcs/reader.c
+Error (line 33): function read_map has 37 lines
+Error (line 85): function cut_map has 27 lines
+
+Norme: ./srcs/parse_type.c
+Error: 8 functions in the file
+Error (line 147): function parse_global has 30 lines

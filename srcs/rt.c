@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 11:22:50 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/26 19:10:23 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/27 14:28:33 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ static t_color	compute_color(t_env *env, t_ray *ray, t_object *obj, t_f64 t)
 		vec3_mul_scalar(&(ray_hit.dir), -1.0);
 	vec3_cpy(&(ray->orig), &p_hit_biais);
 	color = compute_light(env, ray, &ray_hit, obj);
-
 	return (color);
 }
 
@@ -128,7 +127,6 @@ int				draw_rt(void *data)
 	t_vec3		camera;
 	int			i;
 	int			j;
-
 
 	algo = (t_algo *)data;
 	i = algo->start;

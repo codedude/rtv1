@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_type.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 14:09:01 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/24 22:23:55 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/27 14:27:58 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,10 @@ int				check_counter_details(int counter[OBJECT_DETAILS_SIZE],
 	else if (type == 4)
 		return (counter[6] == 1 && counter[10] == 1);
 	else
+	{
 		return (counter[6] == 1 && counter[7] == 1 && counter[8] == 1
-			&& counter[9] == 1 && counter[11] == 1);
+		&& counter[9] == 1 && counter[11] == 1);
+	}
 	return (0);
 }
 

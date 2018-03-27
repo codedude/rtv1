@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_funs3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 20:45:34 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/25 22:28:10 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/27 14:28:56 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include "matrix.h"
 #include "objects.h"
 
-t_f64	clamp_f64(t_f64 f, t_f64 lmin, t_f64 lmax)
+t_f64		clamp_f64(t_f64 f, t_f64 lmin, t_f64 lmax)
 {
 	if (f < lmin)
 		return (lmin);
@@ -29,7 +29,7 @@ t_f64	clamp_f64(t_f64 f, t_f64 lmin, t_f64 lmax)
 	return (f);
 }
 
-int		clamp_i32(int f, int lmin, int lmax)
+int			clamp_i32(int f, int lmin, int lmax)
 {
 	if (f < lmin)
 		return (lmin);
@@ -83,5 +83,36 @@ int			ft_atof64_s(char *str, t_f64 *n)
 	else
 		compute_d(d, parts[1], n, sign);
 	ft_strsplit_free(parts);
+	return (SUCCESS);
+}
+
+int			parse_t_orig(void *data, char **strs)
+{
+	t_env	*env;
+	t_f64	n[3];
+
+	env = (t_env *)data;
+	if (ft_atof64_s(strs[0], &n[0]) == ERROR
+		|| ft_atof64_s(strs[1], &n[1]) == ERROR
+		|| ft_atof64_s(strs[2], &n[2]) == ERROR)
+		return (ERROR);
+	vec3_set(&(env->cam_orig), n[0], n[1], n[2]);
+	return (SUCCESS);
+}
+
+int			parse_t_phong(void *data, char **strs)
+{
+	t_object	*obj;
+	t_f64		phong[PHONGS];
+	int			shini;
+
+	obj = (t_object *)data;
+	if (ft_atoi_s(strs[0], &shini) == ERROR
+		|| ft_atof64_s(strs[1], &phong[PHONG_KA]) == ERROR
+		|| ft_atof64_s(strs[2], &phong[PHONG_KD]) == ERROR
+		|| ft_atof64_s(strs[3], &phong[PHONG_KS]) == ERROR)
+		return (ERROR);
+	phong[PHONG_SHINI] = (t_f64)shini;
+	object_set_phong(obj, phong);
 	return (SUCCESS);
 }

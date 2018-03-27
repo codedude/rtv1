@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objects_set.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/24 15:56:49 by valentin          #+#    #+#             */
-/*   Updated: 2018/03/24 17:02:42 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/27 14:23:45 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ void		object_set_intensity(t_object *obj, t_vec3 *intensity)
 	vec3_set(&(obj->intensity),
 		clamp_f64(intensity->x, 0.0, 5.0),
 		clamp_f64(intensity->y, 0.0, 5.0),
-		clamp_f64(intensity->z, 0.0, 5.0)
-	);
+		clamp_f64(intensity->z, 0.0, 5.0));
 }
 
 void		object_set_color(t_object *obj, t_vec3 *color)
@@ -32,8 +31,7 @@ void		object_set_color(t_object *obj, t_vec3 *color)
 	vec3_set(&(obj->color),
 		(t_f64)clamp_i32(color->x, 0, 255) / 255.,
 		(t_f64)clamp_i32(color->y, 0, 255) / 255.,
-		(t_f64)clamp_i32(color->z, 0, 255) / 255.
-	);
+		(t_f64)clamp_i32(color->z, 0, 255) / 255.);
 }
 
 void		object_set_radius(t_object *obj, t_f64 radius)
