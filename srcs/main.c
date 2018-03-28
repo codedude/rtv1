@@ -6,11 +6,10 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 17:52:32 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/28 04:09:38 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/28 14:04:39 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include "libft.h"
 #include "mlx.h"
@@ -53,12 +52,9 @@ int			main(int argc, char **argv)
 {
 	t_data	data;
 
-	char buf[3];
-	fgets(buf, 2, stdin);
-	(void)argv;
 	if (argc < 2)
 	{
-		ft_putstr("rtv1 : ./rtv1 MAP\n");
+		ft_putstr("rtv1 : ./rtv1 SCENE\n");
 		return (EXIT_SUCCESS);
 	}
 	if (env_init(&(data.env), argv[1]) == ERROR)

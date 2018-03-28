@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_details.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/20 12:59:53 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/27 14:24:46 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/28 14:03:41 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include "parser.h"
 #include "libft.h"
 #include "ft_math.h"

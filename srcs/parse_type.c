@@ -6,12 +6,11 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 14:09:01 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/28 02:40:20 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/28 14:02:17 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include "parser.h"
 #include "libft.h"
 #include "ft_math.h"

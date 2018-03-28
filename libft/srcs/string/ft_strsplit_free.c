@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit_free.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/11 12:22:09 by vparis            #+#    #+#             */
-/*   Updated: 2018/01/11 12:23:47 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/28 14:02:28 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_strsplit_free(char **str)
 	{
 		free(str[i]);
 		str[i] = NULL;
+		i++;
 	}
 	free(str);
 }

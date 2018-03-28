@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rt_norm.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 14:23:51 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/13 14:41:47 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/28 14:03:17 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
 #include <math.h>
 #include "libft.h"

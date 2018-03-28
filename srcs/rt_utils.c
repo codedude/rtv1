@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rt_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 14:33:24 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/26 12:45:29 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/28 14:03:24 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
 #include <math.h>
 #include "libft.h"

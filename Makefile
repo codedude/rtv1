@@ -6,7 +6,7 @@
 #    By: valentin <valentin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/02 17:37:24 by vparis            #+#    #+#              #
-#    Updated: 2018/03/28 03:02:55 by valentin         ###   ########.fr        #
+#    Updated: 2018/03/28 13:58:00 by valentin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ SRCS		=	$(SRCD)/main.c $(SRCD)/ft_mlx.c $(SRCD)/ft_pixel.c \
 				$(SRCD)/parse_type.c $(SRCD)/parse_type_2.c
 OBJS		=	$(patsubst %.c, %.o, $(SRCS))
 
-CFLAGS		+=	-I$(INCD) -flto -march=native -g3 -std=c11 -pedantic \
+CFLAGS		+=	-I$(INCD) -flto -march=native -std=c11 -pedantic \
 				-I$(LIBFTD)/includes -I$(LIBTPOOLD)/includes -I$(MLXD)
 LDFLAGS		+=	-Wextra -Wall -Wno-unused-result
 LDLIBS		+=	-L$(LIBFTD) -lft -L$(LIBTPOOLD) -ltpool -L$(MLXD) -lmlx -lm \
