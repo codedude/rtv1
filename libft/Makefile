@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vparis <vparis@student.42.fr>              +#+  +:+       +#+         #
+#    By: valentin <valentin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/02 17:37:24 by vparis            #+#    #+#              #
-#    Updated: 2018/03/20 17:59:36 by vparis           ###   ########.fr        #
+#    Updated: 2018/03/28 01:04:34 by valentin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,8 @@ LIBFT_SRCS	+= $(MATHD)/ft_sqrt.c $(MATHD)/ft_find_next_prime.c \
 			$(MATHD)/ft_fibonacci.c $(MATHD)/ft_max.c $(MATHD)/ft_angle.c \
 			$(MATHD)/ft_power.c $(MATHD)/ft_factorial.c
 LIBFT_SRCS	+= $(CONVERTD)/ft_atoi_base.c $(CONVERTD)/ft_atoi_s.c \
-			$(CONVERTD)/ft_itoa.c $(CONVERTD)/ft_atoi.c
+			$(CONVERTD)/ft_itoa.c $(CONVERTD)/ft_atoi.c $(CONVERTD)/ft_clamp.c \
+			$(CONVERTD)/ft_atof64_s.c
 LIBFT_SRCS	+= $(ASCIID)/ft_toupper.c $(ASCIID)/ft_islower.c \
 			$(ASCIID)/ft_isgraph.c $(ASCIID)/ft_isupper.c \
 			$(ASCIID)/ft_isspace.c $(ASCIID)/ft_isdigit.c \

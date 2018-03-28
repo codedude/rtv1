@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtv1.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 04:21:59 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/26 18:07:11 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/28 01:07:00 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,6 @@ typedef struct	s_algo {
 
 int				env_init(t_env *env, char *map);
 void			env_destroy(t_data *data);
-
-t_f64			clamp_f64(t_f64 f, t_f64 lmin, t_f64 lmax);
-int				clamp_i32(int f, int lmin, int lmax);
-int				ft_atof64_s(char *str, t_f64 *n);
 
 void			check_key(t_env *env);
 void			check_key2(t_env *env);

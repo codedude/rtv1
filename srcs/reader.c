@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reader.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 10:31:22 by valentin          #+#    #+#             */
-/*   Updated: 2018/03/19 14:42:32 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/28 04:14:34 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,23 @@ int			check_map(char *str)
 	return (SUCCESS);
 }
 
+static char	*read_init(char *filename, int *fd)
+{
+	char	*buff;
+
+	if ((*fd = open(filename, O_RDONLY | O_NONBLOCK | O_NOFOLLOW)) < 0)
+	{
+		ft_putendl("Invalid path");
+		return (NULL);
+	}
+	if ((buff = (char *)malloc(BUFF_SIZE + 1)) == NULL)
+	{
+		close(*fd);
+		return (NULL);
+	}
+	return (buff);
+}
+
 char		*read_map(char *filename)
 {
 	int		r;
@@ -38,25 +55,14 @@ char		*read_map(char *filename)
 	int		read_size;
 	char	*buff;
 
-	if (filename == NULL)
+	if ((buff = read_init(filename, &fd)) == NULL)
 		return (NULL);
-	if ((fd = open(filename, O_RDONLY | O_NONBLOCK | O_NOFOLLOW)) < 0)
-	{
-		ft_putendl("Invalid path");
-		return (NULL);
-	}
-	if ((buff = (char *)malloc(BUFF_SIZE + 1)) == NULL)
-	{
-		close(fd);
-		return (NULL);
-	}
 	n = 0;
 	read_size = BUFF_READ;
 	while ((r = read(fd, &buff[n], read_size)) > 0)
 	{
 		n += r;
 		if (n + read_size > BUFF_SIZE - 1)
-		{
 			if ((read_size = BUFF_SIZE - 1 - n) < 1)
 			{
 				free(buff);
@@ -64,7 +70,6 @@ char		*read_map(char *filename)
 				ft_putendl("File is too big (MAX 1Mo)");
 				return (NULL);
 			}
-		}
 	}
 	buff[n] = 0;
 	close(fd);
@@ -90,9 +95,9 @@ char		**cut_map(char *map)
 
 	if ((tmp = ft_strsplit_str(map, "\n")) == NULL)
 		return (NULL);
-	i = 0;
+	i = -1;
 	j = 0;
-	while (tmp[i] != NULL)
+	while (tmp[++i] != NULL)
 	{
 		if (trim_content(&tmp[i]) == ERROR)
 		{
@@ -103,11 +108,9 @@ char		**cut_map(char *map)
 			free(tmp[i]);
 		else
 		{
-			if (j != i)
-				tmp[j] = tmp[i];
+			tmp[j] = tmp[i];
 			j++;
 		}
-		i++;
 	}
 	tmp[j] = NULL;
 	return (tmp);

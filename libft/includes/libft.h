@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/02 22:22:13 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/20 17:58:16 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/28 01:07:25 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int					ft_atoi(const char *nptr);
 char				*ft_itoa(int n);
 int					ft_atoi_base(char const *nptr, char const *base);
 int					ft_atoi_s(const char *str, int *nb);
+int					ft_atof64_s(char *str, t_f64 *n);
 
 /*
 ** ASCII Characters checking

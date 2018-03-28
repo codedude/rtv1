@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_type.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 14:09:01 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/27 14:27:58 by vparis           ###   ########.fr       */
+/*   Updated: 2018/03/28 02:40:20 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,94 +41,8 @@ t_parse_type	*get_parse_funs(void)
 	return (parse_type);
 }
 
-size_t			ft_strcountc(char *str, char c)
-{
-	size_t	i;
-	size_t	r;
-
-	i = 0;
-	r = 0;
-	while (str[i] != 0)
-	{
-		if (str[i] == c)
-			r++;
-		i++;
-	}
-	return (r);
-}
-
-char			**get_line(char *str)
-{
-	char	**tmp;
-	int		i;
-
-	if (ft_strcountc(str, T_SEPAR) != 1)
-		return (NULL);
-	if ((tmp = ft_strsplit(str, T_SEPAR)) == NULL)
-		return (NULL);
-	if (tmp[0] == NULL || tmp[1] == NULL || tmp[2] != NULL)
-	{
-		ft_strsplit_free(tmp);
-		return (NULL);
-	}
-	i = 0;
-	while (tmp[i] != NULL)
-	{
-		if (trim_content(&tmp[i]) == ERROR)
-		{
-			ft_strsplit_free(tmp);
-			return (NULL);
-		}
-		i++;
-	}
-	return (tmp);
-}
-
-int				check_line_object(char *lst, int type)
-{
-	if (ft_strchr(lst, '0' + type) != NULL)
-		return (SUCCESS);
-	return (ERROR);
-}
-
-int				check_line_type(char **line, t_parse_type *data, int type)
-{
-	if (check_line_object(data->types, type) == ERROR)
-		return (ERROR);
-	if (ft_strcmp(line[0], data->name) != 0)
-		return (ERROR);
-	return (SUCCESS);
-}
-
-char			**check_line(char *str, int type, int *r)
-{
-	char			**tmp;
-	t_parse_type	*parse_funs;
-	int				i;
-
-	if ((tmp = get_line(str)) == NULL)
-		return (NULL);
-	parse_funs = get_parse_funs();
-	i = 0;
-	while (parse_funs[i].name != NULL)
-	{
-		if (check_line_type(tmp, &(parse_funs[i]), type) == SUCCESS)
-		{
-			*r = i;
-			break ;
-		}
-		i++;
-	}
-	if (parse_funs[i].name == NULL)
-	{
-		ft_strsplit_free(tmp);
-		tmp = NULL;
-	}
-	return (tmp);
-}
-
-int				check_counter_details(int counter[OBJECT_DETAILS_SIZE],
-					int type)
+static int		check_counter_details(int counter[OBJECT_DETAILS_SIZE],
+						int type)
 {
 	if (type == 5)
 		return (counter[0] == 1 && counter[1] == 1 && counter[2] == 1);
@@ -144,20 +58,27 @@ int				check_counter_details(int counter[OBJECT_DETAILS_SIZE],
 	return (0);
 }
 
+static int		parse_global_need_space(int *i, int type, t_object	**obj)
+{
+	if (type > 4)
+		*obj = NULL;
+	else if ((*obj = object_new(type)) == NULL)
+		return (ERROR);
+	*i = 0;
+	return (SUCCESS);
+}
+
 int				parse_global(t_env *env, char **str, int type)
 {
 	int				i;
 	int				r;
+	t_object		*obj;
 	char			**tmp;
 	int				counter[OBJECT_DETAILS_SIZE];
-	t_object		*obj;
 
 	ft_bzero(counter, OBJECT_DETAILS_SIZE * sizeof(int));
-	if (type > 4)
-		obj = NULL;
-	else if ((obj = object_new(type)) == NULL)
+	if (parse_global_need_space(&i, type, &obj) == ERROR)
 		return (-1);
-	i = 0;
 	while (*(str + i) != NULL)
 	{
 		if ((tmp = check_line(*(str + i), type, &r)) == NULL)
@@ -173,7 +94,5 @@ int				parse_global(t_env *env, char **str, int type)
 	}
 	if (obj != NULL)
 		object_add(&(env->objects), obj);
-	if (!check_counter_details(counter, type))
-		return (-1);
-	return (i);
+	return (check_counter_details(counter, type) ? i : -1);
 }

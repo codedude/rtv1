@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vparis <vparis@student.42.fr>              +#+  +:+       +#+         #
+#    By: valentin <valentin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/02 17:37:24 by vparis            #+#    #+#              #
-#    Updated: 2018/02/26 13:47:38 by vparis           ###   ########.fr        #
+#    Updated: 2018/03/28 01:38:48 by valentin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ $(NAME): $(OBJS)
 	@echo "libtpool - compiled"
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ -c $< $(LDLIBS)
+	@$(CC) $(CFLAGS) $(LDFLAGS) -o $@ -c $< $(LDLIBS)
 
 showlib: $(NAME)
 	@ar -t $(NAME)

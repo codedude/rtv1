@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 10:29:55 by valentin          #+#    #+#             */
-/*   Updated: 2018/03/24 18:13:23 by valentin         ###   ########.fr       */
+/*   Updated: 2018/03/28 02:28:40 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,12 @@ int				trim_content(char **dest);
 int				parse_map(t_env *env, char *map);
 
 /*
-** parse_type.c
+** parse_type.c & parse_type_2.c
 */
 
-int				parse_global(t_env *env, char **str, int type);
 t_parse_type	*get_parse_funs(void);
+int				parse_global(t_env *env, char **str, int type);
+char			**check_line(char *str, int type, int *r);
 
 /*
 ** parse_details.c

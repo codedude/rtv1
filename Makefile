@@ -6,7 +6,7 @@
 #    By: valentin <valentin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/02 17:37:24 by vparis            #+#    #+#              #
-#    Updated: 2018/03/26 20:12:50 by valentin         ###   ########.fr        #
+#    Updated: 2018/03/28 03:02:55 by valentin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,12 +28,13 @@ SRCS		=	$(SRCD)/main.c $(SRCD)/ft_mlx.c $(SRCD)/ft_pixel.c \
 				$(SRCD)/matrix_3.c $(SRCD)/export_bmp.c $(SRCD)/export_bmp2.c \
 				$(SRCD)/rt.c $(SRCD)/rt_norm.c $(SRCD)/rt_utils.c \
 				$(SRCD)/rt_convert.c $(SRCD)/rt_intersect.c $(SRCD)/rt_color.c \
-				$(SRCD)/reader.c $(SRCD)/parser.c $(SRCD)/parse_type.c \
+				$(SRCD)/reader.c $(SRCD)/parser.c \
 				$(SRCD)/parse_funs1.c $(SRCD)/parse_funs2.c \
-				$(SRCD)/parse_funs3.c $(SRCD)/parse_details.c
+				$(SRCD)/parse_funs3.c $(SRCD)/parse_details.c \
+				$(SRCD)/parse_type.c $(SRCD)/parse_type_2.c
 OBJS		=	$(patsubst %.c, %.o, $(SRCS))
 
-CFLAGS		+=	-I$(INCD) -O3 -flto -march=native -g \
+CFLAGS		+=	-I$(INCD) -flto -march=native -g3 -std=c11 -pedantic \
 				-I$(LIBFTD)/includes -I$(LIBTPOOLD)/includes -I$(MLXD)
 LDFLAGS		+=	-Wextra -Wall -Wno-unused-result
 LDLIBS		+=	-L$(LIBFTD) -lft -L$(LIBTPOOLD) -ltpool -L$(MLXD) -lmlx -lm \
@@ -56,13 +57,13 @@ clean:
 	make -C $(LIBFTD) clean
 	make -C $(LIBTPOOLD) clean
 	make -C $(MLXD) clean
-	@rm -vf $(OBJS)
+	@rm -f $(OBJS)
 
 fclean: clean
 	make -C $(LIBFTD) __fclean
 	make -C $(LIBTPOOLD) __fclean
-	@rm -vf $(MLXD)/libmlx.a
-	@rm -vf $(NAME)
+	make -C $(MLXD) __fclean
+	@rm -f $(NAME)
 
 re: fclean all
 
@@ -72,4 +73,4 @@ rer:
 	make $(NAME)
 
 clean_saved:
-	rm -f $(IMG)/*.bmp
+	rm -vf $(IMG)/*.bmp
