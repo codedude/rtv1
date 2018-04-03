@@ -6,7 +6,7 @@
 #    By: vparis <vparis@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/02 17:37:24 by vparis            #+#    #+#              #
-#    Updated: 2018/04/03 14:20:12 by vparis           ###   ########.fr        #
+#    Updated: 2018/04/03 16:54:05 by vparis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,12 +44,17 @@ LDLIBS		+=	-L$(LIBFTD) -lft -L$(LIBTPOOLD) -ltpool -L$(MLXD) -lmlx -lm \
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): libs objs
+	@echo "rtv1 - compiled"
+
+objs: $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $^ $(LDLIBS)
+
+libs:
 	make -C $(LIBFTD)
 	make -C $(LIBTPOOLD)
 	make -C $(MLXD)
-	$(CC) $(CFLAGS) -o $@ $^ $(LDLIBS)
-
+	
 %.o: %.c
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ -c $<
 
@@ -58,12 +63,14 @@ clean:
 	make -C $(LIBTPOOLD) clean
 	make -C $(MLXD) clean
 	@rm -f $(OBJS)
+	@echo "rtv1 - cleaned"
 
 fclean: clean
 	make -C $(LIBFTD) __fclean
 	make -C $(LIBTPOOLD) __fclean
 	make -C $(MLXD) __fclean
 	@rm -f $(NAME)
+	@echo "rtv1 - lib cleaned"
 
 re: fclean all
 

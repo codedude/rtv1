@@ -25,6 +25,6 @@ fclean: clean
 
 __fclean:
 	@rm -f $(NOM)
-	@echo "mlx- lib cleaned"
+	@echo "mlx - lib cleaned"
 
 re: clean all
