@@ -3,18 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   rt.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 11:22:50 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/28 14:03:09 by valentin         ###   ########.fr       */
+/*   Updated: 2018/04/03 14:40:41 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <unistd.h>
-#include <math.h>
 #include "libft.h"
-#include "ft_math.h"
 #include "ft_mlx.h"
 #include "matrix.h"
 #include "objects.h"

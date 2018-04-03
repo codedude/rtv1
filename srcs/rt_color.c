@@ -6,15 +6,13 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 16:39:36 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/27 14:27:04 by vparis           ###   ########.fr       */
+/*   Updated: 2018/04/03 14:41:26 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <math.h>
 #include "libft.h"
-#include "ft_math.h"
-#include "ft_mlx.h"
 #include "matrix.h"
 #include "objects.h"
 #include "rtv1.h"

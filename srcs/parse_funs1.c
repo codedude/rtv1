@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 14:30:20 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/27 14:32:06 by vparis           ###   ########.fr       */
+/*   Updated: 2018/04/03 14:37:35 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 #include "parser.h"
 #include "libft.h"
 #include "ft_math.h"
-#include "ft_mlx.h"
-#include "rtv1.h"
 #include "matrix.h"
-#include "objects.h"
+#include "rtv1.h"
 
 int		parse_t_width(void *data, char **strs)
 {

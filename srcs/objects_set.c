@@ -6,17 +6,15 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/24 15:56:49 by valentin          #+#    #+#             */
-/*   Updated: 2018/03/27 14:23:45 by vparis           ###   ########.fr       */
+/*   Updated: 2018/04/03 14:35:43 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <math.h>
 #include "libft.h"
-#include "ft_mlx.h"
 #include "objects.h"
 #include "matrix.h"
-#include "rtv1.h"
 
 void		object_set_intensity(t_object *obj, t_vec3 *intensity)
 {

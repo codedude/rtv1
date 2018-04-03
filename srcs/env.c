@@ -3,20 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 00:26:13 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/28 04:06:34 by valentin         ###   ########.fr       */
+/*   Updated: 2018/04/03 14:32:36 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <time.h>
-#include "libft.h"
-#include "ft_math.h"
 #include "ft_mlx.h"
 #include "rtv1.h"
-#include "matrix.h"
 #include "objects.h"
 #include "ft_tpool.h"
 #include "parser.h"
@@ -65,7 +61,6 @@ int			env_init(t_env *env, char *map)
 	if (parse_map(env, map) == ERROR)
 		return (ERROR);
 	env_init_screen(env);
-	srand(time(NULL));
 	return (SUCCESS);
 }
 

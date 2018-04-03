@@ -6,12 +6,12 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 13:44:22 by valentin          #+#    #+#             */
-/*   Updated: 2018/03/05 11:04:54 by vparis           ###   ########.fr       */
+/*   Updated: 2018/04/03 14:33:07 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "rtv1.h"
+#include "ft_mlx.h"
 
 static void	get_int(int n, char *buff, int bytes)
 {

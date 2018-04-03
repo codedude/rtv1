@@ -3,15 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   compute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 14:47:10 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/26 19:21:07 by valentin         ###   ########.fr       */
+/*   Updated: 2018/04/03 14:30:17 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "libft.h"
 #include "rtv1.h"
 
 void			clean_maps(t_data *data)

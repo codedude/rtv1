@@ -6,15 +6,13 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 17:44:18 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/12 16:35:52 by vparis           ###   ########.fr       */
+/*   Updated: 2018/04/03 14:21:13 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MLX_H
 # define FT_MLX_H
 
-# include "libft.h"
-# include "ft_tpool.h"
 # include "mlx.h"
 # include "ft_mlx_key.h"
 

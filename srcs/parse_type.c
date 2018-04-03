@@ -3,20 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parse_type.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 14:09:01 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/28 14:02:17 by valentin         ###   ########.fr       */
+/*   Updated: 2018/04/03 14:38:18 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "parser.h"
 #include "libft.h"
-#include "ft_math.h"
 #include "ft_mlx.h"
 #include "rtv1.h"
-#include "matrix.h"
 #include "objects.h"
 
 t_parse_type	*get_parse_funs(void)
@@ -57,7 +55,7 @@ static int		check_counter_details(int counter[OBJECT_DETAILS_SIZE],
 	return (0);
 }
 
-static int		parse_global_need_space(int *i, int type, t_object	**obj)
+static int		parse_global_need_space(int *i, int type, t_object **obj)
 {
 	if (type > 4)
 		*obj = NULL;

@@ -3,21 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parse_type_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 14:09:01 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/28 14:03:34 by valentin         ###   ########.fr       */
+/*   Updated: 2018/04/03 14:39:06 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "parser.h"
 #include "libft.h"
-#include "ft_math.h"
-#include "ft_mlx.h"
 #include "rtv1.h"
-#include "matrix.h"
-#include "objects.h"
 
 static size_t	ft_strcountc(char *str, char c)
 {

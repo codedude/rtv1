@@ -3,20 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   objects.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 12:46:39 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/25 22:28:18 by valentin         ###   ########.fr       */
+/*   Updated: 2018/04/03 14:35:15 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <math.h>
-#include "libft.h"
 #include "ft_mlx.h"
 #include "objects.h"
 #include "matrix.h"
-#include "rtv1.h"
 
 void		object_set_pos(t_object *obj, t_vec3 *pos)
 {
