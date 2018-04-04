@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_funs2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 14:31:31 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/28 14:02:54 by valentin         ###   ########.fr       */
+/*   Updated: 2018/04/03 14:37:32 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 #include "parser.h"
 #include "libft.h"
 #include "ft_math.h"
-#include "ft_mlx.h"
-#include "rtv1.h"
 #include "matrix.h"
 #include "objects.h"
+#include "rtv1.h"
 
 int		parse_t_pos(void *data, char **strs)
 {

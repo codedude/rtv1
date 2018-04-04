@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objects.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 12:32:54 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/24 18:03:48 by valentin         ###   ########.fr       */
+/*   Updated: 2018/04/03 14:21:43 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define OBJECTS_H
 
 # include "libft.h"
-# include "ft_mlx.h"
 # include "matrix.h"
 
 # define OBJECTS		4

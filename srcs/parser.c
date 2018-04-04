@@ -3,21 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 10:31:17 by valentin          #+#    #+#             */
-/*   Updated: 2018/03/28 14:03:03 by valentin         ###   ########.fr       */
+/*   Updated: 2018/04/03 14:39:51 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "parser.h"
 #include "libft.h"
-#include "ft_math.h"
-#include "ft_mlx.h"
 #include "rtv1.h"
-#include "matrix.h"
-#include "objects.h"
 
 int			parse_check_header(char *str)
 {

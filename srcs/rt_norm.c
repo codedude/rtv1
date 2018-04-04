@@ -3,19 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   rt_norm.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 14:23:51 by vparis            #+#    #+#             */
-/*   Updated: 2018/03/28 14:03:17 by valentin         ###   ########.fr       */
+/*   Updated: 2018/04/03 14:42:32 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <unistd.h>
-#include <math.h>
 #include "libft.h"
 #include "ft_math.h"
-#include "ft_mlx.h"
 #include "matrix.h"
 #include "objects.h"
 #include "rtv1.h"
