@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 11:08:48 by vparis            #+#    #+#             */
-/*   Updated: 2018/04/03 14:42:05 by vparis           ###   ########.fr       */
+/*   Updated: 2018/04/05 17:53:39 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		intersect_plane(t_ray *ray, t_object *obj, t_solution *solution)
 		vec3_cpy(&diff, &(obj->pos));
 		vec3_sub(&diff, &(ray->orig));
 		solution->t0 = vec3_dot(&diff, &(obj->norm)) / denom;
-		return (solution->t0 > 0. ? SUCCESS : ERROR);
+		return (solution->t0 > 0.0 ? SUCCESS : ERROR);
 	}
 	return (ERROR);
 }

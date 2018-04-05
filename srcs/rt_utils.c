@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 14:33:24 by vparis            #+#    #+#             */
-/*   Updated: 2018/04/03 14:42:55 by vparis           ###   ########.fr       */
+/*   Updated: 2018/04/05 17:51:10 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int				is_shadow(t_env *env, t_ray *ray_light, t_solution *solution,
 		{
 			if (env->intersect[iter_object->object->type](ray_light,
 				iter_object->object, solution) == SUCCESS)
-				if (solution->t0 < solution->t && solution->t0 > 0.)
+				if (solution->t0 < solution->t && solution->t0 > INTER_MIN)
 					return (SUCCESS);
 		}
 		iter_object = iter_object->next;
