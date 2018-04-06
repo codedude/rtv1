@@ -6,7 +6,7 @@
 #    By: vparis <vparis@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/02 17:37:24 by vparis            #+#    #+#              #
-#    Updated: 2018/04/03 16:54:05 by vparis           ###   ########.fr        #
+#    Updated: 2018/04/06 14:54:40 by vparis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,11 +44,12 @@ LDLIBS		+=	-L$(LIBFTD) -lft -L$(LIBTPOOLD) -ltpool -L$(MLXD) -lmlx -lm \
 
 all: $(NAME)
 
-$(NAME): libs objs
-	@echo "rtv1 - compiled"
-
-objs: $(OBJS)
+$(NAME): $(OBJS)
+	make -C $(LIBFTD)
+	make -C $(LIBTPOOLD)
+	make -C $(MLXD)
 	$(CC) $(CFLAGS) -o $(NAME) $^ $(LDLIBS)
+	@echo "rtv1 - compiled"
 
 libs:
 	make -C $(LIBFTD)

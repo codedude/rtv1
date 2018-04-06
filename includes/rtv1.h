@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 04:21:59 by vparis            #+#    #+#             */
-/*   Updated: 2018/04/05 17:44:51 by vparis           ###   ########.fr       */
+/*   Updated: 2018/04/06 15:36:11 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 # include "matrix.h"
 # include "objects.h"
 
-# define FLOAT_INF		1e8
-# define INTER_MIN		1e-8
-# define BIAIS			1e-8
+# define FLOAT_INF		1e6
+# define INTER_MIN		1e-6
+# define BIAIS			1e-6
 # define L_DIST_FACTOR	(-2.0 * 120.)
 # define TITLE			"RTV1 DX4000"
 # define FILE_NAME		"saved_img/rt_XXX.bmp"

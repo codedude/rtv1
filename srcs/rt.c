@@ -6,7 +6,7 @@
 /*   By: vparis <vparis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 11:22:50 by vparis            #+#    #+#             */
-/*   Updated: 2018/04/05 17:47:21 by vparis           ###   ########.fr       */
+/*   Updated: 2018/04/06 16:17:49 by vparis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ static t_object	*trace(t_env *env, t_ray *ray, t_solution *solution)
 		if (env->intersect[iter->object->type](ray, iter->object, solution)
 			== SUCCESS)
 		{
-			if (solution->t0 < solution->t)
+			if (solution->t0 < solution->t && solution->t0 > INTER_MIN
+				&& solution->t0 < FLOAT_INF)
 			{
 				solution->t = solution->t0;
 				obj = iter->object;
