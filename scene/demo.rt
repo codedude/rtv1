@@ -13,14 +13,14 @@
 
 canvas
 {
-	width = 32
-	height = 32
+	width = 1024
+	height = 768
 	background = 250 250 250
 }
 
 camera
 {
-	orig = 0.0 30.0 30.0
+	orig = 0.0 30.0 50.0
 	ang = -10.0 0.0 0.0
 	fov = 90
 }
